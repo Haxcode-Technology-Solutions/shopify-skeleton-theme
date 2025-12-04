@@ -166,12 +166,21 @@
             "heading": "MISS DIOR",
             "link": ""
           }
+        },
+        "banner_7L3fWV": {
+          "type": "banner",
+          "settings": {
+            "subheading": "New Fragrance",
+            "heading": "MISS DIOR",
+            "link": ""
+          }
         }
       },
       "block_order": [
         "banner-1",
         "banner-2",
-        "banner-3"
+        "banner-3",
+        "banner_7L3fWV"
       ],
       "settings": {}
     }
