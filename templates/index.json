@@ -53,55 +53,64 @@
         "brand-1": {
           "type": "brand",
           "settings": {
-            "brand_name": "CREED"
+            "brand_name": "CREED",
+            "link": ""
           }
         },
         "brand-2": {
           "type": "brand",
           "settings": {
-            "brand_name": "BURBERRY"
+            "brand_name": "BURBERRY",
+            "link": ""
           }
         },
         "brand-3": {
           "type": "brand",
           "settings": {
-            "brand_name": "CHANEL"
+            "brand_name": "CHANEL",
+            "link": ""
           }
         },
         "brand-4": {
           "type": "brand",
           "settings": {
-            "brand_name": "CALVIN KLEIN"
+            "brand_name": "CALVIN KLEIN",
+            "link": ""
           }
         },
         "brand-5": {
           "type": "brand",
           "settings": {
-            "brand_name": "Christian Dior"
+            "brand_name": "Christian Dior",
+            "link": ""
           }
         },
         "brand-6": {
           "type": "brand",
           "settings": {
-            "brand_name": "GIORGIO ARMANI"
+            "brand_name": "GIORGIO ARMANI",
+            "link": ""
           }
         },
         "brand-7": {
           "type": "brand",
           "settings": {
-            "brand_name": "TOM FORD"
+            "brand_name": "TOM FORD",
+            "link": ""
           }
         },
         "brand-8": {
           "type": "brand",
           "settings": {
-            "brand_name": "VERSACE"
+            "brand_name": "VERSACE",
+            "link": ""
           }
         },
         "brand-9": {
           "type": "brand",
           "settings": {
-            "brand_name": "Yves Saint Laurent"
+            "brand_name": "Yves Saint Laurent",
+            "link": ""
           }
         }
       },
@@ -125,6 +134,7 @@
       "settings": {
         "heading": "THE MOST POPULAR",
         "subheading": "Moisturising beautifully glowing and clean skin all year round",
+        "collection": "cologne",
         "products_limit": 8,
         "show_filters": true,
         "show_view_all": true
@@ -137,21 +147,24 @@
           "type": "banner",
           "settings": {
             "subheading": "unique niche perfumes collection",
-            "heading": "SAP PERFUMES"
+            "heading": "SAP PERFUMES",
+            "link": ""
           }
         },
         "banner-2": {
           "type": "banner",
           "settings": {
             "subheading": "Scent of the Season",
-            "heading": "LEGENDS IN LUXURY"
+            "heading": "LEGENDS IN LUXURY",
+            "link": ""
           }
         },
         "banner-3": {
           "type": "banner",
           "settings": {
             "subheading": "New Fragrance",
-            "heading": "MISS DIOR"
+            "heading": "MISS DIOR",
+            "link": ""
           }
         }
       },
