@@ -20,10 +20,30 @@
             "button_label": "SHOP NOW",
             "button_link": ""
           }
+        },
+        "slide-2": {
+          "type": "slide",
+          "settings": {
+            "subheading": "EXCLUSIVE COLLECTION",
+            "heading": "DISCOVER LUXURY FRAGRANCES",
+            "button_label": "EXPLORE NOW",
+            "button_link": ""
+          }
+        },
+        "slide-3": {
+          "type": "slide",
+          "settings": {
+            "subheading": "SIGNATURE SCENTS",
+            "heading": "FIND YOUR PERFECT MATCH",
+            "button_label": "VIEW COLLECTION",
+            "button_link": ""
+          }
         }
       },
       "block_order": [
-        "slide-1"
+        "slide-1",
+        "slide-2",
+        "slide-3"
       ],
       "settings": {}
     },

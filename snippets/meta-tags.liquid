@@ -1,6 +1,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#4a1c40">
 
 {%- liquid
   assign og_title = page_title | default: shop.name
@@ -103,3 +104,23 @@
     content="{{ page_description | escape }}"
   >
 {% endif %}
+
+{%- comment -%} Additional SEO meta tags {%- endcomment -%}
+<meta name="author" content="{{ shop.name }}">
+<meta name="robots" content="index,follow">
+
+{%- if request.page_type == 'product' -%}
+  <meta property="product:brand" content="{{ product.vendor }}">
+  <meta property="product:availability" content="{% if product.available %}in stock{% else %}out of stock{% endif %}">
+  <meta property="product:condition" content="new">
+  <meta property="product:price:amount" content="{{ product.price | money_without_currency }}">
+  <meta property="product:price:currency" content="{{ cart.currency.iso_code }}">
+
+  {%- if product.featured_image -%}
+    <meta property="og:image:alt" content="{{ product.featured_image.alt | escape }}">
+  {%- endif -%}
+{%- endif -%}
+
+{%- if request.page_type == 'collection' -%}
+  <meta property="og:type" content="product.group">
+{%- endif -%}
