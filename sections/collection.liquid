@@ -292,6 +292,187 @@
   }
 {% endstylesheet %}
 
+{% javascript %}
+  class CollectionPage {
+    constructor() {
+      this.filterToggle = document.getElementById('filterToggle');
+      this.filterSidebar = document.getElementById('filterSidebar');
+      this.filterClose = document.getElementById('filterClose');
+      this.sortSelect = document.getElementById('sortBy');
+      this.clearFiltersBtn = document.getElementById('clearFilters');
+      this.priceFromInput = document.getElementById('priceFrom');
+      this.priceToInput = document.getElementById('priceTo');
+      this.applyPriceBtn = document.getElementById('applyPriceFilter');
+      this.filterCheckboxes = document.querySelectorAll('.filter-checkbox__input');
+      this.productCards = document.querySelectorAll('.product-card');
+      this.addToCartBtns = document.querySelectorAll('.product-card__button');
+
+      this.init();
+    }
+
+    init() {
+      if (this.filterToggle) {
+        this.filterToggle.addEventListener('click', () => this.toggleSidebar());
+      }
+
+      if (this.filterClose) {
+        this.filterClose.addEventListener('click', () => this.toggleSidebar());
+      }
+
+      if (this.sortSelect) {
+        this.sortSelect.addEventListener('change', (e) => this.handleSort(e.target.value));
+      }
+
+      if (this.clearFiltersBtn) {
+        this.clearFiltersBtn.addEventListener('click', () => this.clearFilters());
+      }
+
+      if (this.applyPriceBtn) {
+        this.applyPriceBtn.addEventListener('click', () => this.applyFilters());
+      }
+
+      this.filterCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', () => this.applyFilters());
+      });
+
+      this.addToCartBtns.forEach(btn => {
+        if (!btn.disabled) {
+          btn.addEventListener('click', (e) => this.addToCart(e));
+        }
+      });
+
+      // Close sidebar when clicking outside
+      document.addEventListener('click', (e) => {
+        if (window.innerWidth <= 1024 &&
+            this.filterSidebar.classList.contains('active') &&
+            !this.filterSidebar.contains(e.target) &&
+            !this.filterToggle.contains(e.target)) {
+          this.toggleSidebar();
+        }
+      });
+
+      // Get sort param from URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const sortValue = urlParams.get('sort_by');
+      if (sortValue && this.sortSelect) {
+        this.sortSelect.value = sortValue;
+      }
+    }
+
+    toggleSidebar() {
+      this.filterSidebar.classList.toggle('active');
+    }
+
+    handleSort(sortValue) {
+      const url = new URL(window.location.href);
+      url.searchParams.set('sort_by', sortValue);
+      window.location.href = url.toString();
+    }
+
+    applyFilters() {
+      const priceFrom = parseFloat(this.priceFromInput.value) || 0;
+      const priceTo = parseFloat(this.priceToInput.value) || Infinity;
+
+      const selectedVendors = Array.from(document.querySelectorAll('.filter-checkbox__input[data-filter-type="vendor"]:checked'))
+        .map(cb => cb.value);
+      const selectedTypes = Array.from(document.querySelectorAll('.filter-checkbox__input[data-filter-type="type"]:checked'))
+        .map(cb => cb.value);
+      const selectedAvailability = Array.from(document.querySelectorAll('.filter-checkbox__input[data-filter-type="availability"]:checked'))
+        .map(cb => cb.value);
+
+      this.productCards.forEach(card => {
+        const price = parseFloat(card.dataset.price) / 100; // Price is in cents
+        const vendor = card.dataset.vendor;
+        const type = card.dataset.type;
+        const available = card.dataset.available === 'true';
+
+        let show = true;
+
+        // Price filter
+        if (price < priceFrom || price > priceTo) {
+          show = false;
+        }
+
+        // Vendor filter
+        if (selectedVendors.length > 0 && !selectedVendors.includes(vendor)) {
+          show = false;
+        }
+
+        // Type filter
+        if (selectedTypes.length > 0 && !selectedTypes.includes(type)) {
+          show = false;
+        }
+
+        // Availability filter
+        if (selectedAvailability.length > 0) {
+          const inStockSelected = selectedAvailability.includes('in-stock');
+          const outOfStockSelected = selectedAvailability.includes('out-of-stock');
+
+          if (inStockSelected && !outOfStockSelected && !available) {
+            show = false;
+          } else if (outOfStockSelected && !inStockSelected && available) {
+            show = false;
+          }
+        }
+
+        card.style.display = show ? 'flex' : 'none';
+      });
+    }
+
+    clearFilters() {
+      this.priceFromInput.value = '';
+      this.priceToInput.value = '';
+      this.filterCheckboxes.forEach(cb => cb.checked = false);
+      this.productCards.forEach(card => card.style.display = 'flex');
+    }
+
+    async addToCart(e) {
+      const btn = e.currentTarget;
+      const productId = btn.dataset.productId;
+
+      if (!productId) return;
+
+      const originalHTML = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = 'Adding...';
+
+      try {
+        const response = await fetch('/cart/add.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            id: productId,
+            quantity: 1
+          })
+        });
+
+        if (response.ok) {
+          btn.innerHTML = 'Added!';
+          setTimeout(() => {
+            btn.innerHTML = originalHTML;
+            btn.disabled = false;
+          }, 2000);
+
+          document.dispatchEvent(new CustomEvent('cart:updated'));
+        }
+      } catch (error) {
+        console.error('Error adding to cart:', error);
+        btn.innerHTML = 'Error';
+        setTimeout(() => {
+          btn.innerHTML = originalHTML;
+          btn.disabled = false;
+        }, 2000);
+      }
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    new CollectionPage();
+  });
+{% endjavascript %}
+
 {% schema %}
 {
   "name": "t:general.collection",
