@@ -15,6 +15,7 @@
         "slide-1": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/main-banner_2_d228cf01-ecce-4b65-ab01-56ecfd689ebc.jpg",
             "subheading": "THE NEW FRAGRANCE FOR MEN",
             "heading": "BOSS HUGO BOSS BOTTLED",
             "button_label": "SHOP NOW",
@@ -24,6 +25,7 @@
         "slide-2": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/main-banner_4_f6b62afd-a088-4a2c-a1d5-13fc4755fda2.jpg",
             "subheading": "EXCLUSIVE COLLECTION",
             "heading": "DISCOVER LUXURY FRAGRANCES",
             "button_label": "EXPLORE NOW",
@@ -33,9 +35,10 @@
         "slide-3": {
           "type": "slide",
           "settings": {
-            "subheading": "SIGNATURE SCENTS",
-            "heading": "FIND YOUR PERFECT MATCH",
-            "button_label": "VIEW COLLECTION",
+            "image": "shopify://shop_images/main-banner_3_3fd06544-ccae-4eae-a293-165eb6554c0c.jpg",
+            "subheading": "",
+            "heading": "",
+            "button_label": "",
             "button_link": ""
           }
         }
