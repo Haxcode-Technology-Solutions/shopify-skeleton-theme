@@ -1,47 +1,21 @@
 <header class="site-header">
   <div class="header__container">
     <div class="header__top">
-      <div class="header__contact">
-        {% if section.settings.show_contact_info %}
-          <span class="header__email">
-            <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor">
-              <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
-              <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
-            </svg>
-            {{ section.settings.email | default: 'contact@theperfumes.com' }}
-          </span>
-          <span class="header__phone">
-            <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor">
-              <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
-            </svg>
-            {{ section.settings.phone | default: '(888) 647-1234' }}
-          </span>
-        {% endif %}
-      </div>
-      <div class="header__icons">
-        <a href="{{ routes.search_url }}" class="header__icon" aria-label="Search">
-          <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor">
-            <path d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14z" stroke-width="2"/>
-            <path d="M13 13l6 6" stroke-width="2" stroke-linecap="round"/>
+      {% if section.settings.show_contact_info %}
+        <span class="header__email">
+          <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
           </svg>
-        </a>
-        {% if shop.customer_accounts_enabled %}
-          <a href="{{ routes.account_url }}" class="header__icon" aria-label="Account">
-            {{ 'icon-account.svg' | inline_asset_content }}
-          </a>
-        {% endif %}
-        <a href="#" class="header__icon" aria-label="Wishlist">
-          <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor">
-            <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" stroke-width="2"/>
+          {{ section.settings.email | default: 'contact@theperfumes.com' }}
+        </span>
+        <span class="header__phone">
+          <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
           </svg>
-        </a>
-        <a href="{{ routes.cart_url }}" class="header__icon header__cart" aria-label="Cart">
-          {% if cart.item_count > 0 %}
-            <span class="cart__count">{{ cart.item_count }}</span>
-          {% endif %}
-          {{ 'icon-cart.svg' | inline_asset_content }}
-        </a>
-      </div>
+          {{ section.settings.phone | default: '(888) 647-1234' }}
+        </span>
+      {% endif %}
     </div>
 
     <div class="header__main">
@@ -82,61 +56,31 @@
           </button>
         </form>
       </div>
-    </div>
 
-    <div class="header__features">
-      <div class="header__features-container">
-        <div class="header__feature">
-          <div class="header__feature-icon">
-            <svg width="30" height="30" viewBox="0 0 40 40" fill="none">
-              <circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="2"/>
-              <path d="M15 20l5 5 10-10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <div class="header__actions">
+        {% if shop.customer_accounts_enabled %}
+          <a href="{{ routes.account_url }}" class="header__action-icon" aria-label="Account">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="12" cy="7" r="4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-          </div>
-          <div class="header__feature-text">
-            <strong>900+ BRANDS</strong>
-            <p>All types of Products</p>
-          </div>
-        </div>
-
-        <div class="header__feature">
-          <div class="header__feature-icon">
-            <svg width="30" height="30" viewBox="0 0 40 40" fill="none">
-              <path d="M5 20h30M20 5v30" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-              <circle cx="20" cy="20" r="15" stroke="currentColor" stroke-width="2"/>
-            </svg>
-          </div>
-          <div class="header__feature-text">
-            <strong>USA & CANADA SHIPPING</strong>
-            <p>Next Day & Priority plus Fast Shipping</p>
-          </div>
-        </div>
-
-        <div class="header__feature">
-          <div class="header__feature-icon">
-            <svg width="30" height="30" viewBox="0 0 40 40" fill="none">
-              <circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="2"/>
-              <path d="M20 10v10l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <div class="header__feature-text">
-            <strong>CUSTOMER SERVICE</strong>
-            <p>Call , Text, Toll Free & Help Center</p>
-          </div>
-        </div>
-
-        <div class="header__feature">
-          <div class="header__feature-icon">
-            <svg width="30" height="30" viewBox="0 0 40 40" fill="none">
-              <rect x="5" y="10" width="30" height="20" rx="2" stroke="currentColor" stroke-width="2"/>
-              <path d="M5 15h30" stroke="currentColor" stroke-width="2"/>
-            </svg>
-          </div>
-          <div class="header__feature-text">
-            <strong>100% SECURED PAYMENT</strong>
-            <p>We never use your card details</p>
-          </div>
-        </div>
+          </a>
+        {% endif %}
+        <a href="#" class="header__action-icon" aria-label="Wishlist">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a href="{{ routes.cart_url }}" class="header__action-icon header__action-cart" aria-label="Cart">
+          {% if cart.item_count > 0 %}
+            <span class="cart__badge">{{ cart.item_count }}</span>
+          {% endif %}
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <circle cx="9" cy="21" r="1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="20" cy="21" r="1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
       </div>
     </div>
   </div>
@@ -157,62 +101,20 @@
   }
   .header__top {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    gap: 1.5rem;
     padding: 10px var(--page-margin, 20px);
     background: #4a1c40;
     color: #fff;
     font-size: 0.85rem;
     width: 100%;
   }
-  .header__contact {
-    display: flex;
-    gap: 1.5rem;
-    align-items: center;
-  }
   .header__email,
   .header__phone {
     display: flex;
     align-items: center;
     gap: 0.4rem;
-  }
-  .header__icons {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-  }
-  .header__icon {
-    position: relative;
-    color: inherit;
-    text-decoration: none;
-    cursor: pointer;
-    transition: color 0.2s;
-  }
-  .header__icon:hover {
-    color: #999;
-  }
-  .header__icon svg {
-    width: 20px;
-    height: 20px;
-    display: block;
-  }
-  .header__cart {
-    position: relative;
-  }
-  .cart__count {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    background: #ff0000;
-    color: #fff;
-    border-radius: 50%;
-    width: 18px;
-    height: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
-    font-weight: bold;
   }
   .header__main {
     display: flex;
@@ -299,42 +201,47 @@
   .header__search button:hover {
     background: #3a1530;
   }
-  .header__features {
-    background: #f8f8f8;
-    border-top: 1px solid #e0e0e0;
-    padding: 1rem 0;
+  .header__actions {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    flex-shrink: 0;
   }
-  .header__features-container {
-    max-width: var(--page-width, 1400px);
-    margin: 0 auto;
-    padding: 0 var(--page-margin, 20px);
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
-  }
-  .header__feature {
+  .header__action-icon {
+    position: relative;
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.3s;
     display: flex;
     align-items: center;
-    gap: 0.8rem;
+    justify-content: center;
   }
-  .header__feature-icon {
-    flex-shrink: 0;
+  .header__action-icon:hover {
     color: #4a1c40;
   }
-  .header__feature-text {
-    font-size: 0.75rem;
-    line-height: 1.4;
-  }
-  .header__feature-text strong {
+  .header__action-icon svg {
+    width: 24px;
+    height: 24px;
     display: block;
-    margin-bottom: 0.2rem;
-    font-size: 0.8rem;
-    color: #333;
   }
-  .header__feature-text p {
-    margin: 0;
-    color: #666;
-    font-size: 0.7rem;
+  .header__action-cart {
+    position: relative;
+  }
+  .cart__badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #ff0000;
+    color: #fff;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: bold;
   }
 
   @media (max-width: 1024px) {
@@ -344,30 +251,27 @@
     .nav__link {
       font-size: 0.85rem;
     }
-    .header__features-container {
-      grid-template-columns: repeat(2, 1fr);
+    .header__actions {
       gap: 1rem;
-    }
-    .header__feature-text {
-      font-size: 0.7rem;
-    }
-    .header__feature-text strong {
-      font-size: 0.75rem;
-    }
-    .header__feature-text p {
-      font-size: 0.65rem;
     }
   }
 
   @media (max-width: 768px) {
     .header__top {
-      flex-direction: column;
-      gap: 0.5rem;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      justify-content: center;
       text-align: center;
+      font-size: 0.75rem;
     }
     .header__main {
       flex-wrap: wrap;
       gap: 1rem;
+    }
+    .header__logo {
+      order: 1;
+      width: 100%;
+      text-align: center;
     }
     .header__nav {
       order: 3;
@@ -378,18 +282,16 @@
     }
     .header__search {
       order: 2;
-      width: 100%;
+      flex: 1;
+      min-width: 200px;
     }
-    .header__features-container {
-      grid-template-columns: 1fr;
-      gap: 0.8rem;
+    .header__actions {
+      order: 2;
+      gap: 1.2rem;
     }
-    .header__feature {
-      gap: 0.6rem;
-    }
-    .header__feature-icon svg {
-      width: 25px;
-      height: 25px;
+    .header__action-icon svg {
+      width: 22px;
+      height: 22px;
     }
   }
 {% endstylesheet %}
