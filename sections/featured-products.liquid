@@ -10,9 +10,14 @@
     {% if section.settings.show_filters %}
       <div class="featured-products__filters">
         <button class="filter-btn filter-btn--active" data-filter="all">All</button>
-        <button class="filter-btn" data-filter="fragrance">Fragrance</button>
-        <button class="filter-btn" data-filter="body-care">Body Care</button>
-        <button class="filter-btn" data-filter="skin-care">Skin Care</button>
+        {% for block in section.blocks %}
+          {% case block.type %}
+            {% when 'filter' %}
+              <button class="filter-btn" data-filter="{{ block.settings.filter_value | handleize }}" {{ block.shopify_attributes }}>
+                {{ block.settings.filter_label }}
+              </button>
+          {% endcase %}
+        {% endfor %}
       </div>
     {% endif %}
 
@@ -418,9 +423,54 @@
       "default": true
     }
   ],
+  "blocks": [
+    {
+      "type": "filter",
+      "name": "Category Filter",
+      "settings": [
+        {
+          "type": "text",
+          "id": "filter_label",
+          "label": "Filter label",
+          "default": "Category Name",
+          "info": "This is the text displayed on the filter button"
+        },
+        {
+          "type": "text",
+          "id": "filter_value",
+          "label": "Filter value",
+          "default": "category-name",
+          "info": "This should match the product tag you want to filter by (e.g., 'fragrance', 'body-care', 'skin-care')"
+        }
+      ]
+    }
+  ],
   "presets": [
     {
-      "name": "Featured Products"
+      "name": "Featured Products",
+      "blocks": [
+        {
+          "type": "filter",
+          "settings": {
+            "filter_label": "Fragrance",
+            "filter_value": "fragrance"
+          }
+        },
+        {
+          "type": "filter",
+          "settings": {
+            "filter_label": "Body Care",
+            "filter_value": "body-care"
+          }
+        },
+        {
+          "type": "filter",
+          "settings": {
+            "filter_label": "Skin Care",
+            "filter_value": "skin-care"
+          }
+        }
+      ]
     }
   ]
 }
