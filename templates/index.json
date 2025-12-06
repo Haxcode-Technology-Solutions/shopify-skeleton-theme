@@ -134,6 +134,18 @@
     },
     "featured-products": {
       "type": "featured-products",
+      "blocks": {
+        "filter_m7MLc6": {
+          "type": "filter",
+          "settings": {
+            "filter_label": "{{ section.settings.collection.title }}",
+            "filter_value": "{{ section.settings.collection.title }}"
+          }
+        }
+      },
+      "block_order": [
+        "filter_m7MLc6"
+      ],
       "settings": {
         "heading": "THE MOST POPULAR",
         "subheading": "Moisturising beautifully glowing and clean skin all year round",
