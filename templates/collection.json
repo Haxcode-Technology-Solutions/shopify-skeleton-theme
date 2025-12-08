@@ -9,12 +9,50 @@
  */
 {
   "sections": {
+    "1765166396d2e1f633": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_d53e9c7_GWQ8ey": {
+          "type": "ai_gen_block_d53e9c7",
+          "settings": {
+            "title": "Filters",
+            "show_price_filter": true,
+            "show_brand_filter": true,
+            "show_type_filter": true,
+            "show_availability_filter": true,
+            "show_tag_filter": true,
+            "background_color": "#FFFFFF",
+            "text_color": "#333333",
+            "accent_color": "#000f9f",
+            "border_color": "#e0e0e0",
+            "divider_color": "#f0f0f0",
+            "count_color": "#999999",
+            "tag_background": "#f4f4f4",
+            "button_color": "#000f9f",
+            "button_text_color": "#ffffff",
+            "button_hover_color": "#000000",
+            "button_border_radius": 4,
+            "input_border_color": "#cccccc",
+            "input_border_radius": 4,
+            "padding": 24,
+            "border_radius": 8,
+            "title_size": 20
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_d53e9c7_GWQ8ey"
+      ],
+      "settings": {}
+    },
     "main": {
       "type": "collection",
       "settings": {}
     }
   },
   "order": [
+    "1765166396d2e1f633",
     "main"
   ]
 }
