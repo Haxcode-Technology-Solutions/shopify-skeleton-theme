@@ -16,55 +16,30 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/main-banner_2_d228cf01-ecce-4b65-ab01-56ecfd689ebc.jpg",
-            "mobile_image": "shopify://shop_images/category-perfume_makeup.png",
-            "placeholder_gradient": "",
-            "show_overlay": false,
             "subheading": "",
             "heading": "",
             "button_label": "",
-            "button_link": "",
-            "text_alignment": "left",
-            "content_position": "center",
-            "overlay_color": "",
-            "text_color": "#ffffff",
-            "button_bg_color": "#ffffff",
-            "button_text_color": "#000000"
+            "button_link": ""
           }
         },
         "slide-2": {
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/main-banner_4_f6b62afd-a088-4a2c-a1d5-13fc4755fda2.jpg",
-            "placeholder_gradient": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-            "show_overlay": true,
             "subheading": "",
             "heading": "",
             "button_label": "",
-            "button_link": "",
-            "text_alignment": "left",
-            "content_position": "center",
-            "overlay_color": "linear-gradient(90deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.1) 100%)",
-            "text_color": "#ffffff",
-            "button_bg_color": "#ffffff",
-            "button_text_color": "#000000"
+            "button_link": ""
           }
         },
         "slide-3": {
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/main-banner_3_3fd06544-ccae-4eae-a293-165eb6554c0c.jpg",
-            "placeholder_gradient": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-            "show_overlay": true,
             "subheading": "",
             "heading": "",
             "button_label": "",
-            "button_link": "",
-            "text_alignment": "left",
-            "content_position": "center",
-            "overlay_color": "linear-gradient(90deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.1) 100%)",
-            "text_color": "#ffffff",
-            "button_bg_color": "#ffffff",
-            "button_text_color": "#000000"
+            "button_link": ""
           }
         }
       },
@@ -73,17 +48,7 @@
         "slide-2",
         "slide-3"
       ],
-      "settings": {
-        "slider_height_mobile": 400,
-        "slider_height_tablet": 500,
-        "slider_height_desktop": 600,
-        "background_color": "#f5f5f5",
-        "show_arrows": true,
-        "arrow_color": "#ffffff",
-        "show_dots": true,
-        "dot_color": "#ffffff",
-        "autoplay_delay": 5
-      }
+      "settings": {}
     },
     "brand-carousel": {
       "type": "brand-carousel",
