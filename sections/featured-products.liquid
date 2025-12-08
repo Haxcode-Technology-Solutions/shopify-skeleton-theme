@@ -26,7 +26,7 @@
       {% if collection != blank %}
         {% for product in collection.products limit: section.settings.products_limit %}
           <div class="product-card" data-category="{{ product.tags | first | handleize }}">
-            <div class="product-card__image">
+            <div class="product-card__image-wrapper">
               <a href="{{ product.url }}">
                 {% if product.featured_image %}
                   {{ product.featured_image | image_url: width: 400 | image_tag: alt: product.title, loading: 'lazy' }}
@@ -62,7 +62,7 @@
         {%comment%} Show placeholder products if no collection is selected {%endcomment%}
         {% for i in (1..8) %}
           <div class="product-card">
-            <div class="product-card__image">
+            <div class="product-card__image-wrapper">
               <div class="product-card__placeholder"></div>
             </div>
             <div class="product-card__content">
@@ -167,6 +167,7 @@
     padding: 5%;
     overflow: hidden;
     background: #f5f5f5;
+ 
   }
     .featured-products .product-card__image img {
     position: absolute;
