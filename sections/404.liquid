@@ -5,19 +5,469 @@
   https://shopify.dev/docs/storefronts/themes/architecture/templates/404
 {% endcomment %}
 
-<h1>{{ '404.title' | t }}</h1>
+<div class="error-404">
+  <div class="error-404__container">
+    <div class="error-404__content">
+      {% if section.settings.show_error_code %}
+        <h1 class="error-404__code">{{ section.settings.error_code | default: "404" }}</h1>
+      {% endif %}
 
-<p>
-  {{ '404.not_found' | t }}
-</p>
+      <h2 class="error-404__title">{{ section.settings.page_title | default: "Oops! Page Not Found" }}</h2>
 
-<a href="{{ routes.all_products_collection_url }}">
-  {{ '404.back_to_shopping' | t }}
-</a>
+      {% if section.settings.page_message != blank %}
+        <p class="error-404__message">{{ section.settings.page_message }}</p>
+      {% endif %}
+
+      {% if section.settings.show_search %}
+        <div class="error-404__search">
+          <form action="{{ routes.search_url }}" method="get" role="search">
+            <input
+              type="search"
+              name="q"
+              placeholder="{{ section.settings.search_placeholder | default: 'Search our store...' }}"
+              aria-label="Search"
+            >
+            <button type="submit">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor">
+                <path d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14z" stroke-width="2"/>
+                <path d="M13 13l6 6" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              Search
+            </button>
+          </form>
+        </div>
+      {% endif %}
+
+      <div class="error-404__actions">
+        <a href="{{ routes.root_url }}" class="error-404__button error-404__button--primary">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor">
+            <path d="M3 10h14M10 3l7 7-7 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          {{ section.settings.home_button_text | default: "Back to Home" }}
+        </a>
+
+        {% if section.settings.show_collections_button %}
+          <a href="{{ routes.collections_url }}" class="error-404__button error-404__button--secondary">
+            {{ section.settings.collections_button_text | default: "Browse Collections" }}
+          </a>
+        {% endif %}
+      </div>
+
+      {% if section.blocks.size > 0 %}
+        <div class="error-404__links">
+          <h3>{{ section.settings.links_heading | default: "Popular Pages" }}</h3>
+          <div class="error-404__links-grid">
+            {% for block in section.blocks %}
+              {% case block.type %}
+                {% when 'link' %}
+                  <a href="{{ block.settings.link_url }}" class="error-404__link" {{ block.shopify_attributes }}>
+                    {% if block.settings.link_icon != blank %}
+                      <span class="error-404__link-icon">{{ block.settings.link_icon }}</span>
+                    {% endif %}
+                    <span class="error-404__link-text">{{ block.settings.link_label }}</span>
+                  </a>
+              {% endcase %}
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+
+    {% if section.settings.show_image and section.settings.image != blank %}
+      <div class="error-404__image">
+        {{ section.settings.image | image_url: width: 600 | image_tag: alt: '404 Error', loading: 'lazy' }}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% stylesheet %}
+  .error-404 {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    padding: 4rem 0;
+  }
+  .error-404__container {
+    max-width: var(--page-width, 1400px);
+    margin: 0 auto;
+    padding: 0 var(--page-margin, 20px);
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+  .error-404__content {
+    text-align: center;
+    color: #fff;
+  }
+  .error-404__code {
+    font-size: 8rem;
+    font-weight: 900;
+    margin: 0 0 1rem;
+    color: rgba(255, 255, 255, 0.3);
+    line-height: 1;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  }
+  .error-404__title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0 0 1.5rem;
+    color: #fff;
+  }
+  .error-404__message {
+    font-size: 1.2rem;
+    margin: 0 0 2.5rem;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+  }
+  .error-404__search {
+    max-width: 500px;
+    margin: 0 auto 2.5rem;
+  }
+  .error-404__search form {
+    display: flex;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 0.5rem;
+    border-radius: 50px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  }
+  .error-404__search input {
+    flex: 1;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    background: transparent;
+    font-size: 1rem;
+    outline: none;
+    color: #333;
+  }
+  .error-404__search input::placeholder {
+    color: #999;
+  }
+  .error-404__search button {
+    padding: 0.8rem 1.5rem;
+    background: #4a1c40;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s;
+  }
+  .error-404__search button:hover {
+    background: #3a1530;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  .error-404__actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+  }
+  .error-404__button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 50px;
+    transition: all 0.3s;
+    border: 2px solid transparent;
+  }
+  .error-404__button--primary {
+    background: #fff;
+    color: #4a1c40;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  }
+  .error-404__button--primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.25);
+  }
+  .error-404__button--secondary {
+    background: transparent;
+    color: #fff;
+    border-color: #fff;
+  }
+  .error-404__button--secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-3px);
+  }
+  .error-404__links {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 2.5rem;
+    border-radius: 12px;
+    margin-top: 2rem;
+  }
+  .error-404__links h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0 0 1.5rem;
+    color: #fff;
+  }
+  .error-404__links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+  .error-404__link {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1rem 1.5rem;
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  .error-404__link:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateX(5px);
+  }
+  .error-404__link-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+  .error-404__link-text {
+    font-size: 1rem;
+    font-weight: 500;
+  }
+  .error-404__image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .error-404__image img {
+    max-width: 100%;
+    height: auto;
+    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+  }
+
+  @media (min-width: 1024px) {
+    .error-404__container {
+      grid-template-columns: 1fr 1fr;
+    }
+    .error-404__content {
+      text-align: left;
+    }
+    .error-404__search,
+    .error-404__message {
+      margin-left: 0;
+      margin-right: 0;
+    }
+    .error-404__actions {
+      justify-content: flex-start;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .error-404 {
+      padding: 3rem 0;
+    }
+    .error-404__code {
+      font-size: 5rem;
+    }
+    .error-404__title {
+      font-size: 2rem;
+    }
+    .error-404__message {
+      font-size: 1rem;
+    }
+    .error-404__actions {
+      flex-direction: column;
+      width: 100%;
+    }
+    .error-404__button {
+      width: 100%;
+      justify-content: center;
+    }
+    .error-404__links {
+      padding: 1.5rem;
+    }
+    .error-404__links-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+{% endstylesheet %}
 
 {% schema %}
 {
   "name": "t:general.404",
-  "settings": []
+  "tag": "section",
+  "class": "error-404-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Page Content"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_error_code",
+      "label": "Show 404 error code",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "error_code",
+      "label": "Error code",
+      "default": "404"
+    },
+    {
+      "type": "text",
+      "id": "page_title",
+      "label": "Page title",
+      "default": "Oops! Page Not Found"
+    },
+    {
+      "type": "textarea",
+      "id": "page_message",
+      "label": "Message",
+      "default": "The page you're looking for seems to have vanished into thin air. But don't worry, we'll help you find your way back."
+    },
+    {
+      "type": "header",
+      "content": "Search"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "label": "Show search bar",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "search_placeholder",
+      "label": "Search placeholder text",
+      "default": "Search our store..."
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "text",
+      "id": "home_button_text",
+      "label": "Home button text",
+      "default": "Back to Home"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collections_button",
+      "label": "Show collections button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "collections_button_text",
+      "label": "Collections button text",
+      "default": "Browse Collections"
+    },
+    {
+      "type": "header",
+      "content": "Popular Links"
+    },
+    {
+      "type": "text",
+      "id": "links_heading",
+      "label": "Links section heading",
+      "default": "Popular Pages"
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "label": "Show decorative image",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "link",
+      "name": "Quick Link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "link_icon",
+          "label": "Icon (emoji or symbol)",
+          "default": "🏠",
+          "info": "Add an emoji or symbol to display before the link text"
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Link label",
+          "default": "Shop All"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Link URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "404 Error Page",
+      "blocks": [
+        {
+          "type": "link",
+          "settings": {
+            "link_icon": "🛍️",
+            "link_label": "Shop All Products",
+            "link_url": "/collections/all"
+          }
+        },
+        {
+          "type": "link",
+          "settings": {
+            "link_icon": "💐",
+            "link_label": "Fragrances",
+            "link_url": "/collections/fragrances"
+          }
+        },
+        {
+          "type": "link",
+          "settings": {
+            "link_icon": "✨",
+            "link_label": "Best Sellers",
+            "link_url": "/collections/best-sellers"
+          }
+        },
+        {
+          "type": "link",
+          "settings": {
+            "link_icon": "📞",
+            "link_label": "Contact Us",
+            "link_url": "/pages/contact"
+          }
+        }
+      ]
+    }
+  ]
 }
 {% endschema %}
