@@ -1,0 +1,409 @@
+<div class="page-content">
+  <div class="page-content__container">
+    {% if section.settings.show_breadcrumbs %}
+      <nav class="breadcrumbs">
+        <a href="{{ routes.root_url }}">Home</a>
+        <span class="breadcrumb-divider">/</span>
+        <span>{{ section.settings.page_title }}</span>
+      </nav>
+    {% endif %}
+
+    <header class="page-header">
+      <h1 class="page-title">{{ section.settings.page_title | default: "Return & Refund Policy" }}</h1>
+      {% if section.settings.page_subtitle != blank %}
+        <p class="page-subtitle">{{ section.settings.page_subtitle }}</p>
+      {% endif %}
+      {% if section.settings.last_updated != blank %}
+        <p class="page-meta">Last Updated: {{ section.settings.last_updated }}</p>
+      {% endif %}
+    </header>
+
+    <div class="page-content__body">
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'text_section' %}
+            <div class="content-section" {{ block.shopify_attributes }}>
+              {% if block.settings.section_heading != blank %}
+                <h2 class="section-heading">{{ block.settings.section_heading }}</h2>
+              {% endif %}
+              {% if block.settings.section_content != blank %}
+                <div class="section-content">
+                  {{ block.settings.section_content }}
+                </div>
+              {% endif %}
+            </div>
+          {% when 'bullet_list' %}
+            <div class="content-section" {{ block.shopify_attributes }}>
+              {% if block.settings.list_heading != blank %}
+                <h2 class="section-heading">{{ block.settings.list_heading }}</h2>
+              {% endif %}
+              {% if block.settings.list_items != blank %}
+                <ul class="content-list">
+                  {% assign items = block.settings.list_items | split: '|' %}
+                  {% for item in items %}
+                    <li>{{ item }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </div>
+          {% when 'highlight_box' %}
+            <div class="highlight-box" {{ block.shopify_attributes }}>
+              {% if block.settings.box_icon != blank %}
+                <div class="highlight-box__icon">{{ block.settings.box_icon }}</div>
+              {% endif %}
+              {% if block.settings.box_heading != blank %}
+                <h3 class="highlight-box__heading">{{ block.settings.box_heading }}</h3>
+              {% endif %}
+              {% if block.settings.box_content != blank %}
+                <div class="highlight-box__content">{{ block.settings.box_content }}</div>
+              {% endif %}
+            </div>
+        {% endcase %}
+      {% endfor %}
+    </div>
+
+    {% if section.settings.show_contact_footer %}
+      <div class="page-footer">
+        <h3>{{ section.settings.footer_heading | default: "Need Help with a Return?" }}</h3>
+        <p>{{ section.settings.footer_text | default: "Our customer service team is here to help you with returns and refunds." }}</p>
+        {% if section.settings.footer_button_text != blank %}
+          <a href="{% if section.settings.footer_button_link != blank %}{{ section.settings.footer_button_link }}{% else %}/pages/contact-us{% endif %}" class="page-footer__button">
+            {{ section.settings.footer_button_text }}
+          </a>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% stylesheet %}
+  .page-content {
+    padding: 3rem 0;
+    background: #fff;
+  }
+  .page-content__container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 var(--page-margin, 20px);
+  }
+  .breadcrumbs {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 2rem;
+  }
+  .breadcrumbs a {
+    color: #4a1c40;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .breadcrumbs a:hover {
+    color: #000;
+  }
+  .breadcrumb-divider {
+    margin: 0 0.5rem;
+    color: #999;
+  }
+  .page-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid #e0e0e0;
+  }
+  .page-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0 0 1rem;
+    color: #000;
+  }
+  .page-subtitle {
+    font-size: 1.1rem;
+    color: #666;
+    margin: 0 0 1rem;
+    line-height: 1.6;
+  }
+  .page-meta {
+    font-size: 0.9rem;
+    color: #999;
+    margin: 0;
+  }
+  .page-content__body {
+    margin-bottom: 3rem;
+  }
+  .content-section {
+    margin-bottom: 2.5rem;
+  }
+  .section-heading {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 1rem;
+    color: #333;
+  }
+  .section-content {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #555;
+  }
+  .section-content p {
+    margin: 0 0 1rem;
+  }
+  .section-content strong {
+    color: #000;
+    font-weight: 600;
+  }
+  .content-list {
+    list-style: disc;
+    padding-left: 2rem;
+    margin: 1rem 0;
+  }
+  .content-list li {
+    margin-bottom: 0.8rem;
+    line-height: 1.6;
+    color: #555;
+  }
+  .highlight-box {
+    background: #f8f3f0;
+    border-left: 4px solid #4a1c40;
+    padding: 2rem;
+    margin: 2rem 0;
+    border-radius: 4px;
+  }
+  .highlight-box__icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  .highlight-box__heading {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 0 0 1rem;
+    color: #4a1c40;
+  }
+  .highlight-box__content {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #555;
+  }
+  .page-footer {
+    background: #f8f8f8;
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+    margin-top: 3rem;
+  }
+  .page-footer h3 {
+    font-size: 1.5rem;
+    margin: 0 0 1rem;
+    color: #333;
+  }
+  .page-footer p {
+    font-size: 1rem;
+    color: #666;
+    margin: 0 0 1.5rem;
+  }
+  .page-footer__button {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    background: #4a1c40;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 4px;
+    transition: all 0.3s;
+  }
+  .page-footer__button:hover {
+    background: #3a1530;
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 768px) {
+    .page-title {
+      font-size: 2rem;
+    }
+    .section-heading {
+      font-size: 1.3rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Refund Policy Page",
+  "tag": "section",
+  "class": "refund-policy-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Page Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumbs",
+      "label": "Show breadcrumbs",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "page_title",
+      "label": "Page title",
+      "default": "Return & Refund Policy"
+    },
+    {
+      "type": "textarea",
+      "id": "page_subtitle",
+      "label": "Page subtitle",
+      "default": "We want you to be completely satisfied with your purchase. Please review our return and refund policy below."
+    },
+    {
+      "type": "text",
+      "id": "last_updated",
+      "label": "Last updated date",
+      "default": "January 15, 2025"
+    },
+    {
+      "type": "header",
+      "content": "Contact Footer"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_contact_footer",
+      "label": "Show contact footer",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "footer_heading",
+      "label": "Footer heading",
+      "default": "Need Help with a Return?"
+    },
+    {
+      "type": "textarea",
+      "id": "footer_text",
+      "label": "Footer text",
+      "default": "Our customer service team is here to help you with returns and refunds."
+    },
+    {
+      "type": "text",
+      "id": "footer_button_text",
+      "label": "Button text",
+      "default": "Contact Support"
+    },
+    {
+      "type": "url",
+      "id": "footer_button_link",
+      "label": "Button link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text_section",
+      "name": "Text Section",
+      "settings": [
+        {
+          "type": "text",
+          "id": "section_heading",
+          "label": "Section heading",
+          "default": "Return Policy"
+        },
+        {
+          "type": "richtext",
+          "id": "section_content",
+          "label": "Content",
+          "default": "<p>We accept returns within 30 days of delivery for most items. Products must be unused, in their original packaging, and in the same condition as received.</p>"
+        }
+      ]
+    },
+    {
+      "type": "bullet_list",
+      "name": "Bullet List",
+      "settings": [
+        {
+          "type": "text",
+          "id": "list_heading",
+          "label": "List heading",
+          "default": "Items That Cannot Be Returned:"
+        },
+        {
+          "type": "textarea",
+          "id": "list_items",
+          "label": "List items (separate with | )",
+          "default": "Opened or used fragrances for hygiene reasons|Items marked as final sale|Gift cards|Personalized or custom-made products",
+          "info": "Separate each item with a pipe character: |"
+        }
+      ]
+    },
+    {
+      "type": "highlight_box",
+      "name": "Highlight Box",
+      "settings": [
+        {
+          "type": "text",
+          "id": "box_icon",
+          "label": "Icon (emoji or text)",
+          "default": "⏱️"
+        },
+        {
+          "type": "text",
+          "id": "box_heading",
+          "label": "Box heading",
+          "default": "30-Day Return Window"
+        },
+        {
+          "type": "richtext",
+          "id": "box_content",
+          "label": "Box content",
+          "default": "<p>You have 30 days from the date of delivery to initiate a return. Please keep your order confirmation and tracking information.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Refund Policy Page",
+      "blocks": [
+        {
+          "type": "text_section",
+          "settings": {
+            "section_heading": "Return Policy",
+            "section_content": "<p>We accept returns within 30 days of delivery for most items. Products must be unused, in their original packaging, and in the same condition as received.</p><p>To initiate a return, please contact our customer service team with your order number.</p>"
+          }
+        },
+        {
+          "type": "highlight_box",
+          "settings": {
+            "box_icon": "⏱️",
+            "box_heading": "30-Day Return Window",
+            "box_content": "<p>You have 30 days from the date of delivery to initiate a return. Please keep your order confirmation and tracking information.</p>"
+          }
+        },
+        {
+          "type": "bullet_list",
+          "settings": {
+            "list_heading": "Items That Cannot Be Returned:",
+            "list_items": "Opened or used fragrances for hygiene reasons|Items marked as final sale|Gift cards|Personalized or custom-made products"
+          }
+        },
+        {
+          "type": "text_section",
+          "settings": {
+            "section_heading": "How to Return an Item",
+            "section_content": "<p><strong>Step 1:</strong> Contact our customer service team to request a return authorization.</p><p><strong>Step 2:</strong> Pack the item securely in its original packaging.</p><p><strong>Step 3:</strong> Ship the item back to the address provided by our team.</p><p><strong>Step 4:</strong> Once we receive and inspect your return, we'll process your refund within 5-7 business days.</p>"
+          }
+        },
+        {
+          "type": "text_section",
+          "settings": {
+            "section_heading": "Refund Processing",
+            "section_content": "<p>Refunds will be issued to your original payment method. Please allow 5-7 business days for the refund to appear in your account after we process it.</p><p>Shipping costs are non-refundable unless the return is due to our error.</p>"
+          }
+        },
+        {
+          "type": "text_section",
+          "settings": {
+            "section_heading": "Exchanges",
+            "section_content": "<p>We currently do not offer direct exchanges. If you'd like a different product, please return the original item for a refund and place a new order.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

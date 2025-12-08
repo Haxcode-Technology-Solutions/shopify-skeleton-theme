@@ -1,0 +1,453 @@
+<div class="faq-page">
+  <div class="faq-page__container">
+    <header class="faq-header">
+      <h1 class="faq-title">{{ section.settings.page_title | default: "Frequently Asked Questions" }}</h1>
+      {% if section.settings.page_subtitle != blank %}
+        <p class="faq-subtitle">{{ section.settings.page_subtitle }}</p>
+      {% endif %}
+    </header>
+
+    {% if section.settings.show_search %}
+      <div class="faq-search">
+        <input type="text" id="faq-search-input" placeholder="{{ section.settings.search_placeholder | default: 'Search for answers...' }}" aria-label="Search FAQs">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor">
+          <path d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14z" stroke-width="2"/>
+          <path d="M13 13l6 6" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+    {% endif %}
+
+    <div class="faq-content">
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'category' %}
+            <div class="faq-category" {{ block.shopify_attributes }}>
+              {% if block.settings.category_name != blank %}
+                <h2 class="faq-category__title">{{ block.settings.category_name }}</h2>
+              {% endif %}
+            </div>
+
+          {% when 'faq_item' %}
+            <div class="faq-item" data-faq-item {{ block.shopify_attributes }}>
+              <button class="faq-question" data-faq-toggle>
+                <span>{{ block.settings.question }}</span>
+                <svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor">
+                  <path d="M5 7.5l5 5 5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <div class="faq-answer" data-faq-answer>
+                <div class="faq-answer__content">
+                  {{ block.settings.answer }}
+                </div>
+              </div>
+            </div>
+        {% endcase %}
+      {% endfor %}
+    </div>
+
+    {% if section.settings.show_contact_box %}
+      <div class="faq-contact-box">
+        <h3>{{ section.settings.contact_heading | default: "Still Have Questions?" }}</h3>
+        <p>{{ section.settings.contact_text | default: "Can't find the answer you're looking for? Our support team is here to help." }}</p>
+        {% if section.settings.contact_button_text != blank %}
+          <a href="{% if section.settings.contact_button_link != blank %}{{ section.settings.contact_button_link }}{% else %}/pages/contact-us{% endif %}" class="faq-contact-button">
+            {{ section.settings.contact_button_text }}
+          </a>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% stylesheet %}
+  .faq-page {
+    padding: 3rem 0;
+    background: #fff;
+  }
+  .faq-page__container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 var(--page-margin, 20px);
+  }
+  .faq-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  .faq-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0 0 1rem;
+    color: #000;
+  }
+  .faq-subtitle {
+    font-size: 1.1rem;
+    color: #666;
+    margin: 0;
+    line-height: 1.6;
+  }
+  .faq-search {
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto 3rem;
+  }
+  .faq-search input {
+    width: 100%;
+    padding: 1rem 3rem 1rem 1.5rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 50px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  .faq-search input:focus {
+    border-color: #4a1c40;
+  }
+  .faq-search svg {
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+  }
+  .faq-content {
+    margin-bottom: 3rem;
+  }
+  .faq-category {
+    margin: 3rem 0 1.5rem;
+  }
+  .faq-category__title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #4a1c40;
+    margin: 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #4a1c40;
+  }
+  .faq-item {
+    border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 0.5rem;
+  }
+  .faq-question {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 0;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    transition: color 0.3s;
+  }
+  .faq-question:hover {
+    color: #4a1c40;
+  }
+  .faq-icon {
+    flex-shrink: 0;
+    margin-left: 1rem;
+    transition: transform 0.3s;
+  }
+  .faq-item.active .faq-icon {
+    transform: rotate(180deg);
+  }
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  .faq-item.active .faq-answer {
+    max-height: 500px;
+  }
+  .faq-answer__content {
+    padding: 0 0 1.5rem 0;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #555;
+  }
+  .faq-answer__content p {
+    margin: 0 0 1rem;
+  }
+  .faq-answer__content ul {
+    margin: 0 0 1rem;
+    padding-left: 1.5rem;
+  }
+  .faq-answer__content li {
+    margin-bottom: 0.5rem;
+  }
+  .faq-contact-box {
+    background: #f8f3f0;
+    padding: 2.5rem;
+    border-radius: 8px;
+    text-align: center;
+    border-left: 4px solid #4a1c40;
+  }
+  .faq-contact-box h3 {
+    font-size: 1.5rem;
+    margin: 0 0 1rem;
+    color: #333;
+  }
+  .faq-contact-box p {
+    font-size: 1rem;
+    color: #666;
+    margin: 0 0 1.5rem;
+  }
+  .faq-contact-button {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    background: #4a1c40;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 4px;
+    transition: all 0.3s;
+  }
+  .faq-contact-button:hover {
+    background: #3a1530;
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 768px) {
+    .faq-title {
+      font-size: 2rem;
+    }
+    .faq-question {
+      font-size: 1rem;
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  class FAQAccordion {
+    constructor() {
+      this.faqItems = document.querySelectorAll('[data-faq-item]');
+      this.searchInput = document.getElementById('faq-search-input');
+      this.init();
+    }
+
+    init() {
+      // Set up accordion functionality
+      this.faqItems.forEach(item => {
+        const toggle = item.querySelector('[data-faq-toggle]');
+        toggle.addEventListener('click', () => this.toggleFAQ(item));
+      });
+
+      // Set up search functionality
+      if (this.searchInput) {
+        this.searchInput.addEventListener('input', (e) => this.searchFAQs(e.target.value));
+      }
+    }
+
+    toggleFAQ(item) {
+      const isActive = item.classList.contains('active');
+
+      // Close all other items (optional - remove if you want multiple open)
+      // this.faqItems.forEach(i => i.classList.remove('active'));
+
+      // Toggle current item
+      if (isActive) {
+        item.classList.remove('active');
+      } else {
+        item.classList.add('active');
+      }
+    }
+
+    searchFAQs(query) {
+      const searchTerm = query.toLowerCase().trim();
+
+      this.faqItems.forEach(item => {
+        const question = item.querySelector('[data-faq-toggle] span').textContent.toLowerCase();
+        const answer = item.querySelector('[data-faq-answer]').textContent.toLowerCase();
+
+        if (searchTerm === '' || question.includes(searchTerm) || answer.includes(searchTerm)) {
+          item.style.display = 'block';
+          if (searchTerm !== '') {
+            item.classList.add('active');
+          }
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    new FAQAccordion();
+  });
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "FAQ Page",
+  "tag": "section",
+  "class": "faq-page-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Page Settings"
+    },
+    {
+      "type": "text",
+      "id": "page_title",
+      "label": "Page title",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "textarea",
+      "id": "page_subtitle",
+      "label": "Page subtitle",
+      "default": "Find answers to common questions about our products, shipping, and policies."
+    },
+    {
+      "type": "header",
+      "content": "Search"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "label": "Show search bar",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "search_placeholder",
+      "label": "Search placeholder text",
+      "default": "Search for answers..."
+    },
+    {
+      "type": "header",
+      "content": "Contact Box"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_contact_box",
+      "label": "Show contact box",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "contact_heading",
+      "label": "Contact heading",
+      "default": "Still Have Questions?"
+    },
+    {
+      "type": "textarea",
+      "id": "contact_text",
+      "label": "Contact text",
+      "default": "Can't find the answer you're looking for? Our support team is here to help."
+    },
+    {
+      "type": "text",
+      "id": "contact_button_text",
+      "label": "Button text",
+      "default": "Contact Us"
+    },
+    {
+      "type": "url",
+      "id": "contact_button_link",
+      "label": "Button link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "FAQ Category",
+      "settings": [
+        {
+          "type": "text",
+          "id": "category_name",
+          "label": "Category name",
+          "default": "Ordering & Payment"
+        }
+      ]
+    },
+    {
+      "type": "faq_item",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "How do I place an order?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Simply browse our collection, add items to your cart, and proceed to checkout. You can pay securely with credit card, PayPal, or other accepted payment methods.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ Page",
+      "blocks": [
+        {
+          "type": "category",
+          "settings": {
+            "category_name": "Ordering & Payment"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "How do I place an order?",
+            "answer": "<p>Simply browse our collection, add items to your cart, and proceed to checkout. You can pay securely with credit card, PayPal, or other accepted payment methods.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "What payment methods do you accept?",
+            "answer": "<p>We accept all major credit cards (Visa, Mastercard, American Express, Discover), PayPal, Apple Pay, and Google Pay.</p>"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "category_name": "Shipping & Delivery"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "How long does shipping take?",
+            "answer": "<p>Standard shipping takes 5-7 business days. We also offer expedited shipping options for faster delivery. You'll receive a tracking number once your order ships.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Do you ship internationally?",
+            "answer": "<p>Currently, we ship to the USA and Canada. International shipping to other countries is not available at this time.</p>"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "category_name": "Products & Authenticity"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Are your fragrances authentic?",
+            "answer": "<p>Yes! All our products are 100% authentic and sourced directly from authorized distributors. We guarantee the authenticity of every item we sell.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "How should I store my perfume?",
+            "answer": "<p>Store your fragrance in a cool, dry place away from direct sunlight and heat. Keep the bottle tightly closed when not in use to preserve the scent.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

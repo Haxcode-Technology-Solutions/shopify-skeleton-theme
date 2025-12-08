@@ -1,0 +1,343 @@
+<div class="page-content">
+  <div class="page-content__container">
+    {% if section.settings.show_breadcrumbs %}
+      <nav class="breadcrumbs">
+        <a href="{{ routes.root_url }}">Home</a>
+        <span class="breadcrumb-divider">/</span>
+        <span>{{ section.settings.page_title }}</span>
+      </nav>
+    {% endif %}
+
+    <header class="page-header">
+      <h1 class="page-title">{{ section.settings.page_title | default: "Privacy Policy" }}</h1>
+      {% if section.settings.page_subtitle != blank %}
+        <p class="page-subtitle">{{ section.settings.page_subtitle }}</p>
+      {% endif %}
+      {% if section.settings.last_updated != blank %}
+        <p class="page-meta">Last Updated: {{ section.settings.last_updated }}</p>
+      {% endif %}
+    </header>
+
+    <div class="page-content__body">
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'text_section' %}
+            <div class="content-section" {{ block.shopify_attributes }}>
+              {% if block.settings.section_heading != blank %}
+                <h2 class="section-heading">{{ block.settings.section_heading }}</h2>
+              {% endif %}
+              {% if block.settings.section_content != blank %}
+                <div class="section-content">
+                  {{ block.settings.section_content }}
+                </div>
+              {% endif %}
+            </div>
+          {% when 'bullet_list' %}
+            <div class="content-section" {{ block.shopify_attributes }}>
+              {% if block.settings.list_heading != blank %}
+                <h2 class="section-heading">{{ block.settings.list_heading }}</h2>
+              {% endif %}
+              {% if block.settings.list_items != blank %}
+                <ul class="content-list">
+                  {% assign items = block.settings.list_items | split: '|' %}
+                  {% for item in items %}
+                    <li>{{ item }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </div>
+        {% endcase %}
+      {% endfor %}
+    </div>
+
+    {% if section.settings.show_contact_footer %}
+      <div class="page-footer">
+        <h3>{{ section.settings.footer_heading | default: "Have Questions?" }}</h3>
+        <p>{{ section.settings.footer_text | default: "If you have any questions about our privacy policy, please contact us." }}</p>
+        {% if section.settings.footer_button_text != blank %}
+          <a href="{% if section.settings.footer_button_link != blank %}{{ section.settings.footer_button_link }}{% else %}/pages/contact-us{% endif %}" class="page-footer__button">
+            {{ section.settings.footer_button_text }}
+          </a>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% stylesheet %}
+  .page-content {
+    padding: 3rem 0;
+    background: #fff;
+  }
+  .page-content__container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 var(--page-margin, 20px);
+  }
+  .breadcrumbs {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 2rem;
+  }
+  .breadcrumbs a {
+    color: #4a1c40;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .breadcrumbs a:hover {
+    color: #000;
+  }
+  .breadcrumb-divider {
+    margin: 0 0.5rem;
+    color: #999;
+  }
+  .page-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid #e0e0e0;
+  }
+  .page-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0 0 1rem;
+    color: #000;
+  }
+  .page-subtitle {
+    font-size: 1.1rem;
+    color: #666;
+    margin: 0 0 1rem;
+    line-height: 1.6;
+  }
+  .page-meta {
+    font-size: 0.9rem;
+    color: #999;
+    margin: 0;
+  }
+  .page-content__body {
+    margin-bottom: 3rem;
+  }
+  .content-section {
+    margin-bottom: 2.5rem;
+  }
+  .section-heading {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 1rem;
+    color: #333;
+  }
+  .section-content {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #555;
+  }
+  .section-content p {
+    margin: 0 0 1rem;
+  }
+  .section-content strong {
+    color: #000;
+    font-weight: 600;
+  }
+  .content-list {
+    list-style: disc;
+    padding-left: 2rem;
+    margin: 1rem 0;
+  }
+  .content-list li {
+    margin-bottom: 0.8rem;
+    line-height: 1.6;
+    color: #555;
+  }
+  .page-footer {
+    background: #f8f8f8;
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+    margin-top: 3rem;
+  }
+  .page-footer h3 {
+    font-size: 1.5rem;
+    margin: 0 0 1rem;
+    color: #333;
+  }
+  .page-footer p {
+    font-size: 1rem;
+    color: #666;
+    margin: 0 0 1.5rem;
+  }
+  .page-footer__button {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    background: #4a1c40;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 4px;
+    transition: all 0.3s;
+  }
+  .page-footer__button:hover {
+    background: #3a1530;
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 768px) {
+    .page-title {
+      font-size: 2rem;
+    }
+    .section-heading {
+      font-size: 1.3rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Privacy Policy Page",
+  "tag": "section",
+  "class": "privacy-policy-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Page Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumbs",
+      "label": "Show breadcrumbs",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "page_title",
+      "label": "Page title",
+      "default": "Privacy Policy"
+    },
+    {
+      "type": "textarea",
+      "id": "page_subtitle",
+      "label": "Page subtitle",
+      "default": "Your privacy is important to us. This policy outlines how we collect, use, and protect your information."
+    },
+    {
+      "type": "text",
+      "id": "last_updated",
+      "label": "Last updated date",
+      "default": "January 15, 2025"
+    },
+    {
+      "type": "header",
+      "content": "Contact Footer"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_contact_footer",
+      "label": "Show contact footer",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "footer_heading",
+      "label": "Footer heading",
+      "default": "Have Questions?"
+    },
+    {
+      "type": "textarea",
+      "id": "footer_text",
+      "label": "Footer text",
+      "default": "If you have any questions about our privacy policy, please contact us."
+    },
+    {
+      "type": "text",
+      "id": "footer_button_text",
+      "label": "Button text",
+      "default": "Contact Us"
+    },
+    {
+      "type": "url",
+      "id": "footer_button_link",
+      "label": "Button link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text_section",
+      "name": "Text Section",
+      "settings": [
+        {
+          "type": "text",
+          "id": "section_heading",
+          "label": "Section heading",
+          "default": "Information We Collect"
+        },
+        {
+          "type": "richtext",
+          "id": "section_content",
+          "label": "Content",
+          "default": "<p>We collect information you provide directly to us when you create an account, make a purchase, or communicate with us. This may include your name, email address, shipping address, phone number, and payment information.</p>"
+        }
+      ]
+    },
+    {
+      "type": "bullet_list",
+      "name": "Bullet List",
+      "settings": [
+        {
+          "type": "text",
+          "id": "list_heading",
+          "label": "List heading",
+          "default": "We Use Your Information To:"
+        },
+        {
+          "type": "textarea",
+          "id": "list_items",
+          "label": "List items (separate with | )",
+          "default": "Process and fulfill your orders|Send you order confirmations and shipping updates|Respond to your questions and provide customer service|Send you marketing communications (with your consent)|Improve our website and services|Prevent fraud and enhance security",
+          "info": "Separate each item with a pipe character: |"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Privacy Policy Page",
+      "blocks": [
+        {
+          "type": "text_section",
+          "settings": {
+            "section_heading": "Information We Collect",
+            "section_content": "<p>We collect information you provide directly to us when you create an account, make a purchase, or communicate with us. This may include your name, email address, shipping address, phone number, and payment information.</p><p>We also automatically collect certain information about your device when you use our website, including your IP address, browser type, operating system, and browsing behavior.</p>"
+          }
+        },
+        {
+          "type": "bullet_list",
+          "settings": {
+            "list_heading": "We Use Your Information To:",
+            "list_items": "Process and fulfill your orders|Send you order confirmations and shipping updates|Respond to your questions and provide customer service|Send you marketing communications (with your consent)|Improve our website and services|Prevent fraud and enhance security"
+          }
+        },
+        {
+          "type": "text_section",
+          "settings": {
+            "section_heading": "Information Sharing",
+            "section_content": "<p>We do not sell your personal information. We may share your information with:</p><p><strong>Service Providers:</strong> Third-party companies that help us operate our business, such as payment processors and shipping companies.</p><p><strong>Legal Requirements:</strong> When required by law or to protect our rights and the safety of our customers.</p>"
+          }
+        },
+        {
+          "type": "text_section",
+          "settings": {
+            "section_heading": "Data Security",
+            "section_content": "<p>We implement appropriate security measures to protect your personal information from unauthorized access, alteration, or disclosure. However, no method of transmission over the internet is 100% secure.</p>"
+          }
+        },
+        {
+          "type": "text_section",
+          "settings": {
+            "section_heading": "Your Rights",
+            "section_content": "<p>You have the right to access, update, or delete your personal information. You can also opt-out of marketing communications at any time. To exercise these rights, please contact us using the information below.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

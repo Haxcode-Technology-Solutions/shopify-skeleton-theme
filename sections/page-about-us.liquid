@@ -1,0 +1,550 @@
+<div class="about-page">
+  {% if section.settings.show_hero %}
+    <div class="about-hero" style="{% if section.settings.hero_bg_color %}background-color: {{ section.settings.hero_bg_color }};{% endif %}">
+      <div class="about-hero__container">
+        {% if section.settings.hero_image != blank %}
+          <div class="about-hero__image">
+            {{ section.settings.hero_image | image_url: width: 1200 | image_tag: alt: section.settings.hero_heading }}
+          </div>
+        {% endif %}
+        <div class="about-hero__content">
+          {% if section.settings.hero_heading != blank %}
+            <h1 class="about-hero__heading">{{ section.settings.hero_heading }}</h1>
+          {% endif %}
+          {% if section.settings.hero_text != blank %}
+            <p class="about-hero__text">{{ section.settings.hero_text }}</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="about-content">
+    <div class="about-content__container">
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'text_section' %}
+            <div class="content-section" {{ block.shopify_attributes }}>
+              {% if block.settings.section_heading != blank %}
+                <h2 class="section-heading">{{ block.settings.section_heading }}</h2>
+              {% endif %}
+              {% if block.settings.section_content != blank %}
+                <div class="section-content">
+                  {{ block.settings.section_content }}
+                </div>
+              {% endif %}
+            </div>
+
+          {% when 'image_text' %}
+            <div class="image-text-block {% if block.settings.image_position == 'right' %}image-text-block--reverse{% endif %}" {{ block.shopify_attributes }}>
+              {% if block.settings.image != blank %}
+                <div class="image-text-block__image">
+                  {{ block.settings.image | image_url: width: 600 | image_tag: alt: block.settings.heading }}
+                </div>
+              {% endif %}
+              <div class="image-text-block__content">
+                {% if block.settings.heading != blank %}
+                  <h2 class="image-text-block__heading">{{ block.settings.heading }}</h2>
+                {% endif %}
+                {% if block.settings.text != blank %}
+                  <div class="image-text-block__text">{{ block.settings.text }}</div>
+                {% endif %}
+              </div>
+            </div>
+
+          {% when 'stats' %}
+            <div class="stats-section" {{ block.shopify_attributes }}>
+              {% if block.settings.stats_heading != blank %}
+                <h2 class="stats-heading">{{ block.settings.stats_heading }}</h2>
+              {% endif %}
+              <div class="stats-grid">
+                {% if block.settings.stat_1_number != blank %}
+                  <div class="stat-item">
+                    <div class="stat-number">{{ block.settings.stat_1_number }}</div>
+                    <div class="stat-label">{{ block.settings.stat_1_label }}</div>
+                  </div>
+                {% endif %}
+                {% if block.settings.stat_2_number != blank %}
+                  <div class="stat-item">
+                    <div class="stat-number">{{ block.settings.stat_2_number }}</div>
+                    <div class="stat-label">{{ block.settings.stat_2_label }}</div>
+                  </div>
+                {% endif %}
+                {% if block.settings.stat_3_number != blank %}
+                  <div class="stat-item">
+                    <div class="stat-number">{{ block.settings.stat_3_number }}</div>
+                    <div class="stat-label">{{ block.settings.stat_3_label }}</div>
+                  </div>
+                {% endif %}
+                {% if block.settings.stat_4_number != blank %}
+                  <div class="stat-item">
+                    <div class="stat-number">{{ block.settings.stat_4_number }}</div>
+                    <div class="stat-label">{{ block.settings.stat_4_label }}</div>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+
+          {% when 'values' %}
+            <div class="values-section" {{ block.shopify_attributes }}>
+              {% if block.settings.values_heading != blank %}
+                <h2 class="values-heading">{{ block.settings.values_heading }}</h2>
+              {% endif %}
+              <div class="values-grid">
+                {% if block.settings.value_1_title != blank %}
+                  <div class="value-item">
+                    {% if block.settings.value_1_icon != blank %}
+                      <div class="value-icon">{{ block.settings.value_1_icon }}</div>
+                    {% endif %}
+                    <h3 class="value-title">{{ block.settings.value_1_title }}</h3>
+                    <p class="value-description">{{ block.settings.value_1_description }}</p>
+                  </div>
+                {% endif %}
+                {% if block.settings.value_2_title != blank %}
+                  <div class="value-item">
+                    {% if block.settings.value_2_icon != blank %}
+                      <div class="value-icon">{{ block.settings.value_2_icon }}</div>
+                    {% endif %}
+                    <h3 class="value-title">{{ block.settings.value_2_title }}</h3>
+                    <p class="value-description">{{ block.settings.value_2_description }}</p>
+                  </div>
+                {% endif %}
+                {% if block.settings.value_3_title != blank %}
+                  <div class="value-item">
+                    {% if block.settings.value_3_icon != blank %}
+                      <div class="value-icon">{{ block.settings.value_3_icon }}</div>
+                    {% endif %}
+                    <h3 class="value-title">{{ block.settings.value_3_title }}</h3>
+                    <p class="value-description">{{ block.settings.value_3_description }}</p>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+        {% endcase %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .about-page {
+    background: #fff;
+  }
+  .about-hero {
+    padding: 4rem 0;
+    background: #f8f8f8;
+    text-align: center;
+  }
+  .about-hero__container {
+    max-width: var(--page-width, 1400px);
+    margin: 0 auto;
+    padding: 0 var(--page-margin, 20px);
+  }
+  .about-hero__image {
+    margin-bottom: 2rem;
+  }
+  .about-hero__image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  .about-hero__heading {
+    font-size: 3rem;
+    font-weight: 700;
+    margin: 0 0 1rem;
+    color: #000;
+  }
+  .about-hero__text {
+    font-size: 1.2rem;
+    color: #666;
+    margin: 0;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+  .about-content {
+    padding: 4rem 0;
+  }
+  .about-content__container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 var(--page-margin, 20px);
+  }
+  .content-section {
+    margin-bottom: 3rem;
+    text-align: center;
+  }
+  .section-heading {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0 0 1.5rem;
+    color: #333;
+  }
+  .section-content {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #555;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .image-text-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    margin-bottom: 4rem;
+  }
+  .image-text-block--reverse {
+    direction: rtl;
+  }
+  .image-text-block--reverse > * {
+    direction: ltr;
+  }
+  .image-text-block__image img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  .image-text-block__heading {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0 0 1rem;
+    color: #333;
+  }
+  .image-text-block__text {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #555;
+  }
+  .stats-section {
+    background: #4a1c40;
+    color: #fff;
+    padding: 3rem 2rem;
+    border-radius: 8px;
+    margin: 3rem 0;
+    text-align: center;
+  }
+  .stats-heading {
+    font-size: 2rem;
+    margin: 0 0 2rem;
+    color: #fff;
+  }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 2rem;
+  }
+  .stat-item {
+    text-align: center;
+  }
+  .stat-number {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #fff;
+  }
+  .stat-label {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.9);
+  }
+  .values-section {
+    margin: 4rem 0;
+    text-align: center;
+  }
+  .values-heading {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0 0 3rem;
+    color: #333;
+  }
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+  .value-item {
+    padding: 2rem;
+    background: #f8f8f8;
+    border-radius: 8px;
+    text-align: center;
+  }
+  .value-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+  .value-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 0 0 1rem;
+    color: #4a1c40;
+  }
+  .value-description {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #666;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .about-hero__heading {
+      font-size: 2rem;
+    }
+    .image-text-block {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    .image-text-block--reverse {
+      direction: ltr;
+    }
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .stat-number {
+      font-size: 2rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "About Us Page",
+  "tag": "section",
+  "class": "about-us-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Hero Section"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_hero",
+      "label": "Show hero section",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero image"
+    },
+    {
+      "type": "color",
+      "id": "hero_bg_color",
+      "label": "Hero background color",
+      "default": "#f8f8f8"
+    },
+    {
+      "type": "text",
+      "id": "hero_heading",
+      "label": "Hero heading",
+      "default": "About Best of Fragrances"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_text",
+      "label": "Hero text",
+      "default": "America's #1 trusted online shop for perfumes and colognes since 2011. We stock more than 11,000 women's and men's fragrances from over 900 brands."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text_section",
+      "name": "Text Section",
+      "settings": [
+        {
+          "type": "text",
+          "id": "section_heading",
+          "label": "Heading",
+          "default": "Our Story"
+        },
+        {
+          "type": "richtext",
+          "id": "section_content",
+          "label": "Content",
+          "default": "<p>Founded in 2011, Best of Fragrances has grown to become America's most trusted online destination for authentic designer fragrances. Our passion is helping customers discover their signature scent.</p>"
+        }
+      ]
+    },
+    {
+      "type": "image_text",
+      "name": "Image with Text",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "select",
+          "id": "image_position",
+          "label": "Image position",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Quality You Can Trust"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>All our fragrances are 100% authentic and sourced directly from authorized distributors. We guarantee the quality of every product we sell.</p>"
+        }
+      ]
+    },
+    {
+      "type": "stats",
+      "name": "Statistics",
+      "settings": [
+        {
+          "type": "text",
+          "id": "stats_heading",
+          "label": "Section heading",
+          "default": "Our Impact"
+        },
+        {
+          "type": "text",
+          "id": "stat_1_number",
+          "label": "Stat 1 - Number",
+          "default": "900+"
+        },
+        {
+          "type": "text",
+          "id": "stat_1_label",
+          "label": "Stat 1 - Label",
+          "default": "Brands"
+        },
+        {
+          "type": "text",
+          "id": "stat_2_number",
+          "label": "Stat 2 - Number",
+          "default": "11,000+"
+        },
+        {
+          "type": "text",
+          "id": "stat_2_label",
+          "label": "Stat 2 - Label",
+          "default": "Products"
+        },
+        {
+          "type": "text",
+          "id": "stat_3_number",
+          "label": "Stat 3 - Number",
+          "default": "500K+"
+        },
+        {
+          "type": "text",
+          "id": "stat_3_label",
+          "label": "Stat 3 - Label",
+          "default": "Happy Customers"
+        },
+        {
+          "type": "text",
+          "id": "stat_4_number",
+          "label": "Stat 4 - Number",
+          "default": "14 Years"
+        },
+        {
+          "type": "text",
+          "id": "stat_4_label",
+          "label": "Stat 4 - Label",
+          "default": "In Business"
+        }
+      ]
+    },
+    {
+      "type": "values",
+      "name": "Our Values",
+      "settings": [
+        {
+          "type": "text",
+          "id": "values_heading",
+          "label": "Section heading",
+          "default": "Our Values"
+        },
+        {
+          "type": "text",
+          "id": "value_1_icon",
+          "label": "Value 1 - Icon (emoji)",
+          "default": "✨"
+        },
+        {
+          "type": "text",
+          "id": "value_1_title",
+          "label": "Value 1 - Title",
+          "default": "Authenticity"
+        },
+        {
+          "type": "textarea",
+          "id": "value_1_description",
+          "label": "Value 1 - Description",
+          "default": "100% authentic fragrances from authorized distributors only."
+        },
+        {
+          "type": "text",
+          "id": "value_2_icon",
+          "label": "Value 2 - Icon (emoji)",
+          "default": "🚀"
+        },
+        {
+          "type": "text",
+          "id": "value_2_title",
+          "label": "Value 2 - Title",
+          "default": "Fast Shipping"
+        },
+        {
+          "type": "textarea",
+          "id": "value_2_description",
+          "label": "Value 2 - Description",
+          "default": "Quick delivery across the USA and Canada with tracking."
+        },
+        {
+          "type": "text",
+          "id": "value_3_icon",
+          "label": "Value 3 - Icon (emoji)",
+          "default": "💝"
+        },
+        {
+          "type": "text",
+          "id": "value_3_title",
+          "label": "Value 3 - Title",
+          "default": "Customer First"
+        },
+        {
+          "type": "textarea",
+          "id": "value_3_description",
+          "label": "Value 3 - Description",
+          "default": "Dedicated support team ready to help you find your perfect scent."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "About Us Page",
+      "blocks": [
+        {
+          "type": "text_section"
+        },
+        {
+          "type": "stats"
+        },
+        {
+          "type": "values"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
