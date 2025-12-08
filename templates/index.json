@@ -238,12 +238,129 @@
         "banner_7L3fWV"
       ],
       "settings": {}
+    },
+    "1765165467273b494f": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_14a7e3c_AhxFnN": {
+          "type": "ai_gen_block_14a7e3c",
+          "settings": {
+            "paragraph": "<p><strong>Best Of Fragrance Online</strong></p><p>Best Of Fragrance has been America's #1 place to buy discount perfumes online since 2023. We stock more than 13,000 women's and men's fragrances, all of them deliverable to your door within just days. Our broad selection of perfumes and colognes includes celebrity scents, gift sets, best sellers, hard-to-find fragrances, specialty samples, new releases, and even discontinued brands. By buying your next bottle of fragrance online with us, you can save up to 70% off of retail prices, 365 days a year.</p><p>Our massive collection of fragrances hugely surpasses what you could find at any individual shop. We also offer reviews of all of the perfumes we stock, making it easy to find what you're looking for. As a result, first-time shoppers and the most discerning connoisseurs can both find just the right scent at a surprisingly low price.</p><p>If you are looking to buy discount perfume online or you want to buy brand-name discount fragrances, Perfume.com is the most trusted online store in America. Finding cheap perfume of top-notch quality is nearly impossible in a typical brick-and-mortar shop. It's no surprise that many shoppers imagine they have to pay top dollar for quality. However, the efficient online model of Perfume.com makes it possible for us to pass along the savings to you while optimizing convenience. That's how our satisfied shoppers can afford to indulge in bottles of the very finest \"cheap perfume\" you'll find anywhere.</p><p>In addition, ordering with Perfume.com is easy and fast. We ship to every country in the world, and most of our fragrances ship from our headquarters within hours of your order.</p><p>If you're looking for a new scent, take a look at our wide selection of discount perfume from the hottest brands, including Dolce & Gabbana, Burberry, Calvin Klein, Lancome, Giorgio Armani, Bvigari, Calvin Klein, Givenchy, and Gucci.</p><p>Pick up something for him with a bottle of discount cologne. Plus, our delivery service makes it easy to send cheap perfumes to loved ones for special occasions. If you're looking to try a new brand, we'll keep you abreast of the week's best sellers. Plus, our scent experts offer detailed notes on all of our scents, letting you shop confidently.</p>",
+            "max_width": 800,
+            "text_alignment": "left",
+            "padding_top": 40,
+            "padding_bottom": 40,
+            "padding_horizontal": 20,
+            "font_size": 16,
+            "line_height": 1.6,
+            "background_color": "#FFFFFF",
+            "text_color": "#333333",
+            "link_color": "#0066CC",
+            "link_hover_color": "#004499"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_14a7e3c_AhxFnN"
+      ],
+      "settings": {}
+    },
+    "page_faq_pQyiHq": {
+      "type": "page-faq",
+      "blocks": {
+        "category_TF3yaj": {
+          "type": "category",
+          "settings": {
+            "category_name": "Ordering & Payment"
+          }
+        },
+        "faq_item_mQHYta": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How do I place an order?",
+            "answer": "<p>Simply browse our collection, add items to your cart, and proceed to checkout. You can pay securely with credit card, PayPal, or other accepted payment methods.</p>"
+          }
+        },
+        "faq_item_hrdK3m": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What payment methods do you accept?",
+            "answer": "<p>We accept all major credit cards (Visa, Mastercard, American Express, Discover), PayPal, Apple Pay, and Google Pay.</p>"
+          }
+        },
+        "category_NpTgHp": {
+          "type": "category",
+          "settings": {
+            "category_name": "Shipping & Delivery"
+          }
+        },
+        "faq_item_CXKQdd": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How long does shipping take?",
+            "answer": "<p>Standard shipping takes 5-7 business days. We also offer expedited shipping options for faster delivery. You'll receive a tracking number once your order ships.</p>"
+          }
+        },
+        "faq_item_iNmenf": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Do you ship internationally?",
+            "answer": "<p>Currently, we ship to the USA and Canada. International shipping to other countries is not available at this time.</p>"
+          }
+        },
+        "category_wwtz3X": {
+          "type": "category",
+          "settings": {
+            "category_name": "Products & Authenticity"
+          }
+        },
+        "faq_item_A9kecp": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Are your fragrances authentic?",
+            "answer": "<p>Yes! All our products are 100% authentic and sourced directly from authorized distributors. We guarantee the authenticity of every item we sell.</p>"
+          }
+        },
+        "faq_item_zLb3PB": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How should I store my perfume?",
+            "answer": "<p>Store your fragrance in a cool, dry place away from direct sunlight and heat. Keep the bottle tightly closed when not in use to preserve the scent.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "category_TF3yaj",
+        "faq_item_mQHYta",
+        "faq_item_hrdK3m",
+        "category_NpTgHp",
+        "faq_item_CXKQdd",
+        "faq_item_iNmenf",
+        "category_wwtz3X",
+        "faq_item_A9kecp",
+        "faq_item_zLb3PB"
+      ],
+      "name": "FAQ Page",
+      "settings": {
+        "page_title": "Frequently Asked Questions",
+        "page_subtitle": "Find answers to common questions about our products, shipping, and policies.",
+        "show_search": true,
+        "search_placeholder": "Search for answers...",
+        "show_contact_box": true,
+        "contact_heading": "Still Have Questions?",
+        "contact_text": "Can't find the answer you're looking for? Our support team is here to help.",
+        "contact_button_text": "Contact Us",
+        "contact_button_link": ""
+      }
     }
   },
   "order": [
     "hero-slider",
     "brand-carousel",
     "featured-products",
-    "promo-banners"
+    "promo-banners",
+    "1765165467273b494f",
+    "page_faq_pQyiHq"
   ]
 }
