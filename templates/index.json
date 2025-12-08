@@ -183,6 +183,7 @@
         "banner_WGNPtK": {
           "type": "banner",
           "settings": {
+            "image": "shopify://shop_images/category-perfume_travel-sprays.png",
             "subheading": "unique niche perfumes collection",
             "heading": "SAP PERFUMES",
             "link": ""
@@ -191,6 +192,7 @@
         "banner_QBfrTB": {
           "type": "banner",
           "settings": {
+            "image": "shopify://shop_images/category-perfume_makeup.png",
             "subheading": "unique niche perfumes collection",
             "heading": "SAP PERFUMES",
             "link": ""
@@ -199,6 +201,7 @@
         "banner-1": {
           "type": "banner",
           "settings": {
+            "image": "shopify://shop_images/category-perfume_bestseller.png",
             "subheading": "unique niche perfumes collection",
             "heading": "SAP PERFUMES",
             "link": ""
@@ -207,6 +210,7 @@
         "banner-2": {
           "type": "banner",
           "settings": {
+            "image": "shopify://shop_images/category-perfume_newarrivals.png",
             "subheading": "Scent of the Season",
             "heading": "LEGENDS IN LUXURY",
             "link": ""
@@ -215,6 +219,7 @@
         "banner-3": {
           "type": "banner",
           "settings": {
+            "image": "shopify://shop_images/category-perfume_giftsets.png",
             "subheading": "New Fragrance",
             "heading": "MISS DIOR",
             "link": ""
@@ -223,6 +228,7 @@
         "banner_7L3fWV": {
           "type": "banner",
           "settings": {
+            "image": "shopify://shop_images/category-perfume_skincare.png",
             "subheading": "New Fragrance",
             "heading": "MISS DIOR",
             "link": ""
