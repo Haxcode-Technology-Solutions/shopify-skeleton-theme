@@ -53,11 +53,18 @@
 
         <div class="filter-group">
           <h4 class="filter-group__title">Price Range</h4>
-          <div class="filter-price">
-            <input type="number" id="priceFrom" placeholder="From" min="0">
-            <span>-</span>
-            <input type="number" id="priceTo" placeholder="To" min="0">
-            <button id="applyPriceFilter" class="filter-apply-btn">Apply</button>
+          <div class="filter-price-slider">
+            <div class="price-slider__values">
+              <span class="price-slider__value" id="priceMinValue">$0</span>
+              <span class="price-slider__separator">-</span>
+              <span class="price-slider__value" id="priceMaxValue">$500</span>
+            </div>
+            <div class="price-slider__container">
+              <div class="price-slider__track"></div>
+              <div class="price-slider__range" id="priceSliderRange"></div>
+              <input type="range" id="priceMin" class="price-slider__input price-slider__input--min" min="0" max="500" value="0" step="10">
+              <input type="range" id="priceMax" class="price-slider__input price-slider__input--max" min="0" max="500" value="500" step="10">
+            </div>
           </div>
         </div>
 
@@ -334,31 +341,92 @@
     color: #555;
     cursor: pointer;
   }
-  .filter-price {
+  .filter-price-slider {
+    padding: 0.5rem 0;
+  }
+  .price-slider__values {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 0.5rem;
+    margin-bottom: 1.5rem;
   }
-  .filter-price input {
-    flex: 1;
-    padding: 0.5rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 0.9rem;
-  }
-  .filter-apply-btn {
-    padding: 0.5rem 1rem;
-    background: #4a1c40;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    font-size: 0.85rem;
+  .price-slider__value {
+    font-size: 0.95rem;
     font-weight: 600;
-    cursor: pointer;
-    transition: background 0.3s;
+    color: #4a1c40;
+    background: #f8f8f8;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    min-width: 60px;
+    text-align: center;
   }
-  .filter-apply-btn:hover {
+  .price-slider__separator {
+    color: #999;
+    font-weight: 500;
+  }
+  .price-slider__container {
+    position: relative;
+    height: 6px;
+    margin: 1rem 0;
+  }
+  .price-slider__track {
+    position: absolute;
+    width: 100%;
+    height: 6px;
+    background: #e0e0e0;
+    border-radius: 3px;
+  }
+  .price-slider__range {
+    position: absolute;
+    height: 6px;
+    background: #4a1c40;
+    border-radius: 3px;
+    transition: all 0.1s;
+  }
+  .price-slider__input {
+    position: absolute;
+    width: 100%;
+    height: 6px;
+    background: none;
+    pointer-events: none;
+    -webkit-appearance: none;
+    appearance: none;
+    outline: none;
+  }
+  .price-slider__input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    background: #4a1c40;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    cursor: pointer;
+    pointer-events: all;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s;
+  }
+  .price-slider__input::-webkit-slider-thumb:hover {
     background: #3a1530;
+    transform: scale(1.1);
+  }
+  .price-slider__input::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    background: #4a1c40;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    cursor: pointer;
+    pointer-events: all;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s;
+  }
+  .price-slider__input::-moz-range-thumb:hover {
+    background: #3a1530;
+    transform: scale(1.1);
+  }
+  .price-slider__input--max {
+    pointer-events: all;
   }
   .filter-clear-btn {
     width: 100%;
@@ -386,6 +454,7 @@
     gap: 1.5rem;
   }
   .product-card {
+    display: block !important;
     background: #fff;
     border-radius: 8px;
     overflow: hidden;
@@ -399,7 +468,7 @@
   .product-card__image-wrapper {
     position: relative;
     width: 100%;
-    padding-bottom: 125%;
+    padding-bottom: 100%;
     overflow: hidden;
     background: #f5f5f5;
   }
@@ -412,10 +481,6 @@
   }
   .product-card__image {
     position: absolute;
-    top: 5%;
-    left: 5%;
-    width: 90%;
-    height: 90%;
     object-fit: contain;
     transition: opacity 0.3s;
   }
@@ -622,9 +687,11 @@
       this.filterClose = document.getElementById('filterClose');
       this.sortSelect = document.getElementById('sortBy');
       this.clearFiltersBtn = document.getElementById('clearFilters');
-      this.priceFromInput = document.getElementById('priceFrom');
-      this.priceToInput = document.getElementById('priceTo');
-      this.applyPriceBtn = document.getElementById('applyPriceFilter');
+      this.priceMinInput = document.getElementById('priceMin');
+      this.priceMaxInput = document.getElementById('priceMax');
+      this.priceMinValue = document.getElementById('priceMinValue');
+      this.priceMaxValue = document.getElementById('priceMaxValue');
+      this.priceSliderRange = document.getElementById('priceSliderRange');
       this.filterCheckboxes = document.querySelectorAll('.filter-checkbox__input');
       this.productCards = document.querySelectorAll('.product-card');
       this.addToCartBtns = document.querySelectorAll('.product-card__button');
@@ -649,8 +716,11 @@
         this.clearFiltersBtn.addEventListener('click', () => this.clearFilters());
       }
 
-      if (this.applyPriceBtn) {
-        this.applyPriceBtn.addEventListener('click', () => this.applyFilters());
+      // Initialize price slider
+      if (this.priceMinInput && this.priceMaxInput) {
+        this.priceMinInput.addEventListener('input', () => this.updatePriceSlider());
+        this.priceMaxInput.addEventListener('input', () => this.updatePriceSlider());
+        this.updatePriceSlider();
       }
 
       this.filterCheckboxes.forEach(checkbox => {
@@ -681,6 +751,40 @@
       }
     }
 
+    updatePriceSlider() {
+      const minVal = parseInt(this.priceMinInput.value);
+      const maxVal = parseInt(this.priceMaxInput.value);
+      const min = parseInt(this.priceMinInput.min);
+      const max = parseInt(this.priceMinInput.max);
+
+      // Prevent min from exceeding max
+      if (minVal > maxVal - 10) {
+        this.priceMinInput.value = maxVal - 10;
+      }
+
+      // Prevent max from going below min
+      if (maxVal < minVal + 10) {
+        this.priceMaxInput.value = minVal + 10;
+      }
+
+      const actualMin = parseInt(this.priceMinInput.value);
+      const actualMax = parseInt(this.priceMaxInput.value);
+
+      // Update displayed values
+      this.priceMinValue.textContent = `$${actualMin}`;
+      this.priceMaxValue.textContent = `$${actualMax}`;
+
+      // Update slider range visual
+      const percentMin = ((actualMin - min) / (max - min)) * 100;
+      const percentMax = ((actualMax - min) / (max - min)) * 100;
+
+      this.priceSliderRange.style.left = percentMin + '%';
+      this.priceSliderRange.style.width = (percentMax - percentMin) + '%';
+
+      // Apply filters
+      this.applyFilters();
+    }
+
     toggleSidebar() {
       this.filterSidebar.classList.toggle('active');
     }
@@ -692,8 +796,8 @@
     }
 
     applyFilters() {
-      const priceFrom = parseFloat(this.priceFromInput.value) || 0;
-      const priceTo = parseFloat(this.priceToInput.value) || Infinity;
+      const priceFrom = parseInt(this.priceMinInput.value) || 0;
+      const priceTo = parseInt(this.priceMaxInput.value) || Infinity;
 
       const selectedVendors = Array.from(document.querySelectorAll('.filter-checkbox__input[data-filter-type="vendor"]:checked'))
         .map(cb => cb.value);
@@ -705,7 +809,8 @@
         .map(cb => cb.value);
 
       this.productCards.forEach(card => {
-        const price = parseFloat(card.dataset.price) / 100; // Price is in cents
+        const priceInCents = parseFloat(card.dataset.price);
+        const price = priceInCents / 100; // Convert cents to dollars
         const vendor = card.dataset.vendor;
         const type = card.dataset.type;
         const available = card.dataset.available === 'true';
@@ -753,8 +858,9 @@
     }
 
     clearFilters() {
-      this.priceFromInput.value = '';
-      this.priceToInput.value = '';
+      this.priceMinInput.value = this.priceMinInput.min;
+      this.priceMaxInput.value = this.priceMaxInput.max;
+      this.updatePriceSlider();
       this.filterCheckboxes.forEach(cb => cb.checked = false);
       this.productCards.forEach(card => card.style.display = 'flex');
     }
