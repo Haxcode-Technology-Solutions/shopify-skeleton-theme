@@ -13,6 +13,9 @@
   "sections": {
     "header": {
       "type": "header",
+      "custom_css": [
+        ".header__logo img {max-height: 48px; width: 244px;}"
+      ],
       "settings": {
         "logo": "shopify://shop_images/bestoffragrances_logo_2.png",
         "menu": "main-menu",
