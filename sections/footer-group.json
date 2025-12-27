@@ -14,7 +14,19 @@
     "footer": {
       "type": "footer",
       "settings": {
-        "show_payment_icons": true
+        "about_text": "<p>Best of Fragrances is has been America's #1 global trusted retail online shop for perfumes and colognes since 2011.</p>",
+        "column_1_heading": "bestoffragrances.com",
+        "menu_1": "",
+        "menu_2": "",
+        "menu_3": "",
+        "address": "Best of fragrances <br>Division of Niral Co.                                                                                            2880 Cochran Street, 1024Simi Valley, CA 93065, USA",
+        "email": "sales@bestoffragrances.com",
+        "phone": "(888)647-2526",
+        "copyright_text": "",
+        "show_payment_icons": true,
+        "show_newsletter": true,
+        "newsletter_heading": "Be the first to save!",
+        "newsletter_text": "Enter your email below to get attractive offers."
       }
     }
   },
