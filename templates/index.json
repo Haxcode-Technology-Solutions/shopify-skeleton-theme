@@ -192,7 +192,7 @@
             "image": "shopify://shop_images/category-perfume_makeup.png",
             "subheading": "Makeup and skincare luxury set",
             "heading": "Curated Beauty Essentials",
-            "link": ""
+            "link": "shopify://collections"
           }
         },
         "banner-1": {
@@ -201,7 +201,7 @@
             "image": "shopify://shop_images/category-perfume_bestseller.png",
             "subheading": "Four distinctive designer bottles",
             "heading": "Premium Fragrance Quartet",
-            "link": ""
+            "link": "shopify://collections"
           }
         },
         "banner-2": {
@@ -210,7 +210,7 @@
             "image": "shopify://shop_images/category-perfume_newarrivals.png",
             "subheading": "Aqua backdrop with floral accents and classic scents",
             "heading": "Seasonal Luxury Legends",
-            "link": ""
+            "link": "shopify://collections"
           }
         },
         "banner-3": {
@@ -219,7 +219,7 @@
             "image": "shopify://shop_images/category-perfume_giftsets.png",
             "subheading": "Festive ribbon-wrapped fragrance set",
             "heading": "Miss Dior Gift Collection",
-            "link": ""
+            "link": "shopify://collections"
           }
         },
         "banner_7L3fWV": {
@@ -228,7 +228,7 @@
             "image": "shopify://shop_images/category-perfume_skincare.png",
             "subheading": "Turquoise and lavender beauty products",
             "heading": "Coastal Fresh Trio",
-            "link": ""
+            "link": "shopify://collections"
           }
         }
       },
