@@ -181,17 +181,17 @@
           "type": "banner",
           "settings": {
             "image": "shopify://shop_images/category-perfume_travel-sprays.png",
-            "subheading": "unique niche perfumes collection",
-            "heading": "SAP PERFUMES",
-            "link": ""
+            "subheading": "Delicate pink blossoms with niche perfumes",
+            "heading": "Artisan Fragrance Collection",
+            "link": "shopify://collections/cologne"
           }
         },
         "banner_QBfrTB": {
           "type": "banner",
           "settings": {
             "image": "shopify://shop_images/category-perfume_makeup.png",
-            "subheading": "unique niche perfumes collection",
-            "heading": "SAP PERFUMES",
+            "subheading": "Makeup and skincare luxury set",
+            "heading": "Curated Beauty Essentials",
             "link": ""
           }
         },
@@ -199,8 +199,8 @@
           "type": "banner",
           "settings": {
             "image": "shopify://shop_images/category-perfume_bestseller.png",
-            "subheading": "unique niche perfumes collection",
-            "heading": "SAP PERFUMES",
+            "subheading": "Four distinctive designer bottles",
+            "heading": "Premium Fragrance Quartet",
             "link": ""
           }
         },
@@ -208,8 +208,8 @@
           "type": "banner",
           "settings": {
             "image": "shopify://shop_images/category-perfume_newarrivals.png",
-            "subheading": "Scent of the Season",
-            "heading": "LEGENDS IN LUXURY",
+            "subheading": "Aqua backdrop with floral accents and classic scents",
+            "heading": "Seasonal Luxury Legends",
             "link": ""
           }
         },
@@ -217,8 +217,8 @@
           "type": "banner",
           "settings": {
             "image": "shopify://shop_images/category-perfume_giftsets.png",
-            "subheading": "New Fragrance",
-            "heading": "MISS DIOR",
+            "subheading": "Festive ribbon-wrapped fragrance set",
+            "heading": "Miss Dior Gift Collection",
             "link": ""
           }
         },
@@ -226,8 +226,8 @@
           "type": "banner",
           "settings": {
             "image": "shopify://shop_images/category-perfume_skincare.png",
-            "subheading": "New Fragrance",
-            "heading": "MISS DIOR",
+            "subheading": "Turquoise and lavender beauty products",
+            "heading": "Coastal Fresh Trio",
             "link": ""
           }
         }
@@ -256,9 +256,9 @@
             "padding_horizontal": 20,
             "font_size": 16,
             "line_height": 1.6,
-            "background_color": "#FFFFFF",
+            "background_color": "#ffffff",
             "text_color": "#333333",
-            "link_color": "#0066CC",
+            "link_color": "#0066cc",
             "link_hover_color": "#004499"
           },
           "blocks": {}
