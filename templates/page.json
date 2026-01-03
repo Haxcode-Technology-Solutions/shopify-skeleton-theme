@@ -11,6 +11,10 @@
   "sections": {
     "main": {
       "type": "page",
+      "custom_css": [
+        ".shopify-page-content {margin: 1% 5%;}",
+        ".shopify-page-content h1 {margin-bottom: 2%; text-align: center;}"
+      ],
       "settings": {}
     }
   },
