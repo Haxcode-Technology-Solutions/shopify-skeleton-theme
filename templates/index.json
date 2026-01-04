@@ -163,6 +163,69 @@
         "show_navigation": true
       }
     },
+    "17675012488c86aafb": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_6220534_qTPWhF": {
+          "type": "ai_gen_block_6220534",
+          "settings": {
+            "heading": "THE MOST POPULAR",
+            "description": "Moisturising beautifully glowing and clean skin all year round",
+            "heading_alignment": "center",
+            "collection_1": "cologne",
+            "collection_2": "",
+            "collection_3": "perfume",
+            "collection_4": "",
+            "products_limit": 12,
+            "products_per_row_desktop": 4,
+            "products_per_row_mobile": "2",
+            "product_gap": 20,
+            "section_padding": 50,
+            "button_text": "Add to cart",
+            "added_text": "Added!",
+            "sold_out_text": "Sold out",
+            "button_text_size": 14,
+            "sale_badge_label": "Sale",
+            "sale_badge_bg": "#dc2626",
+            "sale_badge_color": "#ffffff",
+            "compare_price_color": "#999999",
+            "tabs_alignment": "center",
+            "tab_border_radius": 8,
+            "tab_bg_color": "#ffffff",
+            "tab_text_color": "#333333",
+            "tab_border_color": "#e0e0e0",
+            "tab_hover_bg_color": "#f5f5f5",
+            "tab_hover_text_color": "#000000",
+            "tab_hover_border_color": "#333333",
+            "tab_active_bg_color": "#000000",
+            "tab_active_text_color": "#ffffff",
+            "tab_active_border_color": "#000000",
+            "product_card_radius": 8,
+            "product_card_bg": "#ffffff",
+            "product_title_size": 16,
+            "product_title_color": "#333333",
+            "product_price_size": 16,
+            "product_price_color": "#000000",
+            "nav_button_size": 45,
+            "nav_button_bg": "#ffffff",
+            "nav_button_color": "#000000",
+            "nav_button_hover_bg": "#000000",
+            "nav_button_hover_color": "#ffffff",
+            "background_color": "#f9f9f9",
+            "heading_color": "#000000",
+            "text_color": "#666666",
+            "heading_size": 36,
+            "description_size": 16,
+            "desktop_width_percent": 100
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_6220534_qTPWhF"
+      ],
+      "settings": {}
+    },
     "featured-products": {
       "type": "featured-products",
       "settings": {
@@ -361,6 +424,7 @@
   "order": [
     "1765165899d89776c0",
     "brand-carousel",
+    "17675012488c86aafb",
     "featured-products",
     "promo-banners",
     "1765165467273b494f",
