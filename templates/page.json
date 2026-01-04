@@ -76,6 +76,7 @@
     },
     "main": {
       "type": "page",
+      "disabled": true,
       "custom_css": [
         ".shopify-page-content {margin: 1% 5%;}",
         ".shopify-page-content h1 {margin-bottom: 2%; text-align: center;}"
