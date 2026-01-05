@@ -9,38 +9,12 @@
  */
 {
   "sections": {
-    "176753079458df6eb7": {
-      "type": "_blocks",
-      "blocks": {
-        "ai_gen_block_573f71a_bVaBec": {
-          "type": "ai_gen_block_573f71a",
-          "settings": {
-            "title_color": "#000000",
-            "text_color": "#333333",
-            "border_color": "#e0e0e0"
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "ai_gen_block_573f71a_bVaBec"
-      ],
-      "disabled": true,
-      "settings": {}
-    },
-    "17675064651bd3c28b": {
-      "type": "_blocks",
-      "disabled": true,
-      "settings": {}
-    },
     "main": {
       "type": "collection",
       "settings": {}
     }
   },
   "order": [
-    "176753079458df6eb7",
-    "17675064651bd3c28b",
     "main"
   ]
 }
