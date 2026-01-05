@@ -25,15 +25,16 @@
       "block_order": [
         "ai_gen_block_573f71a_bVaBec"
       ],
+      "disabled": true,
       "settings": {}
     },
     "17675064651bd3c28b": {
       "type": "_blocks",
+      "disabled": true,
       "settings": {}
     },
     "main": {
       "type": "collection",
-      "disabled": true,
       "settings": {}
     }
   },
