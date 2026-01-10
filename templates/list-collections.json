@@ -9,15 +9,119 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "collections",
+    "brand_carousel_qTWaja": {
+      "type": "brand-carousel",
+      "blocks": {
+        "brand_pLdDgV": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "CREED",
+            "link": ""
+          }
+        },
+        "brand_hDN9r3": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "BURBERRY",
+            "link": ""
+          }
+        },
+        "brand_qjR6Mh": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "CHANEL",
+            "link": ""
+          }
+        },
+        "brand_iajzkr": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "CALVIN KLEIN",
+            "link": ""
+          }
+        },
+        "brand_mQAiPP": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "Christian Dior",
+            "link": ""
+          }
+        },
+        "brand_VRgXVp": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "GIORGIO ARMANI",
+            "link": ""
+          }
+        },
+        "brand_kUCxDY": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "TOM FORD",
+            "link": ""
+          }
+        },
+        "brand_Ggtmdn": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "VERSACE",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "brand_pLdDgV",
+        "brand_hDN9r3",
+        "brand_qjR6Mh",
+        "brand_iajzkr",
+        "brand_mQAiPP",
+        "brand_VRgXVp",
+        "brand_kUCxDY",
+        "brand_Ggtmdn"
+      ],
+      "name": "Brand Carousel",
       "settings": {
-        "grid_item_width": "collections--compact",
-        "grid_gap": 10
+        "show_navigation": true
       }
+    },
+    "176802482382bbf25f": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_67f1e2f_JgEr6g": {
+          "type": "ai_gen_block_67f1e2f",
+          "settings": {
+            "heading": "All brands",
+            "heading_alignment": "center",
+            "columns_desktop": 4,
+            "columns_tablet": 3,
+            "columns_mobile": "2",
+            "max_width": 1200,
+            "grid_gap": 20,
+            "section_padding": 40,
+            "heading_spacing": 30,
+            "card_padding": 20,
+            "card_border_width": 1,
+            "card_border_radius": 8,
+            "card_background": "#ffffff",
+            "card_border_color": "#e5e5e5",
+            "card_hover_border_color": "#333333",
+            "heading_size": 32,
+            "brand_name_size": 16,
+            "background_color": "#f9f9f9",
+            "heading_color": "#333333",
+            "brand_name_color": "#333333"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_67f1e2f_JgEr6g"
+      ],
+      "settings": {}
     }
   },
   "order": [
-    "main"
+    "brand_carousel_qTWaja",
+    "176802482382bbf25f"
   ]
 }
