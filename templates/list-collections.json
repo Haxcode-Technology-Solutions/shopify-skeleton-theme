@@ -84,11 +84,12 @@
         "show_navigation": true
       }
     },
-    "176802482382bbf25f": {
+    "blocks_rPq7zW": {
       "type": "_blocks",
       "blocks": {
-        "ai_gen_block_67f1e2f_JgEr6g": {
+        "ai_gen_block_67f1e2f_VYJKFP": {
           "type": "ai_gen_block_67f1e2f",
+          "name": "All brands",
           "settings": {
             "heading": "All brands",
             "heading_alignment": "center",
@@ -115,13 +116,14 @@
         }
       },
       "block_order": [
-        "ai_gen_block_67f1e2f_JgEr6g"
+        "ai_gen_block_67f1e2f_VYJKFP"
       ],
+      "name": "Brand list",
       "settings": {}
     }
   },
   "order": [
     "brand_carousel_qTWaja",
-    "176802482382bbf25f"
+    "blocks_rPq7zW"
   ]
 }
