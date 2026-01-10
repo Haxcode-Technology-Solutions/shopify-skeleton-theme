@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "brands-list": {
+      "type": "brands-list",
+      "settings": {
+        "heading": "Our Brands",
+        "subheading": "Discover our curated collection of premium fragrance brands"
+      }
+    }
+  },
+  "order": [
+    "brands-list"
+  ]
+}

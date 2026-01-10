@@ -527,6 +527,38 @@
   document.addEventListener('DOMContentLoaded', () => {
     new MobileHeader();
   });
+
+  // Update cart count when items are added
+  document.addEventListener('cart:updated', async () => {
+    try {
+      const response = await fetch('/cart.js');
+      const cart = await response.json();
+
+      // Update all cart badges
+      const cartBadges = document.querySelectorAll('.cart__badge');
+      cartBadges.forEach(badge => {
+        if (cart.item_count > 0) {
+          badge.textContent = cart.item_count;
+          badge.style.display = 'flex';
+        } else {
+          badge.style.display = 'none';
+        }
+      });
+
+      // If no badges exist and cart has items, create them
+      if (cartBadges.length === 0 && cart.item_count > 0) {
+        const cartIcons = document.querySelectorAll('.header__action-cart');
+        cartIcons.forEach(icon => {
+          const badge = document.createElement('span');
+          badge.className = 'cart__badge';
+          badge.textContent = cart.item_count;
+          icon.insertBefore(badge, icon.firstChild);
+        });
+      }
+    } catch (error) {
+      console.error('Error updating cart count:', error);
+    }
+  });
 {% endjavascript %}
 
 {% schema %}

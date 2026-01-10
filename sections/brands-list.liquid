@@ -1,0 +1,246 @@
+{% comment %}
+  This section displays all brands (vendors) from products in a grid layout
+{% endcomment %}
+
+<div class="brands-page">
+  <div class="brands-header">
+    <div class="container">
+      <h1 class="brands-header__title">{{ section.settings.heading | default: 'Our Brands' }}</h1>
+      {% if section.settings.subheading != blank %}
+        <p class="brands-header__description">{{ section.settings.subheading }}</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="brands-grid">
+      {% comment %} Collect all unique vendors from all products {% endcomment %}
+      {% assign all_vendors = '' %}
+      {% for product in collections.all.products %}
+        {% if product.vendor != blank %}
+          {% unless all_vendors contains product.vendor %}
+            {% assign all_vendors = all_vendors | append: product.vendor | append: '||' %}
+          {% endunless %}
+        {% endif %}
+      {% endfor %}
+
+      {% assign vendors_array = all_vendors | split: '||' | uniq | sort %}
+
+      {% for vendor in vendors_array %}
+        {% if vendor != blank %}
+          {% comment %} Get first product from this vendor for image {% endcomment %}
+          {% assign vendor_product = collections.all.products | where: 'vendor', vendor | first %}
+
+          <div class="brand-card">
+            <a href="/collections/all?filter.v.vendor={{ vendor | url_encode }}" class="brand-card__link">
+              <div class="brand-card__image-wrapper">
+                {% if vendor_product.featured_image %}
+                  {{ vendor_product.featured_image | image_url: width: 400 | image_tag: alt: vendor, loading: 'lazy', class: 'brand-card__image' }}
+                {% else %}
+                  <div class="brand-card__placeholder">
+                    <svg width="80" height="80" viewBox="0 0 80 80" fill="none" stroke="currentColor">
+                      <rect x="10" y="10" width="60" height="60" rx="4" stroke-width="2"/>
+                      <path d="M25 40h30M40 25v30" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                  </div>
+                {% endif %}
+              </div>
+              <div class="brand-card__content">
+                <h3 class="brand-card__title">{{ vendor }}</h3>
+                {% assign vendor_products_count = collections.all.products | where: 'vendor', vendor | size %}
+                <p class="brand-card__count">{{ vendor_products_count }} {% if vendor_products_count == 1 %}product{% else %}products{% endif %}</p>
+              </div>
+            </a>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .brands-page {
+    background: #f8f8f8;
+    min-height: 60vh;
+    padding-bottom: 4rem;
+  }
+
+  .brands-header {
+    background: linear-gradient(135deg, #4a1c40 0%, #764ba2 100%);
+    padding: 3rem 0;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .brands-header__title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0 0 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .brands-header__description {
+    font-size: 1.1rem;
+    margin: 0;
+    opacity: 0.95;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .container {
+    max-width: var(--page-width, 1400px);
+    margin: 0 auto;
+    padding: 0 var(--page-margin, 20px);
+  }
+
+  .brands-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 2rem;
+    padding: 2rem 0;
+  }
+
+  .brand-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    position: relative;
+  }
+
+  .brand-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+  }
+
+  .brand-card__link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .brand-card__image-wrapper {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+    overflow: hidden;
+    background: #f5f5f5;
+  }
+
+  .brand-card__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 1rem;
+    transition: transform 0.3s ease;
+  }
+
+  .brand-card:hover .brand-card__image {
+    transform: scale(1.05);
+  }
+
+  .brand-card__placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%);
+    color: #999;
+  }
+
+  .brand-card__content {
+    padding: 1.5rem;
+    text-align: center;
+    background: #fff;
+  }
+
+  .brand-card__title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .brand-card:hover .brand-card__title {
+    color: #4a1c40;
+  }
+
+  .brand-card__count {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .brands-header__title {
+      font-size: 1.8rem;
+    }
+
+    .brands-header__description {
+      font-size: 1rem;
+    }
+
+    .brands-grid {
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 1rem;
+    }
+
+    .brand-card__content {
+      padding: 1rem;
+    }
+
+    .brand-card__title {
+      font-size: 1rem;
+    }
+
+    .brand-card__count {
+      font-size: 0.8rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .brands-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Brands List",
+  "tag": "section",
+  "class": "brands-list-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Our Brands"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Discover our curated collection of premium fragrance brands"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brands List"
+    }
+  ]
+}
+{% endschema %}

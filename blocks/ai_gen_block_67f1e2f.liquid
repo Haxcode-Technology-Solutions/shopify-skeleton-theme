@@ -72,6 +72,12 @@
     font-size: {{ block.settings.brand_name_size }}px;
     color: {{ block.settings.brand_name_color }};
     font-weight: 500;
+    margin: 0 0 8px 0;
+  }
+
+  .ai-brands__count-{{ ai_gen_id }} {
+    font-size: {{ block.settings.product_count_size }}px;
+    color: {{ block.settings.product_count_color }};
     margin: 0;
   }
 
@@ -100,6 +106,10 @@
     .ai-brands__name-{{ ai_gen_id }} {
       font-size: calc({{ block.settings.brand_name_size }}px * 0.9);
     }
+
+    .ai-brands__count-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.product_count_size }}px * 0.9);
+    }
   }
 {% endstyle %}
 
@@ -115,9 +125,12 @@
       <ul class="ai-brands__grid-{{ ai_gen_id }}">
         {% for vendor in vendor_list %}
           {% if vendor != blank %}
+            {% assign vendor_products = collections.all.products | where: 'vendor', vendor %}
+            {% assign product_count = vendor_products.size %}
             <li class="ai-brands__item-{{ ai_gen_id }}">
               <a href="{{ vendor | url_for_vendor }}" class="ai-brands__link-{{ ai_gen_id }}">
                 <h3 class="ai-brands__name-{{ ai_gen_id }}">{{ vendor }}</h3>
+                <p class="ai-brands__count-{{ ai_gen_id }}">{{ product_count }} {% if product_count == 1 %}product{% else %}products{% endif %}</p>
               </a>
             </li>
           {% endif %}
@@ -345,6 +358,16 @@
       "default": 16
     },
     {
+      "type": "range",
+      "id": "product_count_size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Product count size",
+      "default": 14
+    },
+    {
       "type": "header",
       "content": "Colors"
     },
@@ -365,6 +388,12 @@
       "id": "brand_name_color",
       "label": "Brand name",
       "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "product_count_color",
+      "label": "Product count",
+      "default": "#666666"
     }
   ],
   "presets": [
