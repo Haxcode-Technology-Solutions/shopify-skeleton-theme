@@ -1,0 +1,448 @@
+================================================================================
+                    FRAGRANCE BOUTIQUE THEME DOCUMENTATION
+================================================================================
+
+Theme Name: Fragrance Boutique
+Version: 1.0.0
+Author: Your Company
+Last Updated: January 10, 2026
+
+================================================================================
+                              TABLE OF CONTENTS
+================================================================================
+
+1. Introduction
+2. Installation
+3. Theme Features
+4. Theme Structure
+5. Sections Overview
+6. Customization Guide
+7. Template Usage
+8. Troubleshooting
+9. Support & Resources
+
+================================================================================
+                              1. INTRODUCTION
+================================================================================
+
+Fragrance Boutique is a modern, responsive Shopify theme designed specifically
+for fragrance, perfume, and beauty product stores. Built with performance and
+user experience in mind, this theme provides a clean, elegant interface that
+showcases your products beautifully.
+
+Key Highlights:
+- Fully responsive design (mobile, tablet, desktop)
+- Optimized for performance
+- Easy to customize through Shopify theme editor
+- Built-in cart functionality with live updates
+- Advanced filtering and sorting
+- Brand showcase capabilities
+- SEO-friendly structure
+
+================================================================================
+                              2. INSTALLATION
+================================================================================
+
+STEP 1: Upload Theme
+1. Log in to your Shopify admin panel
+2. Navigate to Online Store > Themes
+3. Click "Add theme" > "Upload zip file"
+4. Select the theme zip file and upload
+
+STEP 2: Customize Theme
+1. Click "Customize" on the uploaded theme
+2. Configure your logo, colors, and fonts
+3. Add your content to sections
+4. Save your changes
+
+STEP 3: Publish Theme
+1. Click "Actions" > "Publish" to make the theme live
+2. Your store will now use the Fragrance Boutique theme
+
+================================================================================
+                              3. THEME FEATURES
+================================================================================
+
+HOMEPAGE FEATURES:
+- Hero sections with customizable images and text
+- Featured products grid with filtering
+- Brand carousel showcase
+- Newsletter signup
+- Customizable content blocks
+
+PRODUCT FEATURES:
+- Product image gallery
+- Variant selection
+- Add to cart functionality
+- Product recommendations
+- Related products
+
+COLLECTION FEATURES:
+- Advanced filtering (by brand, price, type, tags)
+- Product sorting options
+- Grid/list view
+- Pagination support
+- Real-time filter updates
+
+CART FEATURES:
+- Live cart count updates
+- Mini cart display
+- Quantity adjustments
+- Cart notes support
+
+BRAND FEATURES:
+- Dedicated brands listing page
+- Product count per brand
+- Alphabetical sorting
+- Brand filtering on collections
+
+HEADER FEATURES:
+- Sticky navigation
+- Mobile-responsive menu
+- Search functionality
+- Cart icon with live count
+- Contact information bar
+
+FOOTER FEATURES:
+- Multi-column layout
+- Social media links
+- Newsletter signup
+- Custom content blocks
+
+================================================================================
+                              4. THEME STRUCTURE
+================================================================================
+
+DIRECTORY STRUCTURE:
+skeleton-fragrance/
+├── assets/              # CSS, JavaScript, and image files
+├── blocks/              # Reusable content blocks
+├── config/              # Theme settings and configuration
+├── layout/              # Base theme layouts
+├── locales/             # Translation files
+├── sections/            # Theme sections
+├── snippets/            # Reusable code snippets
+├── templates/           # Page templates
+└── temp/                # Temporary files
+
+KEY FILES:
+- config/settings_schema.json - Theme customization options
+- config/settings_data.json - Current theme settings
+- layout/theme.liquid - Main layout file
+- sections/header.liquid - Header section
+- sections/footer.liquid - Footer section
+
+================================================================================
+                              5. SECTIONS OVERVIEW
+================================================================================
+
+HEADER SECTION (sections/header.liquid)
+- Contact information bar
+- Logo/branding area
+- Main navigation menu
+- Search bar
+- Account and cart icons
+- Mobile-responsive hamburger menu
+
+Features:
+- Live cart count updates
+- Sticky header on scroll
+- Mobile search toggle
+- Customizable contact info
+
+FEATURED PRODUCTS SECTION (sections/featured-products.liquid)
+- Display products from a selected collection
+- Product filtering by categories
+- Add to cart functionality
+- Customizable heading and subheading
+- Adjustable product limit (4-24 products)
+- Grid layout with hover effects
+
+Customization Options:
+- Heading text
+- Subheading text
+- Collection selection
+- Number of products to show
+- Enable/disable category filters
+- Show/hide load more button
+
+COLLECTION SECTION (sections/collection.liquid)
+- Product grid display
+- Advanced filtering sidebar
+- Sort options
+- Pagination
+- Mobile-responsive filters
+
+Filter Options:
+- Price range slider
+- Availability (in stock/out of stock)
+- Brand/vendor
+- Product type
+- Tags
+
+Sort Options:
+- Featured
+- Best selling
+- Alphabetical (A-Z, Z-A)
+- Price (Low to High, High to Low)
+- Newest
+
+BRANDS LIST SECTION (sections/brands-list.liquid)
+- Display all unique brands/vendors
+- Product count per brand
+- Grid layout with images
+- Link to filtered collection view
+- Fully responsive
+
+Customization Options:
+- Heading text
+- Subheading text
+- Automatic brand collection from products
+
+CART SECTION (sections/cart.liquid)
+- Line item display
+- Quantity adjustment
+- Remove items
+- Cart totals
+- Checkout button
+- Continue shopping link
+
+FOOTER SECTION (sections/footer.liquid)
+- Multi-column layout
+- Quick links
+- Contact information
+- Social media icons
+- Newsletter signup
+- Copyright information
+
+================================================================================
+                              6. CUSTOMIZATION GUIDE
+================================================================================
+
+THEME SETTINGS:
+Access: Shopify Admin > Online Store > Themes > Customize
+
+TYPOGRAPHY:
+- Primary font selection
+- Font size adjustments
+- Letter spacing controls
+
+LAYOUT:
+- Maximum page width: 90rem or 110rem
+- Page margin: 10-100px (default: 20px)
+
+COLORS:
+- Background color (default: #FFFFFF)
+- Foreground/text color (default: #333333)
+- Primary accent color: #4a1c40 (purple)
+- Border radius: 0-10px (default: 4px)
+
+HEADER CUSTOMIZATION:
+1. Logo upload
+2. Menu selection
+3. Contact information toggle
+4. Email address
+5. Phone number
+
+HOMEPAGE CUSTOMIZATION:
+1. Add/remove sections
+2. Reorder sections via drag and drop
+3. Configure individual section settings
+4. Add custom HTML/text blocks
+
+COLLECTION PAGE CUSTOMIZATION:
+1. Collection filters (automatic)
+2. Products per page (default: 24)
+3. Grid layout options
+
+================================================================================
+                              7. TEMPLATE USAGE
+================================================================================
+
+AVAILABLE TEMPLATES:
+
+1. index.json - Homepage template
+   Usage: Default homepage layout
+   Sections: Hero, featured products, brand carousel, custom content
+
+2. collection.json - Collection page template
+   Usage: Product listing pages
+   Features: Filtering, sorting, pagination
+
+3. product.json - Product page template
+   Usage: Individual product pages
+   Features: Image gallery, variants, add to cart
+
+4. page.json - Standard page template
+   Usage: About, Contact, FAQ pages
+   Features: Flexible content blocks
+
+5. page.brands.json - Brands listing template
+   Usage: Display all brands
+   How to use:
+   - Create a new page in Shopify admin
+   - Set page handle to "brands" or any custom name
+   - Select "page.brands" template
+   - Page will automatically list all brands
+
+6. cart.json - Cart page template
+   Usage: Shopping cart display
+   Features: Line items, totals, checkout
+
+7. blog.json - Blog listing template
+   Usage: Blog archive pages
+
+8. article.json - Blog post template
+   Usage: Individual blog posts
+
+9. search.json - Search results template
+   Usage: Product search results
+
+10. 404.json - Error page template
+    Usage: Page not found errors
+
+================================================================================
+                              8. TROUBLESHOOTING
+================================================================================
+
+ISSUE: Cart count not updating after adding products
+SOLUTION: This has been fixed in the latest version. The header now listens
+for cart:updated events and automatically refreshes the cart count.
+
+ISSUE: Mobile menu not opening
+SOLUTION: Ensure JavaScript is enabled. Clear browser cache and try again.
+
+ISSUE: Products not displaying in featured products section
+SOLUTION:
+1. Ensure you've selected a collection in section settings
+2. Verify the collection has products
+3. Check product availability
+
+ISSUE: Filters not working on collection page
+SOLUTION:
+1. Clear browser cache
+2. Ensure products have vendor, type, and tag information
+3. Check that JavaScript is not blocked
+
+ISSUE: Brand page showing no brands
+SOLUTION:
+1. Ensure products have vendor information filled in
+2. Products must be in the "all" collection
+3. Refresh the page
+
+ISSUE: Images not loading
+SOLUTION:
+1. Check image file sizes (recommend under 2MB)
+2. Ensure images are uploaded correctly
+3. Clear CDN cache
+
+ISSUE: Search not working
+SOLUTION:
+1. Verify search is enabled in theme settings
+2. Check that products have titles and descriptions
+3. Ensure search input has proper name="q" attribute
+
+================================================================================
+                              9. SUPPORT & RESOURCES
+================================================================================
+
+THEME SUPPORT:
+- Support URL: https://support.shopify.com/
+- Theme Documentation: https://help.shopify.com/manual/online-store/themes
+
+SHOPIFY RESOURCES:
+- Shopify Help Center: https://help.shopify.com/
+- Shopify Community: https://community.shopify.com/
+- Liquid Documentation: https://shopify.dev/docs/themes/liquid
+
+CUSTOMIZATION RESOURCES:
+- Theme Development: https://shopify.dev/docs/themes
+- Liquid Basics: https://shopify.dev/docs/themes/liquid/reference
+- Theme Architecture: https://shopify.dev/docs/themes/architecture
+
+PERFORMANCE OPTIMIZATION:
+- Image Optimization: Use Shopify's image CDN
+- Enable compression in Shopify settings
+- Minimize custom JavaScript
+- Use lazy loading for images
+
+BEST PRACTICES:
+1. Always backup your theme before making changes
+2. Test changes in theme editor preview before publishing
+3. Use duplicate themes for major customizations
+4. Keep products updated with complete information
+5. Optimize images before uploading
+6. Use descriptive product titles and descriptions for SEO
+7. Regularly update product inventory
+
+DEVELOPMENT NOTES:
+- Theme uses modern CSS with flexbox and grid
+- JavaScript uses vanilla JS (no jQuery dependency)
+- Sections use Shopify's section schema for easy customization
+- Mobile-first responsive design approach
+- Performance optimized with lazy loading
+
+BROWSER COMPATIBILITY:
+- Chrome (latest 2 versions)
+- Firefox (latest 2 versions)
+- Safari (latest 2 versions)
+- Edge (latest 2 versions)
+- Mobile browsers (iOS Safari, Chrome Android)
+
+ACCESSIBILITY:
+- ARIA labels for interactive elements
+- Keyboard navigation support
+- Screen reader friendly
+- Color contrast compliance
+- Semantic HTML structure
+
+================================================================================
+                              VERSION HISTORY
+================================================================================
+
+Version 1.0.0 (January 10, 2026)
+- Initial release
+- Core features implementation
+- Responsive design
+- Cart update functionality
+- Brand listing page
+- Advanced collection filtering
+- Mobile navigation
+- Performance optimizations
+
+================================================================================
+                              CREDITS & LICENSE
+================================================================================
+
+Theme Author: Your Company
+Based on: Shopify Skeleton Theme
+License: MIT License
+
+Copyright (c) 2026 Your Company
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+================================================================================
+                              END OF DOCUMENTATION
+================================================================================
+
+For additional support or questions, please visit:
+https://support.shopify.com/
+
+Thank you for using Fragrance Boutique Theme!

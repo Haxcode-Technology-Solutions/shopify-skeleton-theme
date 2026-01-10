@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fragrance Boutique Theme - Documentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        header {
+            background: linear-gradient(135deg, #4a1c40 0%, #764ba2 100%);
+            color: #fff;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .meta-info {
+            background: #f8f8f8;
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .meta-label {
+            font-size: 0.85rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.25rem;
+        }
+
+        .meta-value {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .content {
+            padding: 2rem;
+        }
+
+        .toc {
+            background: #f8f8f8;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            border-left: 4px solid #4a1c40;
+        }
+
+        .toc h2 {
+            color: #4a1c40;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .toc ol {
+            margin-left: 1.5rem;
+        }
+
+        .toc li {
+            margin-bottom: 0.5rem;
+        }
+
+        .toc a {
+            color: #333;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .toc a:hover {
+            color: #4a1c40;
+        }
+
+        section {
+            margin-bottom: 3rem;
+            scroll-margin-top: 2rem;
+        }
+
+        h2 {
+            color: #4a1c40;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #4a1c40;
+        }
+
+        h3 {
+            color: #333;
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        h4 {
+            color: #555;
+            font-size: 1.2rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: #f8f8f8;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #4a1c40;
+        }
+
+        .feature-card h4 {
+            margin-top: 0;
+            color: #4a1c40;
+        }
+
+        .feature-card ul {
+            margin-left: 1.5rem;
+        }
+
+        .alert {
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            border-left: 4px solid;
+        }
+
+        .alert-info {
+            background: #e3f2fd;
+            border-color: #2196F3;
+            color: #0d47a1;
+        }
+
+        .alert-success {
+            background: #e8f5e9;
+            border-color: #4CAF50;
+            color: #1b5e20;
+        }
+
+        .alert-warning {
+            background: #fff3e0;
+            border-color: #FF9800;
+            color: #e65100;
+        }
+
+        .code-block {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .steps {
+            counter-reset: step-counter;
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .steps li {
+            counter-increment: step-counter;
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .steps li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #4a1c40;
+            color: #fff;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #4a1c40;
+            color: #fff;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: #fff;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        th {
+            background: #4a1c40;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: #f8f8f8;
+        }
+
+        .support-box {
+            background: linear-gradient(135deg, #4a1c40 0%, #764ba2 100%);
+            color: #fff;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        .support-box h3 {
+            color: #fff;
+            margin-top: 0;
+            font-size: 1.8rem;
+        }
+
+        .support-box p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.95;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: #fff;
+            color: #4a1c40;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin: 0.5rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #fff;
+            border: 2px solid #fff;
+        }
+
+        .btn-secondary:hover {
+            background: #fff;
+            color: #4a1c40;
+        }
+
+        footer {
+            background: #2c2c2c;
+            color: #fff;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        footer a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-links {
+            margin: 1.5rem 0;
+        }
+
+        .footer-links a {
+            margin: 0 1rem;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .meta-info {
+                flex-direction: column;
+            }
+
+            .content {
+                padding: 1.5rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .steps li {
+                padding-left: 2.5rem;
+            }
+
+            .btn {
+                display: block;
+                margin: 0.5rem 0;
+            }
+        }
+
+        @media print {
+            body {
+                background: #fff;
+            }
+
+            .container {
+                box-shadow: none;
+            }
+
+            .support-box,
+            footer {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Fragrance Boutique Theme</h1>
+            <p>Complete Documentation & Setup Guide</p>
+        </header>
+
+        <div class="meta-info">
+            <div class="meta-item">
+                <span class="meta-label">Theme Name</span>
+                <span class="meta-value">Fragrance Boutique</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Version</span>
+                <span class="meta-value">1.0.0</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Author</span>
+                <span class="meta-value">HaxCode</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Last Updated</span>
+                <span class="meta-value">January 10, 2026</span>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="toc">
+                <h2>Table of Contents</h2>
+                <ol>
+                    <li><a href="#introduction">Introduction</a></li>
+                    <li><a href="#installation">Installation</a></li>
+                    <li><a href="#features">Theme Features</a></li>
+                    <li><a href="#structure">Theme Structure</a></li>
+                    <li><a href="#sections">Sections Overview</a></li>
+                    <li><a href="#customization">Customization Guide</a></li>
+                    <li><a href="#templates">Template Usage</a></li>
+                    <li><a href="#troubleshooting">Troubleshooting</a></li>
+                    <li><a href="#support">Support & Resources</a></li>
+                </ol>
+            </div>
+
+            <section id="introduction">
+                <h2>1. Introduction</h2>
+                <p>Fragrance Boutique is a modern, responsive Shopify theme designed specifically for fragrance, perfume, and beauty product stores. Built with performance and user experience in mind, this theme provides a clean, elegant interface that showcases your products beautifully.</p>
+
+                <h3>Key Highlights</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>🎨 Beautiful Design</h4>
+                        <ul>
+                            <li>Modern, clean interface</li>
+                            <li>Elegant product showcases</li>
+                            <li>Professional aesthetics</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4>📱 Fully Responsive</h4>
+                        <ul>
+                            <li>Mobile-first approach</li>
+                            <li>Tablet optimized</li>
+                            <li>Desktop perfected</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4>⚡ High Performance</h4>
+                        <ul>
+                            <li>Fast loading times</li>
+                            <li>Optimized images</li>
+                            <li>Clean code structure</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🛠️ Easy Customization</h4>
+                        <ul>
+                            <li>Theme editor support</li>
+                            <li>No coding required</li>
+                            <li>Flexible sections</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="installation">
+                <h2>2. Installation</h2>
+
+                <h3>Step-by-Step Installation Guide</h3>
+                <ol class="steps">
+                    <li>
+                        <strong>Upload Theme</strong>
+                        <p>Log in to your Shopify admin panel, navigate to <strong>Online Store > Themes</strong>, click <strong>"Add theme"</strong> > <strong>"Upload zip file"</strong>, and select the theme zip file.</p>
+                    </li>
+                    <li>
+                        <strong>Customize Theme</strong>
+                        <p>Click <strong>"Customize"</strong> on the uploaded theme, configure your logo, colors, and fonts, add your content to sections, and save your changes.</p>
+                    </li>
+                    <li>
+                        <strong>Publish Theme</strong>
+                        <p>Click <strong>"Actions"</strong> > <strong>"Publish"</strong> to make the theme live on your store.</p>
+                    </li>
+                </ol>
+
+                <div class="alert alert-success">
+                    <strong>✓ Success!</strong> Your Fragrance Boutique theme is now installed and ready to use.
+                </div>
+            </section>
+
+            <section id="features">
+                <h2>3. Theme Features</h2>
+
+                <h3>Homepage Features</h3>
+                <ul>
+                    <li>Hero sections with customizable images and text</li>
+                    <li>Featured products grid with filtering capabilities</li>
+                    <li>Brand carousel showcase</li>
+                    <li>Newsletter signup integration</li>
+                    <li>Customizable content blocks</li>
+                </ul>
+
+                <h3>Product Features</h3>
+                <ul>
+                    <li>Product image gallery with zoom</li>
+                    <li>Variant selection (size, color, etc.)</li>
+                    <li>Add to cart functionality with live updates</li>
+                    <li>Product recommendations</li>
+                    <li>Related products display</li>
+                </ul>
+
+                <h3>Collection Features</h3>
+                <ul>
+                    <li>Advanced filtering (by brand, price, type, tags, availability)</li>
+                    <li>Multiple product sorting options</li>
+                    <li>Grid/list view options</li>
+                    <li>Pagination support</li>
+                    <li>Real-time filter updates without page reload</li>
+                </ul>
+
+                <h3>Cart Features</h3>
+                <ul>
+                    <li>Live cart count updates in header</li>
+                    <li>Mini cart display</li>
+                    <li>Quantity adjustments</li>
+                    <li>Cart notes support</li>
+                    <li>Apply discount codes</li>
+                </ul>
+
+                <h3>Brand Features</h3>
+                <ul>
+                    <li>Dedicated brands listing page</li>
+                    <li>Product count per brand</li>
+                    <li>Alphabetical sorting</li>
+                    <li>Brand filtering on collections</li>
+                    <li>Brand images from products</li>
+                </ul>
+
+                <h3>Header Features</h3>
+                <ul>
+                    <li>Sticky navigation on scroll</li>
+                    <li>Mobile-responsive hamburger menu</li>
+                    <li>Integrated search functionality</li>
+                    <li>Cart icon with live count badge</li>
+                    <li>Contact information bar</li>
+                    <li>Account icon (when enabled)</li>
+                </ul>
+
+                <h3>Footer Features</h3>
+                <ul>
+                    <li>Multi-column layout</li>
+                    <li>Social media links</li>
+                    <li>Newsletter signup</li>
+                    <li>Custom content blocks</li>
+                    <li>Quick navigation links</li>
+                </ul>
+            </section>
+
+            <section id="structure">
+                <h2>4. Theme Structure</h2>
+
+                <h3>Directory Organization</h3>
+                <div class="code-block">
+skeleton-fragrance/
+├── assets/              # CSS, JavaScript, and image files
+├── blocks/              # Reusable content blocks
+│   ├── ai_gen_block_67f1e2f.liquid  # All Brands block
+│   └── ...
+├── config/              # Theme settings and configuration
+│   ├── settings_schema.json
+│   └── settings_data.json
+├── layout/              # Base theme layouts
+│   └── theme.liquid
+├── locales/             # Translation files
+├── sections/            # Theme sections
+│   ├── header.liquid
+│   ├── footer.liquid
+│   ├── featured-products.liquid
+│   ├── collection.liquid
+│   ├── brands-list.liquid
+│   └── ...
+├── snippets/            # Reusable code snippets
+├── templates/           # Page templates
+│   ├── index.json
+│   ├── collection.json
+│   ├── product.json
+│   ├── page.brands.json
+│   └── ...
+└── DOCUMENTATION.html   # This file
+                </div>
+
+                <h3>Key Configuration Files</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>File</th>
+                            <th>Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>config/settings_schema.json</code></td>
+                            <td>Defines theme customization options in the theme editor</td>
+                        </tr>
+                        <tr>
+                            <td><code>config/settings_data.json</code></td>
+                            <td>Stores current theme settings and presets</td>
+                        </tr>
+                        <tr>
+                            <td><code>layout/theme.liquid</code></td>
+                            <td>Main layout wrapper for all pages</td>
+                        </tr>
+                        <tr>
+                            <td><code>sections/header.liquid</code></td>
+                            <td>Header section with navigation and cart</td>
+                        </tr>
+                        <tr>
+                            <td><code>sections/footer.liquid</code></td>
+                            <td>Footer section with links and info</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="sections">
+                <h2>5. Sections Overview</h2>
+
+                <h3>Header Section</h3>
+                <p><span class="badge">sections/header.liquid</span></p>
+                <p>The header contains your site navigation, logo, search, and cart functionality. It features a sticky design that remains visible when scrolling.</p>
+
+                <h4>Features:</h4>
+                <ul>
+                    <li>Live cart count updates (automatically refreshes when items are added)</li>
+                    <li>Sticky header on scroll</li>
+                    <li>Mobile search toggle</li>
+                    <li>Customizable contact information bar</li>
+                    <li>Responsive hamburger menu for mobile</li>
+                </ul>
+
+                <h4>Customization Options:</h4>
+                <ul>
+                    <li>Upload custom logo</li>
+                    <li>Select navigation menu</li>
+                    <li>Toggle contact info display</li>
+                    <li>Set email address</li>
+                    <li>Set phone number</li>
+                </ul>
+
+                <h3>Featured Products Section</h3>
+                <p><span class="badge">sections/featured-products.liquid</span></p>
+                <p>Display a curated selection of products from any collection with filtering and add-to-cart capabilities.</p>
+
+                <h4>Features:</h4>
+                <ul>
+                    <li>Product filtering by categories/tags</li>
+                    <li>Quick add to cart from grid</li>
+                    <li>Hover effects on product cards</li>
+                    <li>Sale badge for discounted items</li>
+                    <li>Vendor/brand display</li>
+                </ul>
+
+                <h4>Customization Options:</h4>
+                <ul>
+                    <li>Heading text</li>
+                    <li>Subheading text</li>
+                    <li>Collection selection</li>
+                    <li>Number of products (4-24)</li>
+                    <li>Enable/disable category filters</li>
+                    <li>Show/hide "load more" button</li>
+                </ul>
+
+                <h3>Collection Section</h3>
+                <p><span class="badge">sections/collection.liquid</span></p>
+                <p>Display all products in a collection with advanced filtering, sorting, and pagination.</p>
+
+                <h4>Filter Options:</h4>
+                <ul>
+                    <li><strong>Price Range:</strong> Dual slider for min/max price</li>
+                    <li><strong>Availability:</strong> In stock / Out of stock</li>
+                    <li><strong>Brand/Vendor:</strong> Filter by product vendor</li>
+                    <li><strong>Product Type:</strong> Filter by product category</li>
+                    <li><strong>Tags:</strong> Filter by product tags</li>
+                </ul>
+
+                <h4>Sort Options:</h4>
+                <ul>
+                    <li>Featured</li>
+                    <li>Best Selling</li>
+                    <li>Alphabetical (A-Z, Z-A)</li>
+                    <li>Price (Low to High, High to Low)</li>
+                    <li>Newest</li>
+                </ul>
+
+                <h3>Brands List Section</h3>
+                <p><span class="badge">sections/brands-list.liquid</span></p>
+                <p>Automatically displays all unique brands/vendors from your store's products in an organized grid layout.</p>
+
+                <h4>Features:</h4>
+                <ul>
+                    <li>Automatic brand collection from all products</li>
+                    <li>Product count per brand</li>
+                    <li>Grid layout with brand images</li>
+                    <li>Links to filtered collection view</li>
+                    <li>Alphabetical sorting</li>
+                    <li>Fully responsive design</li>
+                </ul>
+
+                <h4>How to Use:</h4>
+                <ol class="steps">
+                    <li>Go to <strong>Shopify Admin > Pages > Add page</strong></li>
+                    <li>Create a page (e.g., title: "Our Brands")</li>
+                    <li>In the template selector, choose <strong>"page.brands"</strong></li>
+                    <li>Save the page - brands will automatically populate</li>
+                </ol>
+
+                <h3>All Brands Block</h3>
+                <p><span class="badge">blocks/ai_gen_block_67f1e2f.liquid</span></p>
+                <p>A flexible block that can be added to any page to display all brands in a customizable grid.</p>
+
+                <h4>Features:</h4>
+                <ul>
+                    <li>Alphabetically sorted brand list</li>
+                    <li>Product count for each brand</li>
+                    <li>Highly customizable through theme editor</li>
+                    <li>Responsive column layouts (desktop/tablet/mobile)</li>
+                    <li>Custom colors, fonts, and spacing</li>
+                </ul>
+
+                <h4>Customization Options:</h4>
+                <ul>
+                    <li>Heading text and alignment</li>
+                    <li>Columns (2-6 on desktop, 2-4 on tablet, 1-2 on mobile)</li>
+                    <li>Grid gap (10-50px)</li>
+                    <li>Card styling (padding, border, radius)</li>
+                    <li>Typography (heading size, brand name size, product count size)</li>
+                    <li>Colors (background, borders, text)</li>
+                </ul>
+            </section>
+
+            <section id="customization">
+                <h2>6. Customization Guide</h2>
+
+                <div class="alert alert-info">
+                    <strong>💡 Tip:</strong> Access theme customization through <strong>Shopify Admin > Online Store > Themes > Customize</strong>
+                </div>
+
+                <h3>Typography Settings</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Setting</th>
+                            <th>Options</th>
+                            <th>Default</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Primary Font</td>
+                            <td>Any Shopify font picker option</td>
+                            <td>Work Sans</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Layout Settings</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Setting</th>
+                            <th>Options</th>
+                            <th>Default</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Maximum Page Width</td>
+                            <td>90rem (Narrow) / 110rem (Wide)</td>
+                            <td>90rem</td>
+                        </tr>
+                        <tr>
+                            <td>Page Margin</td>
+                            <td>10px - 100px</td>
+                            <td>20px</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Color Settings</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Setting</th>
+                            <th>Default</th>
+                            <th>Usage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Background Color</td>
+                            <td>#FFFFFF</td>
+                            <td>Page background</td>
+                        </tr>
+                        <tr>
+                            <td>Foreground Color</td>
+                            <td>#333333</td>
+                            <td>Text color</td>
+                        </tr>
+                        <tr>
+                            <td>Primary Accent</td>
+                            <td>#4a1c40</td>
+                            <td>Buttons, links, highlights</td>
+                        </tr>
+                        <tr>
+                            <td>Input Corner Radius</td>
+                            <td>4px (0-10px range)</td>
+                            <td>Form inputs, buttons</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Quick Customization Tips</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>Logo Upload</h4>
+                        <p>Navigate to Header section settings and upload your logo. Recommended size: 200px wide, transparent PNG format.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Navigation Menu</h4>
+                        <p>Create menus in <strong>Navigation</strong> settings, then select them in the Header section.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Homepage Layout</h4>
+                        <p>Add, remove, or reorder sections by clicking on sections in the sidebar and dragging them.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Colors & Fonts</h4>
+                        <p>Access global theme settings from the top of the sidebar to change colors and typography.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="templates">
+                <h2>7. Template Usage</h2>
+
+                <h3>Available Page Templates</h3>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Template</th>
+                            <th>Usage</th>
+                            <th>Features</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>index.json</code></td>
+                            <td>Homepage</td>
+                            <td>Hero, featured products, brand carousel, custom content</td>
+                        </tr>
+                        <tr>
+                            <td><code>collection.json</code></td>
+                            <td>Product Collections</td>
+                            <td>Filtering, sorting, pagination, grid display</td>
+                        </tr>
+                        <tr>
+                            <td><code>product.json</code></td>
+                            <td>Product Pages</td>
+                            <td>Image gallery, variants, add to cart, recommendations</td>
+                        </tr>
+                        <tr>
+                            <td><code>page.json</code></td>
+                            <td>Standard Pages</td>
+                            <td>About, Contact, FAQ - flexible content blocks</td>
+                        </tr>
+                        <tr>
+                            <td><code>page.brands.json</code></td>
+                            <td>Brands Listing</td>
+                            <td>Automatic brand display with product counts</td>
+                        </tr>
+                        <tr>
+                            <td><code>cart.json</code></td>
+                            <td>Shopping Cart</td>
+                            <td>Line items, totals, checkout button</td>
+                        </tr>
+                        <tr>
+                            <td><code>blog.json</code></td>
+                            <td>Blog Listing</td>
+                            <td>Blog post archive with pagination</td>
+                        </tr>
+                        <tr>
+                            <td><code>article.json</code></td>
+                            <td>Blog Posts</td>
+                            <td>Individual blog post display</td>
+                        </tr>
+                        <tr>
+                            <td><code>search.json</code></td>
+                            <td>Search Results</td>
+                            <td>Product search with filtering</td>
+                        </tr>
+                        <tr>
+                            <td><code>404.json</code></td>
+                            <td>Error Page</td>
+                            <td>Page not found with helpful links</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Creating a Brands Page</h3>
+                <ol class="steps">
+                    <li>
+                        <strong>Create New Page</strong>
+                        <p>In Shopify Admin, go to <strong>Online Store > Pages > Add page</strong></p>
+                    </li>
+                    <li>
+                        <strong>Set Page Title</strong>
+                        <p>Enter a title like "Our Brands" or "Shop by Brand"</p>
+                    </li>
+                    <li>
+                        <strong>Select Template</strong>
+                        <p>On the right sidebar, change template from "Default page" to <strong>"page.brands"</strong></p>
+                    </li>
+                    <li>
+                        <strong>Save & View</strong>
+                        <p>Save the page and view it - all your brands will automatically appear!</p>
+                    </li>
+                </ol>
+
+                <div class="alert alert-success">
+                    <strong>✓ Pro Tip:</strong> Ensure your products have vendor information filled in for brands to appear correctly.
+                </div>
+            </section>
+
+            <section id="troubleshooting">
+                <h2>8. Troubleshooting</h2>
+
+                <h3>Common Issues & Solutions</h3>
+
+                <div class="alert alert-warning">
+                    <strong>Issue:</strong> Cart count not updating after adding products
+                </div>
+                <p><strong>Solution:</strong> This has been fixed in version 1.0.0. The header now listens for cart:updated events and automatically refreshes the cart count. If you're still experiencing issues:</p>
+                <ul>
+                    <li>Clear your browser cache</li>
+                    <li>Ensure JavaScript is enabled</li>
+                    <li>Check browser console for errors</li>
+                </ul>
+
+                <div class="alert alert-warning">
+                    <strong>Issue:</strong> Mobile menu not opening
+                </div>
+                <p><strong>Solution:</strong></p>
+                <ul>
+                    <li>Ensure JavaScript is enabled in browser settings</li>
+                    <li>Clear browser cache and cookies</li>
+                    <li>Try a different browser to isolate the issue</li>
+                    <li>Check if any third-party apps are conflicting</li>
+                </ul>
+
+                <div class="alert alert-warning">
+                    <strong>Issue:</strong> Products not displaying in featured products section
+                </div>
+                <p><strong>Solution:</strong></p>
+                <ol>
+                    <li>Ensure you've selected a collection in section settings</li>
+                    <li>Verify the collection has published products</li>
+                    <li>Check product availability (in stock vs out of stock)</li>
+                    <li>Ensure products are not archived</li>
+                </ol>
+
+                <div class="alert alert-warning">
+                    <strong>Issue:</strong> Filters not working on collection page
+                </div>
+                <p><strong>Solution:</strong></p>
+                <ul>
+                    <li>Clear browser cache completely</li>
+                    <li>Ensure products have vendor, type, and tag information</li>
+                    <li>Check that JavaScript is not blocked by ad blockers</li>
+                    <li>Verify browser compatibility (use latest version)</li>
+                </ul>
+
+                <div class="alert alert-warning">
+                    <strong>Issue:</strong> Brand page showing no brands
+                </div>
+                <p><strong>Solution:</strong></p>
+                <ol>
+                    <li>Ensure products have vendor/brand information filled in</li>
+                    <li>Products must be published and available</li>
+                    <li>Check that products are in the "all" collection</li>
+                    <li>Refresh the page or clear cache</li>
+                    <li>Verify the template is set to "page.brands"</li>
+                </ol>
+
+                <div class="alert alert-warning">
+                    <strong>Issue:</strong> Images not loading or appearing blurry
+                </div>
+                <p><strong>Solution:</strong></p>
+                <ul>
+                    <li>Check image file sizes (recommend under 2MB per image)</li>
+                    <li>Use recommended dimensions: 2048x2048px for product images</li>
+                    <li>Ensure images are uploaded correctly in Shopify admin</li>
+                    <li>Use JPG format for photos, PNG for logos/graphics</li>
+                    <li>Clear Shopify CDN cache if issues persist</li>
+                </ul>
+
+                <h3>Performance Optimization Tips</h3>
+                <ul>
+                    <li>Optimize images before uploading (use tools like TinyPNG)</li>
+                    <li>Limit the number of sections on homepage (8-10 max)</li>
+                    <li>Use Shopify's built-in image CDN (automatic)</li>
+                    <li>Enable lazy loading for images (built-in)</li>
+                    <li>Minimize use of heavy third-party apps</li>
+                    <li>Regularly clean up unused products and collections</li>
+                </ul>
+            </section>
+
+            <section id="support">
+                <h2>9. Support & Resources</h2>
+
+                <h3>Official Resources</h3>
+                <ul>
+                    <li><strong>Shopify Help Center:</strong> <a href="https://help.shopify.com/" target="_blank">https://help.shopify.com/</a></li>
+                    <li><strong>Shopify Community:</strong> <a href="https://community.shopify.com/" target="_blank">https://community.shopify.com/</a></li>
+                    <li><strong>Liquid Documentation:</strong> <a href="https://shopify.dev/docs/themes/liquid" target="_blank">https://shopify.dev/docs/themes/liquid</a></li>
+                    <li><strong>Theme Development:</strong> <a href="https://shopify.dev/docs/themes" target="_blank">https://shopify.dev/docs/themes</a></li>
+                </ul>
+
+                <h3>Best Practices</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>Backup Regularly</h4>
+                        <p>Always backup your theme before making major changes. Use the "Duplicate" feature in theme library.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Test Changes</h4>
+                        <p>Use theme editor preview mode to test changes before publishing them live.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Optimize Images</h4>
+                        <p>Compress images before upload. Aim for under 200KB per image for best performance.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Complete Product Info</h4>
+                        <p>Fill in all product fields: title, description, vendor, type, tags for best results.</p>
+                    </div>
+                </div>
+
+                <h3>Browser Compatibility</h3>
+                <p>This theme is fully compatible with:</p>
+                <ul>
+                    <li>Chrome (latest 2 versions)</li>
+                    <li>Firefox (latest 2 versions)</li>
+                    <li>Safari (latest 2 versions)</li>
+                    <li>Edge (latest 2 versions)</li>
+                    <li>Mobile browsers (iOS Safari 13+, Chrome Android)</li>
+                </ul>
+
+                <h3>Accessibility Features</h3>
+                <ul>
+                    <li>ARIA labels for all interactive elements</li>
+                    <li>Keyboard navigation support throughout</li>
+                    <li>Screen reader friendly markup</li>
+                    <li>WCAG 2.1 AA color contrast compliance</li>
+                    <li>Semantic HTML5 structure</li>
+                    <li>Focus indicators for keyboard users</li>
+                </ul>
+            </section>
+
+            <div class="support-box">
+                <h3>Need Help?</h3>
+                <p>Our team at HaxCode is here to support you with any questions or issues you may encounter.</p>
+                <div>
+                    <a href="https://www.haxcode.com" target="_blank" class="btn">Visit HaxCode</a>
+                    <a href="https://www.haxcode.com/contact-us/" target="_blank" class="btn btn-secondary">Contact Support</a>
+                </div>
+                <p style="margin-top: 1.5rem; font-size: 0.95rem;">
+                    For technical support, customization requests, or general inquiries, please visit our contact page.
+                </p>
+            </div>
+
+            <section>
+                <h2>Version History</h2>
+                <h3>Version 1.0.0 (January 10, 2026)</h3>
+                <ul>
+                    <li>✓ Initial release</li>
+                    <li>✓ Core features implementation</li>
+                    <li>✓ Fully responsive design</li>
+                    <li>✓ Live cart update functionality</li>
+                    <li>✓ Brand listing page with product counts</li>
+                    <li>✓ Advanced collection filtering system</li>
+                    <li>✓ Mobile-responsive navigation</li>
+                    <li>✓ Performance optimizations</li>
+                    <li>✓ Accessibility improvements</li>
+                    <li>✓ SEO-friendly structure</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Credits & License</h2>
+                <p><strong>Theme Author:</strong> HaxCode (<a href="https://www.haxcode.com" target="_blank">www.haxcode.com</a>)</p>
+                <p><strong>Based on:</strong> Shopify Skeleton Theme</p>
+                <p><strong>License:</strong> MIT License</p>
+
+                <p style="margin-top: 1.5rem;">Copyright &copy; 2026 HaxCode. All rights reserved.</p>
+
+                <p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+
+                <p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+
+                <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+            </section>
+        </div>
+
+        <footer>
+            <h3>Fragrance Boutique Theme</h3>
+            <p>Developed with excellence by <a href="https://www.haxcode.com" target="_blank">HaxCode</a></p>
+            <div class="footer-links">
+                <a href="https://www.haxcode.com" target="_blank">Website</a>
+                <a href="https://www.haxcode.com/contact-us/" target="_blank">Contact Us</a>
+                <a href="https://help.shopify.com/" target="_blank">Shopify Help</a>
+            </div>
+            <p style="margin-top: 1.5rem; opacity: 0.8;">
+                &copy; 2026 HaxCode. All rights reserved. | Version 1.0.0
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
