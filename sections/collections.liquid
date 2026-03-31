@@ -550,17 +550,13 @@
   const countEl   = document.getElementById('searchCount');
   const totalEl   = document.getElementById('totalCount');
 
-  // All collection cards — each is an <a class="collection-card">
   const cards = Array.from(document.querySelectorAll('.collection-card'));
 
-  // Update the hero "Brands" stat with real count
+  // Update hero stat with real count
   if (totalEl) totalEl.textContent = cards.length;
 
-  // Extract searchable text from a card (title only — first <p> inside content div)
-  function getLabel(card) {
-    const p = card.querySelector('.collection-card__content p');
-    return p ? p.textContent.toLowerCase() : card.textContent.toLowerCase();
-  }
+  // Always hide no-results on init
+  if (noResults) noResults.hidden = true;
 
   // Debounce utility
   function debounce(fn, ms) {
@@ -574,12 +570,12 @@
   function filterCards(query) {
     const q = query.trim().toLowerCase();
 
+    // Cleared — show everything, hide UI chrome
     if (!q) {
-      // Reset: show all
       cards.forEach(c => c.classList.remove('is-hidden'));
-      noResults.hidden = true;
-      metaBox.hidden   = true;
-      clearBtn.hidden  = true;
+      if (noResults) noResults.hidden = true;
+      metaBox.hidden  = true;
+      clearBtn.hidden = true;
       return;
     }
 
@@ -587,32 +583,31 @@
 
     let visible = 0;
     cards.forEach(card => {
-      const match = getLabel(card).includes(q);
+      // Use the title attribute on the <a> tag for matching
+      const label = (card.getAttribute('title') || '').toLowerCase();
+      const match = label.includes(q);
       card.classList.toggle('is-hidden', !match);
       if (match) visible++;
     });
 
-    // Update meta count
+    // Result count
     countEl.innerHTML = `<strong>${visible}</strong> brand${visible !== 1 ? 's' : ''} found`;
     metaBox.hidden = false;
 
-    // No results state
-    noResults.hidden = visible > 0;
+    // No-results state
+    if (noResults) noResults.hidden = visible > 0;
   }
 
-  // Input handler
   input.addEventListener('input', debounce(function () {
     filterCards(this.value);
   }, 180));
 
-  // Clear button
   clearBtn.addEventListener('click', function () {
     input.value = '';
     filterCards('');
     input.focus();
   });
 
-  // "Show all brands" inside no-results
   if (resetBtn) {
     resetBtn.addEventListener('click', function () {
       input.value = '';
@@ -621,7 +616,7 @@
     });
   }
 
-  // Keyboard shortcut: '/' focuses search (common UX pattern)
+  // Press '/' anywhere to focus the search
   document.addEventListener('keydown', function (e) {
     if (e.key === '/' && document.activeElement !== input) {
       e.preventDefault();
