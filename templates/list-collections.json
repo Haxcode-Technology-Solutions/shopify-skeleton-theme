@@ -91,50 +91,10 @@
         "grid_item_width": "collections--full",
         "grid_gap": 10
       }
-    },
-    "blocks_rPq7zW": {
-      "type": "_blocks",
-      "blocks": {
-        "ai_gen_block_67f1e2f_VYJKFP": {
-          "type": "ai_gen_block_67f1e2f",
-          "name": "All brands",
-          "settings": {
-            "heading": "All brands",
-            "heading_alignment": "center",
-            "columns_desktop": 4,
-            "columns_tablet": 3,
-            "columns_mobile": "2",
-            "max_width": 1200,
-            "grid_gap": 20,
-            "section_padding": 40,
-            "heading_spacing": 30,
-            "card_padding": 20,
-            "card_border_width": 1,
-            "card_border_radius": 8,
-            "card_background": "#ffffff",
-            "card_border_color": "#e5e5e5",
-            "card_hover_border_color": "#333333",
-            "heading_size": 32,
-            "brand_name_size": 16,
-            "product_count_size": 14,
-            "background_color": "#f9f9f9",
-            "heading_color": "#333333",
-            "brand_name_color": "#333333",
-            "product_count_color": "#666666"
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "ai_gen_block_67f1e2f_VYJKFP"
-      ],
-      "name": "Brand list",
-      "settings": {}
     }
   },
   "order": [
     "brand_carousel_qTWaja",
-    "collections_mktb3n",
-    "blocks_rPq7zW"
+    "collections_mktb3n"
   ]
 }
