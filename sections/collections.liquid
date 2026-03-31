@@ -556,7 +556,10 @@
   if (totalEl) totalEl.textContent = cards.length;
 
   // Always hide no-results on init
-  if (noResults) noResults.hidden = true;
+  if (noResults) {
+    noResults.hidden = true;
+    noResults.style.display = "none";
+  }
 
   // Debounce utility
   function debounce(fn, ms) {
