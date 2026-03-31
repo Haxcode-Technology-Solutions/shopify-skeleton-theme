@@ -162,14 +162,18 @@
                 </button>
               </div>
               <div class="product-card__info">
-                {% if product.vendor != blank %}
-                  <p class="product-card__vendor">{{ product.vendor }}</p>
-                {% endif %}
                 <div class="product-card__price">
-                  {% if product.compare_at_price > product.price %}
-                    <span class="product-card__price--compare">{{ product.compare_at_price | money }}</span>
-                  {% endif %}
-                  <span class="product-card__price--current">{{ product.price | money }}</span>
+                  <span class="product-card__price-left">
+                    {% if product.vendor != blank %}
+                      <p class="product-card__vendor">{{ product.vendor }}</p>
+                    {% endif %}
+                  </span>
+                  <span class="product-card__price-right">
+                    {% if product.compare_at_price > product.price %}
+                      <span class="product-card__price--compare">{{ product.compare_at_price | money }}</span>
+                    {% endif %}
+                    <span class="product-card__price--current">{{ product.price | money }}</span>
+                  </span>
                 </div>
                 <h3 class="product-card__title">
                   <a href="{{ product.url }}">{{ product.title }}</a>
