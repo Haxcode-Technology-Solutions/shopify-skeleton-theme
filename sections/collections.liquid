@@ -576,7 +576,10 @@
     // Cleared — show everything, hide UI chrome
     if (!q) {
       cards.forEach(c => c.classList.remove('is-hidden'));
-      if (noResults) noResults.hidden = true;
+      if (noResults) {
+        noResults.hidden = true;
+        noResults.style.display = "none";
+      }
       metaBox.hidden  = true;
       clearBtn.hidden = true;
       return;
@@ -598,7 +601,10 @@
     metaBox.hidden = false;
 
     // No-results state
-    if (noResults) noResults.hidden = visible > 0;
+    if (noResults) {
+      noResults.hidden = visible > 0;
+      noResults.style.display = (visible > 0) ? "none" : "block";
+    }
   }
 
   input.addEventListener('input', debounce(function () {
