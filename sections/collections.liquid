@@ -64,6 +64,7 @@
   style="--grid-gap: {{ section.settings.grid_gap }}px"
 >
   {% for collection in collections %}
+        <p>{{ collection }}</p>
     <a class="collection-card" href="{{ collection.url }}" title="{{ collection.title }}">
       {% if collection.featured_image %}
         {% render 'image',
