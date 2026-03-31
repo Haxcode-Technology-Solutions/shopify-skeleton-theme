@@ -84,6 +84,14 @@
         "show_navigation": true
       }
     },
+    "collections_mktb3n": {
+      "type": "collections",
+      "name": "t:general.collections_grid",
+      "settings": {
+        "grid_item_width": "collections--full",
+        "grid_gap": 10
+      }
+    },
     "blocks_rPq7zW": {
       "type": "_blocks",
       "blocks": {
@@ -108,9 +116,11 @@
             "card_hover_border_color": "#333333",
             "heading_size": 32,
             "brand_name_size": 16,
+            "product_count_size": 14,
             "background_color": "#f9f9f9",
             "heading_color": "#333333",
-            "brand_name_color": "#333333"
+            "brand_name_color": "#333333",
+            "product_count_color": "#666666"
           },
           "blocks": {}
         }
@@ -124,6 +134,7 @@
   },
   "order": [
     "brand_carousel_qTWaja",
+    "collections_mktb3n",
     "blocks_rPq7zW"
   ]
 }
