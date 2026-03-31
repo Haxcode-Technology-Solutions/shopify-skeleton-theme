@@ -593,6 +593,7 @@
       const label = (card.getAttribute('title') || '').toLowerCase();
       const match = label.includes(q);
       card.classList.toggle('is-hidden', !match);
+      card.style.display = (!match) ? "none" : "block";
       if (match) visible++;
     });
 
