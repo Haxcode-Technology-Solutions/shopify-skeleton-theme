@@ -64,26 +64,27 @@
   style="--grid-gap: {{ section.settings.grid_gap }}px"
 >
   {% for collection in collections %}
-        <p>{{ collection.products_count }}</p>
-    <a class="collection-card" href="{{ collection.url }}" title="{{ collection.title }}">
-      {% if collection.featured_image %}
-        {% render 'image',
-          class: 'collection-card__image',
-          image: collection.featured_image,
-          width: 600,
-          height: 600,
-          crop: 'center'
-        %}
-      {% endif %}
-
-      <div class="collection-card__content">
-        <p>{{ collection.title }}</p>
-
-        {% if collection.description %}
-          <p>{{ collection.description | strip_html | truncatewords: 15 }}</p>
+    {% if collection.products_count > 5 %} 
+      <a class="collection-card" href="{{ collection.url }}" title="{{ collection.title }}">
+        {% if collection.featured_image %}
+          {% render 'image',
+            class: 'collection-card__image',
+            image: collection.featured_image,
+            width: 600,
+            height: 600,
+            crop: 'center'
+          %}
         {% endif %}
-      </div>
-    </a>
+
+        <div class="collection-card__content">
+          <p>{{ collection.title }}</p>
+
+          {% if collection.description %}
+            <p>{{ collection.description | strip_html | truncatewords: 15 }}</p>
+          {% endif %}
+        </div>
+      </a>
+    {% endif %}
   {% endfor %}
 </div>
 
