@@ -12,9 +12,68 @@
     "main": {
       "type": "product",
       "settings": {}
+    },
+    "177495208173036764": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_29d4275_9yXc4z": {
+          "type": "ai_gen_block_29d4275",
+          "settings": {
+            "use_dynamic_products": true,
+            "max_products": 12,
+            "show_upsell_slider": true,
+            "upsell_title": "People also buy",
+            "upsell_products": [],
+            "show_crosssell_slider": true,
+            "crosssell_title": "Most sold",
+            "crosssell_products": [],
+            "show_stock_status": true,
+            "low_stock_threshold": 5,
+            "in_stock_text": "In stock",
+            "low_stock_text": "Only",
+            "out_stock_text": "Out of stock",
+            "stock_text_size": 12,
+            "in_stock_color": "#008060",
+            "low_stock_color": "#FFA500",
+            "out_stock_color": "#D82C0D",
+            "show_sale_badge": true,
+            "sale_badge_text": "Sale",
+            "badge_bg_color": "#D82C0D",
+            "badge_text_color": "#FFFFFF",
+            "desktop_width_percent": 100,
+            "products_per_row_desktop": 4,
+            "products_per_row_mobile": 2,
+            "product_gap": 16,
+            "slider_spacing": 40,
+            "section_padding": 40,
+            "title_font": "work_sans_n4",
+            "title_size": 28,
+            "title_color": "#333333",
+            "title_spacing": 20,
+            "product_title_size": 16,
+            "product_title_color": "#333333",
+            "product_price_size": 16,
+            "product_price_color": "#333333",
+            "image_border_radius": 8,
+            "show_navigation": true,
+            "nav_button_bg_color": "#FFFFFF",
+            "nav_button_color": "#333333",
+            "nav_button_border_color": "#CCCCCC",
+            "nav_button_hover_bg_color": "#333333",
+            "nav_button_hover_color": "#FFFFFF",
+            "background_color": "#FFFFFF"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_29d4275_9yXc4z"
+      ],
+      "settings": {}
     }
   },
   "order": [
-    "main"
+    "main",
+    "177495208173036764"
   ]
 }
