@@ -12,6 +12,8 @@
   {% endunless %}
 {% endfor %}
 
+{{ all_vendors }}
+
 {% assign vendor_list = all_vendors | split: '||' | sort %}
 
 {% style %}
