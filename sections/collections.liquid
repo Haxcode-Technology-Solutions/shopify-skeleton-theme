@@ -537,6 +537,104 @@
 }
 {% endstylesheet %}
 
+
+{% javascript %}
+(function () {
+  const input     = document.getElementById('collectionSearch');
+  const clearBtn  = document.getElementById('clearSearch');
+  const noResults = document.getElementById('noResults');
+  const resetBtn  = document.getElementById('resetSearch');
+  const metaBox   = document.getElementById('searchMeta');
+  const countEl   = document.getElementById('searchCount');
+  const totalEl   = document.getElementById('totalCount');
+
+  // All collection cards — each is an <a class="collection-card">
+  const cards = Array.from(document.querySelectorAll('.collection-card'));
+
+  // Update the hero "Brands" stat with real count
+  if (totalEl) totalEl.textContent = cards.length;
+
+  // Extract searchable text from a card (title only — first <p> inside content div)
+  function getLabel(card) {
+    const p = card.querySelector('.collection-card__content p');
+    return p ? p.textContent.toLowerCase() : card.textContent.toLowerCase();
+  }
+
+  // Debounce utility
+  function debounce(fn, ms) {
+    let timer;
+    return function (...args) {
+      clearTimeout(timer);
+      timer = setTimeout(() => fn.apply(this, args), ms);
+    };
+  }
+
+  function filterCards(query) {
+    const q = query.trim().toLowerCase();
+
+    if (!q) {
+      // Reset: show all
+      cards.forEach(c => c.classList.remove('is-hidden'));
+      noResults.hidden = true;
+      metaBox.hidden   = true;
+      clearBtn.hidden  = true;
+      return;
+    }
+
+    clearBtn.hidden = false;
+
+    let visible = 0;
+    cards.forEach(card => {
+      const match = getLabel(card).includes(q);
+      card.classList.toggle('is-hidden', !match);
+      if (match) visible++;
+    });
+
+    // Update meta count
+    countEl.innerHTML = `<strong>${visible}</strong> brand${visible !== 1 ? 's' : ''} found`;
+    metaBox.hidden = false;
+
+    // No results state
+    noResults.hidden = visible > 0;
+  }
+
+  // Input handler
+  input.addEventListener('input', debounce(function () {
+    filterCards(this.value);
+  }, 180));
+
+  // Clear button
+  clearBtn.addEventListener('click', function () {
+    input.value = '';
+    filterCards('');
+    input.focus();
+  });
+
+  // "Show all brands" inside no-results
+  if (resetBtn) {
+    resetBtn.addEventListener('click', function () {
+      input.value = '';
+      filterCards('');
+      input.focus();
+    });
+  }
+
+  // Keyboard shortcut: '/' focuses search (common UX pattern)
+  document.addEventListener('keydown', function (e) {
+    if (e.key === '/' && document.activeElement !== input) {
+      e.preventDefault();
+      input.focus();
+      input.select();
+    }
+  });
+})();
+{% endjavascript %}
+
+
+
+
+
+
 {% schema %}
 {
   "name": "t:general.collections_grid",
