@@ -40,7 +40,8 @@
   .ai-product-sliders__container-{{ ai_gen_id }} {
     display: flex;
     flex-direction: column;
-    gap: {{ block.settings.slider_spacing }}px;
+    margin-left: {{ block.settings.slider_spacing }}px;
+    margin-right: {{ block.settings.slider_spacing }}px;
   }
 
   .ai-product-sliders__slider-{{ ai_gen_id }} {
@@ -225,7 +226,7 @@
   }
 {% endstyle %}
 
-<product-sliders-{{ ai_gen_id }} class="ai-product-sliders-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+<product-sliders-{{ ai_gen_id }} class="ai-product-sliders-pdp ai-product-sliders-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
   <div class="ai-product-sliders__container-{{ ai_gen_id }}">
     {% if block.settings.show_upsell_slider %}
       <div class="ai-product-sliders__slider-{{ ai_gen_id }}" data-slider="upsell">
