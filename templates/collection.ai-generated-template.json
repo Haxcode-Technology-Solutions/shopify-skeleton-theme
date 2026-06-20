@@ -11,10 +11,53 @@
   "sections": {
     "main": {
       "type": "collection",
+      "disabled": true,
+      "settings": {}
+    },
+    "17819853489a34c25d": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_adef9cb_mbTFiF": {
+          "type": "ai_gen_block_adef9cb",
+          "settings": {
+            "section_padding_top": 40,
+            "section_padding_bottom": 40,
+            "sidebar_width": 260,
+            "grid_gap": 40,
+            "desktop_width_percent": 100,
+            "desktop_columns": 3,
+            "tablet_columns": 2,
+            "product_grid_gap": 24,
+            "product_card_radius": 8,
+            "filter_title_size": 14,
+            "product_title_size": 14,
+            "product_price_size": 14,
+            "product_count_size": 14,
+            "header_spacing": 24,
+            "filters_spacing": 20,
+            "filter_group_spacing": 20,
+            "background_color": "#FFFFFF",
+            "text_color": "#333333",
+            "border_color": "#E0E0E0",
+            "button_background": "#000000",
+            "button_text_color": "#FFFFFF",
+            "button_hover_background": "#333333",
+            "pill_background": "#F5F5F5",
+            "pill_text_color": "#333333",
+            "product_card_background": "#F9F9F9",
+            "sale_price_color": "#D82C0D"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_adef9cb_mbTFiF"
+      ],
       "settings": {}
     }
   },
   "order": [
-    "main"
+    "main",
+    "17819853489a34c25d"
   ]
 }
