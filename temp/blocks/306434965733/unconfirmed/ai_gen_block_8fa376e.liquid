@@ -1,6 +1,1448 @@
+{% doc %}
+  @prompt
+    Create a fully responsive collection page section with the following features:
+    1. Sidebar filters on the LEFT side on desktop — showing all available Shopify storefront filters (price range, availability, product type, vendor, tags, etc.) using Shopify's native filter API
+    2. On mobile (below 768px), filters should be hidden by default and accessible via a "Filter & Sort" toggle button that opens a slide-in drawer overlay
+    3. A responsive product grid: 1 column on small mobile, 2 columns on mobile/tablet, 3-4 columns on desktop
+    4. A "Sort by" dropdown visible on both desktop and mobile
+    5. Active filter pills/tags displayed above the product grid so users can see and remove applied filters
+    6. Product count display (e.g., "24 products")
+    7. Clean, premium aesthetic suitable for a luxury fragrance brand
+    8. Fully accessible (ARIA labels, keyboard navigation for the mobile drawer)
+    9. Use Shopify's native pagination or infinite scroll
+    10. Compatible with Shopify OS 2.0 themes, improve the design, to make it look like more engaging, beautifull, luxary and also add the price tags like sale, if there are any discount, etcc, sort the products, so that the out of stock items will be moved to the end of list
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-collection-page-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    max-width: {{ settings.max_page_width }};
+    margin: 0 auto;
+    padding: 0 {{ settings.min_page_margin }}px;
+    font-family: {{ settings.type_primary_font.family }}, {{ settings.type_primary_font.fallback_families }};
+    color: {{ settings.foreground_color }};
+  }
+
+  .ai-collection-container-{{ ai_gen_id }} {
+    display: flex;
+    gap: {{ block.settings.grid_gap }}px;
+    margin-top: {{ block.settings.section_spacing }}px;
+  }
+
+  .ai-collection-sidebar-{{ ai_gen_id }} {
+    flex: 0 0 {{ block.settings.sidebar_width }}px;
+    position: sticky;
+    top: 20px;
+    align-self: flex-start;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    background: {{ block.settings.sidebar_bg }};
+    padding: {{ block.settings.sidebar_padding }}px;
+    border-radius: {{ block.settings.sidebar_radius }}px;
+    box-shadow: {{ block.settings.sidebar_shadow }};
+  }
+
+  .ai-collection-main-{{ ai_gen_id }} {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .ai-collection-header-{{ ai_gen_id }} {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: {{ block.settings.grid_gap }}px;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid {{ block.settings.border_color }};
+  }
+
+  .ai-collection-count-{{ ai_gen_id }} {
+    font-size: {{ block.settings.text_size }}px;
+    color: {{ block.settings.text_color }};
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .ai-collection-sort-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .ai-collection-sort-label-{{ ai_gen_id }} {
+    font-size: {{ block.settings.text_size }}px;
+    color: {{ block.settings.text_color }};
+    font-weight: 500;
+  }
+
+  .ai-collection-sort-select-{{ ai_gen_id }} {
+    padding: 12px 18px;
+    border: 1px solid {{ block.settings.border_color }};
+    border-radius: {{ settings.input_corner_radius }}px;
+    background-color: {{ settings.background_color }};
+    color: {{ settings.foreground_color }};
+    font-size: {{ block.settings.text_size }}px;
+    cursor: pointer;
+    min-width: 200px;
+    transition: all 0.3s ease;
+  }
+
+  .ai-collection-sort-select-{{ ai_gen_id }}:hover {
+    border-color: {{ block.settings.button_bg_color }};
+  }
+
+  .ai-collection-mobile-toggle-{{ ai_gen_id }} {
+    display: none;
+    padding: 12px 24px;
+    background-color: {{ block.settings.button_bg_color }};
+    color: {{ block.settings.button_text_color }};
+    border: none;
+    border-radius: {{ settings.input_corner_radius }}px;
+    cursor: pointer;
+    font-size: {{ block.settings.text_size }}px;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .ai-collection-mobile-toggle-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_bg_color }};
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .ai-collection-active-filters-{{ ai_gen_id }} {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: {{ block.settings.grid_gap }}px;
+  }
+
+  .ai-collection-filter-pill-{{ ai_gen_id }} {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background-color: {{ block.settings.pill_bg_color }};
+    color: {{ block.settings.pill_text_color }};
+    border-radius: 24px;
+    font-size: 13px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 1px solid {{ block.settings.border_color }};
+    font-weight: 500;
+  }
+
+  .ai-collection-filter-pill-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.pill_hover_bg_color }};
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .ai-collection-filter-remove-{{ ai_gen_id }} {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  .ai-collection-clear-all-{{ ai_gen_id }} {
+    padding: 10px 16px;
+    background: none;
+    border: 1px solid {{ block.settings.border_color }};
+    border-radius: 24px;
+    color: {{ settings.foreground_color }};
+    font-size: 13px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+
+  .ai-collection-clear-all-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.pill_bg_color }};
+    transform: translateY(-1px);
+  }
+
+  .ai-collection-filters-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: {{ block.settings.filter_spacing }}px;
+  }
+
+  .ai-collection-filter-group-{{ ai_gen_id }} {
+    border-bottom: 1px solid {{ block.settings.border_color }};
+    padding-bottom: {{ block.settings.filter_spacing }}px;
+  }
+
+  .ai-collection-filter-group-{{ ai_gen_id }}:last-child {
+    border-bottom: none;
+  }
+
+  .ai-collection-filter-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.filter_title_size }}px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: {{ settings.foreground_color }};
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    letter-spacing: 0.3px;
+  }
+
+  .ai-collection-filter-toggle-{{ ai_gen_id }} {
+    transition: transform 0.3s ease;
+    font-size: 12px;
+  }
+
+  .ai-collection-filter-toggle-{{ ai_gen_id }}.collapsed {
+    transform: rotate(-90deg);
+  }
+
+  .ai-collection-filter-options-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+
+  .ai-collection-filter-options-{{ ai_gen_id }}.collapsed {
+    display: none;
+  }
+
+  .ai-collection-filter-option-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .ai-collection-filter-checkbox-{{ ai_gen_id }} {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: {{ block.settings.button_bg_color }};
+  }
+
+  .ai-collection-filter-label-{{ ai_gen_id }} {
+    font-size: {{ block.settings.text_size }}px;
+    color: {{ settings.foreground_color }};
+    cursor: pointer;
+    flex: 1;
+  }
+
+  .ai-collection-filter-count-{{ ai_gen_id }} {
+    font-size: 12px;
+    color: #999;
+  }
+
+  .ai-collection-price-range-{{ ai_gen_id }} {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .ai-collection-price-input-{{ ai_gen_id }} {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1px solid {{ block.settings.border_color }};
+    border-radius: {{ settings.input_corner_radius }}px;
+    font-size: {{ block.settings.text_size }}px;
+    transition: border-color 0.3s ease;
+  }
+
+  .ai-collection-price-input-{{ ai_gen_id }}:focus {
+    outline: none;
+    border-color: {{ block.settings.button_bg_color }};
+  }
+
+  .ai-collection-price-separator-{{ ai_gen_id }} {
+    color: #999;
+  }
+
+  .ai-collection-grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat({{ block.settings.desktop_columns }}, 1fr);
+    gap: {{ block.settings.grid_gap }}px;
+    margin-bottom: {{ block.settings.section_spacing }}px;
+  }
+
+  .ai-collection-product-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.3s ease;
+    position: relative;
+  }
+
+  .ai-collection-product-{{ ai_gen_id }}:hover {
+    transform: translateY(-4px);
+  }
+
+  .ai-collection-product-{{ ai_gen_id }}.out-of-stock {
+    opacity: 0.6;
+  }
+
+  .ai-collection-product-image-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    margin-bottom: 16px;
+  }
+
+  .ai-collection-product-image-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+    overflow: hidden;
+    background-color: #f9f9f9;
+    border-radius: {{ block.settings.product_image_radius }}px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.3s ease;
+  }
+
+  .ai-collection-product-{{ ai_gen_id }}:hover .ai-collection-product-image-{{ ai_gen_id }} {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  .ai-collection-product-image-{{ ai_gen_id }} img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .ai-collection-product-{{ ai_gen_id }}:hover .ai-collection-product-image-{{ ai_gen_id }} img {
+    transform: scale(1.05);
+  }
+
+  .ai-collection-badge-{{ ai_gen_id }} {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    z-index: 2;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  .ai-collection-badge-sale-{{ ai_gen_id }} {
+    background: linear-gradient(135deg, {{ block.settings.sale_badge_bg }} 0%, {{ block.settings.sale_badge_bg_end }} 100%);
+    color: {{ block.settings.sale_badge_text }};
+  }
+
+  .ai-collection-badge-new-{{ ai_gen_id }} {
+    background: linear-gradient(135deg, {{ block.settings.new_badge_bg }} 0%, {{ block.settings.new_badge_bg_end }} 100%);
+    color: {{ block.settings.new_badge_text }};
+  }
+
+  .ai-collection-badge-sold-{{ ai_gen_id }} {
+    background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+    color: #ffffff;
+  }
+
+  .ai-collection-product-info-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .ai-collection-product-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.product_title_size }}px;
+    font-weight: 600;
+    margin: 0;
+    color: {{ settings.foreground_color }};
+    line-height: 1.4;
+    letter-spacing: 0.2px;
+  }
+
+  .ai-collection-product-price-{{ ai_gen_id }} {
+    font-size: {{ block.settings.product_price_size }}px;
+    color: {{ settings.foreground_color }};
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .ai-collection-price-current-{{ ai_gen_id }} {
+    font-weight: 700;
+    font-size: {{ block.settings.product_price_size | plus: 2 }}px;
+  }
+
+  .ai-collection-price-sale-{{ ai_gen_id }} {
+    color: {{ block.settings.sale_color }};
+  }
+
+  .ai-collection-price-compare-{{ ai_gen_id }} {
+    text-decoration: line-through;
+    color: #999;
+    font-size: {{ block.settings.product_price_size | minus: 2 }}px;
+  }
+
+  .ai-collection-price-discount-{{ ai_gen_id }} {
+    background-color: {{ block.settings.sale_badge_bg }};
+    color: {{ block.settings.sale_badge_text }};
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+  }
+
+  .ai-collection-pagination-{{ ai_gen_id }} {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: {{ block.settings.section_spacing }}px;
+  }
+
+  .ai-collection-pagination-link-{{ ai_gen_id }} {
+    padding: 12px 18px;
+    border: 1px solid {{ block.settings.border_color }};
+    border-radius: {{ settings.input_corner_radius }}px;
+    text-decoration: none;
+    color: {{ settings.foreground_color }};
+    font-size: {{ block.settings.text_size }}px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+  }
+
+  .ai-collection-pagination-link-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.pill_bg_color }};
+    transform: translateY(-1px);
+  }
+
+  .ai-collection-pagination-link-{{ ai_gen_id }}.active {
+    background-color: {{ block.settings.button_bg_color }};
+    color: {{ block.settings.button_text_color }};
+    border-color: {{ block.settings.button_bg_color }};
+  }
+
+  .ai-collection-pagination-link-{{ ai_gen_id }}.disabled {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  .ai-collection-mobile-drawer-{{ ai_gen_id }} {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+  }
+
+  .ai-collection-mobile-drawer-{{ ai_gen_id }}.active {
+    display: block;
+  }
+
+  .ai-collection-drawer-overlay-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(2px);
+  }
+
+  .ai-collection-drawer-content-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 85%;
+    max-width: 400px;
+    height: 100%;
+    background-color: {{ settings.background_color }};
+    overflow-y: auto;
+    padding: 24px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .ai-collection-mobile-drawer-{{ ai_gen_id }}.active .ai-collection-drawer-content-{{ ai_gen_id }} {
+    transform: translateX(0);
+  }
+
+  .ai-collection-drawer-header-{{ ai_gen_id }} {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid {{ block.settings.border_color }};
+  }
+
+  .ai-collection-drawer-title-{{ ai_gen_id }} {
+    font-size: 20px;
+    font-weight: 700;
+    color: {{ settings.foreground_color }};
+    letter-spacing: 0.3px;
+  }
+
+  .ai-collection-drawer-close-{{ ai_gen_id }} {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    color: {{ settings.foreground_color }};
+    transition: opacity 0.3s ease;
+  }
+
+  .ai-collection-drawer-close-{{ ai_gen_id }}:hover {
+    opacity: 0.6;
+  }
+
+  .ai-collection-drawer-footer-{{ ai_gen_id }} {
+    position: sticky;
+    bottom: 0;
+    background-color: {{ settings.background_color }};
+    padding: 16px 0;
+    border-top: 1px solid {{ block.settings.border_color }};
+    margin-top: 24px;
+  }
+
+  .ai-collection-drawer-apply-{{ ai_gen_id }} {
+    width: 100%;
+    padding: 16px 24px;
+    background-color: {{ block.settings.button_bg_color }};
+    color: {{ block.settings.button_text_color }};
+    border: none;
+    border-radius: {{ settings.input_corner_radius }}px;
+    cursor: pointer;
+    font-size: {{ block.settings.text_size }}px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .ai-collection-drawer-apply-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_bg_color }};
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .ai-collection-empty-{{ ai_gen_id }} {
+    text-align: center;
+    padding: 80px 20px;
+    color: #999;
+  }
+
+  .ai-collection-empty-title-{{ ai_gen_id }} {
+    font-size: 28px;
+    margin-bottom: 12px;
+    color: {{ settings.foreground_color }};
+    font-weight: 600;
+  }
+
+  .ai-collection-empty-text-{{ ai_gen_id }} {
+    font-size: {{ block.settings.text_size }}px;
+  }
+
+  @media screen and (max-width: 1024px) {
+    .ai-collection-grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat({{ block.settings.tablet_columns }}, 1fr);
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .ai-collection-sidebar-{{ ai_gen_id }} {
+      display: none;
+    }
+
+    .ai-collection-mobile-toggle-{{ ai_gen_id }} {
+      display: inline-flex;
+    }
+
+    .ai-collection-grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .ai-collection-header-{{ ai_gen_id }} {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .ai-collection-sort-{{ ai_gen_id }} {
+      width: 100%;
+    }
+
+    .ai-collection-sort-select-{{ ai_gen_id }} {
+      flex: 1;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .ai-collection-grid-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+    }
+  }
+{% endstyle %}
+
+<collection-filters-{{ ai_gen_id }} class="ai-collection-page-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-collection-container-{{ ai_gen_id }}">
+    <aside class="ai-collection-sidebar-{{ ai_gen_id }}">
+      <div class="ai-collection-filters-{{ ai_gen_id }}">
+        {% for filter in collection.filters %}
+          <div class="ai-collection-filter-group-{{ ai_gen_id }}">
+            <div class="ai-collection-filter-title-{{ ai_gen_id }}" data-filter-toggle="{{ filter.label }}">
+              {{ filter.label }}
+              <span class="ai-collection-filter-toggle-{{ ai_gen_id }}">▼</span>
+            </div>
+            <div class="ai-collection-filter-options-{{ ai_gen_id }}" data-filter-options="{{ filter.label }}">
+              {% case filter.type %}
+                {% when 'price_range' %}
+                  <form class="ai-collection-price-range-{{ ai_gen_id }}">
+                    <input
+                      type="number"
+                      name="{{ filter.min_value.param_name }}"
+                      class="ai-collection-price-input-{{ ai_gen_id }}"
+                      placeholder="{{ filter.range_min | money_without_currency | replace: '.00', '' }}"
+                      min="{{ filter.range_min | money_without_currency | replace: '.00', '' }}"
+                      max="{{ filter.range_max | money_without_currency | replace: '.00', '' }}"
+                      {% if filter.min_value.value %}value="{{ filter.min_value.value | money_without_currency | replace: '.00', '' }}"{% endif %}
+                      aria-label="Minimum price"
+                    >
+                    <span class="ai-collection-price-separator-{{ ai_gen_id }}">—</span>
+                    <input
+                      type="number"
+                      name="{{ filter.max_value.param_name }}"
+                      class="ai-collection-price-input-{{ ai_gen_id }}"
+                      placeholder="{{ filter.range_max | money_without_currency | replace: '.00', '' }}"
+                      min="{{ filter.range_min | money_without_currency | replace: '.00', '' }}"
+                      max="{{ filter.range_max | money_without_currency | replace: '.00', '' }}"
+                      {% if filter.max_value.value %}value="{{ filter.max_value.value | money_without_currency | replace: '.00', '' }}"{% endif %}
+                      aria-label="Maximum price"
+                    >
+                  </form>
+                {% else %}
+                  {% for value in filter.values %}
+                    <div class="ai-collection-filter-option-{{ ai_gen_id }}">
+                      <input
+                        type="checkbox"
+                        name="{{ value.param_name }}"
+                        value="{{ value.value }}"
+                        id="filter-{{ filter.label | handleize }}-{{ value.value | handleize }}-{{ ai_gen_id }}"
+                        {% if value.active %}checked{% endif %}
+                        class="ai-collection-filter-checkbox-{{ ai_gen_id }}"
+                      >
+                      <label
+                        for="filter-{{ filter.label | handleize }}-{{ value.value | handleize }}-{{ ai_gen_id }}"
+                        class="ai-collection-filter-label-{{ ai_gen_id }}"
+                      >
+                        {{ value.label }}
+                      </label>
+                      <span class="ai-collection-filter-count-{{ ai_gen_id }}">({{ value.count }})</span>
+                    </div>
+                  {% endfor %}
+              {% endcase %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </aside>
+
+    <main class="ai-collection-main-{{ ai_gen_id }}">
+      <div class="ai-collection-header-{{ ai_gen_id }}">
+        <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
+          <button
+            class="ai-collection-mobile-toggle-{{ ai_gen_id }}"
+            aria-label="Open filters"
+            aria-expanded="false"
+          >
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="3" y1="5" x2="17" y2="5"></line>
+              <line x1="3" y1="10" x2="17" y2="10"></line>
+              <line x1="3" y1="15" x2="17" y2="15"></line>
+            </svg>
+            Filter & Sort
+          </button>
+          <div class="ai-collection-count-{{ ai_gen_id }}">
+            {{ collection.products_count }}
+            {% if collection.products_count == 1 %}
+              product
+            {% else %}
+              products
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="ai-collection-sort-{{ ai_gen_id }}">
+          <label for="sort-by-{{ ai_gen_id }}" class="ai-collection-sort-label-{{ ai_gen_id }}">Sort by:</label>
+          <select id="sort-by-{{ ai_gen_id }}" class="ai-collection-sort-select-{{ ai_gen_id }}" aria-label="Sort products">
+            <option value="manual" {% if collection.sort_by == 'manual' %}selected{% endif %}>Featured</option>
+            <option value="best-selling" {% if collection.sort_by == 'best-selling' %}selected{% endif %}>Best selling</option>
+            <option value="title-ascending" {% if collection.sort_by == 'title-ascending' %}selected{% endif %}>Alphabetically, A-Z</option>
+            <option value="title-descending" {% if collection.sort_by == 'title-descending' %}selected{% endif %}>Alphabetically, Z-A</option>
+            <option value="price-ascending" {% if collection.sort_by == 'price-ascending' %}selected{% endif %}>Price, low to high</option>
+            <option value="price-descending" {% if collection.sort_by == 'price-descending' %}selected{% endif %}>Price, high to low</option>
+            <option value="created-ascending" {% if collection.sort_by == 'created-ascending' %}selected{% endif %}>Date, old to new</option>
+            <option value="created-descending" {% if collection.sort_by == 'created-descending' %}selected{% endif %}>Date, new to old</option>
+          </select>
+        </div>
+      </div>
+
+      {% if collection.filters.size > 0 %}
+        {% assign active_filters_count = 0 %}
+        {% for filter in collection.filters %}
+          {% if filter.type == 'price_range' %}
+            {% if filter.min_value.value or filter.max_value.value %}
+              {% assign active_filters_count = active_filters_count | plus: 1 %}
+            {% endif %}
+          {% else %}
+            {% for value in filter.values %}
+              {% if value.active %}
+                {% assign active_filters_count = active_filters_count | plus: 1 %}
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+        {% endfor %}
+
+        {% if active_filters_count > 0 %}
+          <div class="ai-collection-active-filters-{{ ai_gen_id }}">
+            {% for filter in collection.filters %}
+              {% if filter.type == 'price_range' %}
+                {% if filter.min_value.value or filter.max_value.value %}
+                  <a href="{{ filter.url_to_remove }}" class="ai-collection-filter-pill-{{ ai_gen_id }}">
+                    {% if filter.min_value.value %}{{ filter.min_value.value | money }}{% else %}{{ filter.range_min | money }}{% endif %}
+                    -
+                    {% if filter.max_value.value %}{{ filter.max_value.value | money }}{% else %}{{ filter.range_max | money }}{% endif %}
+                    <span class="ai-collection-filter-remove-{{ ai_gen_id }}">×</span>
+                  </a>
+                {% endif %}
+              {% else %}
+                {% for value in filter.values %}
+                  {% if value.active %}
+                    <a href="{{ value.url_to_remove }}" class="ai-collection-filter-pill-{{ ai_gen_id }}">
+                      {{ value.label }}
+                      <span class="ai-collection-filter-remove-{{ ai_gen_id }}">×</span>
+                    </a>
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+            {% endfor %}
+            <a href="{{ collection.url }}" class="ai-collection-clear-all-{{ ai_gen_id }}">Clear all</a>
+          </div>
+        {% endif %}
+      {% endif %}
+
+      {% if collection.products.size > 0 %}
+        {% assign in_stock_products = '' %}
+        {% assign out_of_stock_products = '' %}
+        
+        {% for product in collection.products %}
+          {% if product.available %}
+            {% assign in_stock_products = in_stock_products | append: product.id | append: ',' %}
+          {% else %}
+            {% assign out_of_stock_products = out_of_stock_products | append: product.id | append: ',' %}
+          {% endif %}
+        {% endfor %}
+        
+        {% assign in_stock_ids = in_stock_products | split: ',' %}
+        {% assign out_of_stock_ids = out_of_stock_products | split: ',' %}
+        
+        <div class="ai-collection-grid-{{ ai_gen_id }}">
+          {% for product_id in in_stock_ids %}
+            {% if product_id != '' %}
+              {% for product in collection.products %}
+                {% assign product_id_str = product.id | append: '' %}
+                {% if product_id_str == product_id %}
+                  <a href="{{ product.url }}" class="ai-collection-product-{{ ai_gen_id }}">
+                    <div class="ai-collection-product-image-wrapper-{{ ai_gen_id }}">
+                      {% if product.compare_at_price > product.price %}
+                        {% assign discount_percent = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round %}
+                        <div class="ai-collection-badge-{{ ai_gen_id }} ai-collection-badge-sale-{{ ai_gen_id }}">
+                          -{{ discount_percent }}%
+                        </div>
+                      {% elsif block.settings.show_new_badge %}
+                        {% assign days_since_published = 'now' | date: '%s' | minus: product.published_at | date: '%s' | divided_by: 86400 %}
+                        {% if days_since_published <= block.settings.new_badge_days %}
+                          <div class="ai-collection-badge-{{ ai_gen_id }} ai-collection-badge-new-{{ ai_gen_id }}">
+                            New
+                          </div>
+                        {% endif %}
+                      {% endif %}
+                      <div class="ai-collection-product-image-{{ ai_gen_id }}">
+                        {% if product.featured_image %}
+                          <img
+                            src="{{ product.featured_image | image_url: width: 600 }}"
+                            alt="{{ product.featured_image.alt | escape }}"
+                            loading="lazy"
+                            width="600"
+                            height="600"
+                          >
+                        {% else %}
+                          {{ 'product-1' | placeholder_svg_tag }}
+                        {% endif %}
+                      </div>
+                    </div>
+                    <div class="ai-collection-product-info-{{ ai_gen_id }}">
+                      <h3 class="ai-collection-product-title-{{ ai_gen_id }}">{{ product.title }}</h3>
+                      <div class="ai-collection-product-price-{{ ai_gen_id }}">
+                        {% if product.compare_at_price > product.price %}
+                          <span class="ai-collection-price-current-{{ ai_gen_id }} ai-collection-price-sale-{{ ai_gen_id }}">{{ product.price | money }}</span>
+                          <span class="ai-collection-price-compare-{{ ai_gen_id }}">{{ product.compare_at_price | money }}</span>
+                          {% if block.settings.show_discount_badge %}
+                            {% assign discount_percent = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round %}
+                            <span class="ai-collection-price-discount-{{ ai_gen_id }}">SAVE {{ discount_percent }}%</span>
+                          {% endif %}
+                        {% else %}
+                          <span class="ai-collection-price-current-{{ ai_gen_id }}">{{ product.price | money }}</span>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </a>
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+          
+          {% for product_id in out_of_stock_ids %}
+            {% if product_id != '' %}
+              {% for product in collection.products %}
+                {% assign product_id_str = product.id | append: '' %}
+                {% if product_id_str == product_id %}
+                  <a href="{{ product.url }}" class="ai-collection-product-{{ ai_gen_id }} out-of-stock">
+                    <div class="ai-collection-product-image-wrapper-{{ ai_gen_id }}">
+                      <div class="ai-collection-badge-{{ ai_gen_id }} ai-collection-badge-sold-{{ ai_gen_id }}">
+                        Sold Out
+                      </div>
+                      <div class="ai-collection-product-image-{{ ai_gen_id }}">
+                        {% if product.featured_image %}
+                          <img
+                            src="{{ product.featured_image | image_url: width: 600 }}"
+                            alt="{{ product.featured_image.alt | escape }}"
+                            loading="lazy"
+                            width="600"
+                            height="600"
+                          >
+                        {% else %}
+                          {{ 'product-1' | placeholder_svg_tag }}
+                        {% endif %}
+                      </div>
+                    </div>
+                    <div class="ai-collection-product-info-{{ ai_gen_id }}">
+                      <h3 class="ai-collection-product-title-{{ ai_gen_id }}">{{ product.title }}</h3>
+                      <div class="ai-collection-product-price-{{ ai_gen_id }}">
+                        {% if product.compare_at_price > product.price %}
+                          <span class="ai-collection-price-current-{{ ai_gen_id }} ai-collection-price-sale-{{ ai_gen_id }}">{{ product.price | money }}</span>
+                          <span class="ai-collection-price-compare-{{ ai_gen_id }}">{{ product.compare_at_price | money }}</span>
+                        {% else %}
+                          <span class="ai-collection-price-current-{{ ai_gen_id }}">{{ product.price | money }}</span>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </a>
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        {% if paginate.pages > 1 %}
+          <div class="ai-collection-pagination-{{ ai_gen_id }}">
+            {% if paginate.previous %}
+              <a href="{{ paginate.previous.url }}" class="ai-collection-pagination-link-{{ ai_gen_id }}">Previous</a>
+            {% else %}
+              <span class="ai-collection-pagination-link-{{ ai_gen_id }} disabled">Previous</span>
+            {% endif %}
+
+            {% for part in paginate.parts %}
+              {% if part.is_link %}
+                <a href="{{ part.url }}" class="ai-collection-pagination-link-{{ ai_gen_id }}">{{ part.title }}</a>
+              {% else %}
+                {% if part.title == paginate.current_page %}
+                  <span class="ai-collection-pagination-link-{{ ai_gen_id }} active">{{ part.title }}</span>
+                {% else %}
+                  <span class="ai-collection-pagination-link-{{ ai_gen_id }}">{{ part.title }}</span>
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+
+            {% if paginate.next %}
+              <a href="{{ paginate.next.url }}" class="ai-collection-pagination-link-{{ ai_gen_id }}">Next</a>
+            {% else %}
+              <span class="ai-collection-pagination-link-{{ ai_gen_id }} disabled">Next</span>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% else %}
+        <div class="ai-collection-empty-{{ ai_gen_id }}">
+          <h2 class="ai-collection-empty-title-{{ ai_gen_id }}">No products found</h2>
+          <p class="ai-collection-empty-text-{{ ai_gen_id }}">Try adjusting your filters or search criteria</p>
+        </div>
+      {% endif %}
+    </main>
+  </div>
+
+  <div class="ai-collection-mobile-drawer-{{ ai_gen_id }}" role="dialog" aria-modal="true" aria-label="Filters">
+    <div class="ai-collection-drawer-overlay-{{ ai_gen_id }}"></div>
+    <div class="ai-collection-drawer-content-{{ ai_gen_id }}">
+      <div class="ai-collection-drawer-header-{{ ai_gen_id }}">
+        <h2 class="ai-collection-drawer-title-{{ ai_gen_id }}">Filter & Sort</h2>
+        <button class="ai-collection-drawer-close-{{ ai_gen_id }}" aria-label="Close filters">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="ai-collection-filters-{{ ai_gen_id }}">
+        {% for filter in collection.filters %}
+          <div class="ai-collection-filter-group-{{ ai_gen_id }}">
+            <div class="ai-collection-filter-title-{{ ai_gen_id }}" data-filter-toggle-mobile="{{ filter.label }}">
+              {{ filter.label }}
+              <span class="ai-collection-filter-toggle-{{ ai_gen_id }}">▼</span>
+            </div>
+            <div class="ai-collection-filter-options-{{ ai_gen_id }}" data-filter-options-mobile="{{ filter.label }}">
+              {% case filter.type %}
+                {% when 'price_range' %}
+                  <form class="ai-collection-price-range-{{ ai_gen_id }}">
+                    <input
+                      type="number"
+                      name="{{ filter.min_value.param_name }}"
+                      class="ai-collection-price-input-{{ ai_gen_id }}"
+                      placeholder="{{ filter.range_min | money_without_currency | replace: '.00', '' }}"
+                      min="{{ filter.range_min | money_without_currency | replace: '.00', '' }}"
+                      max="{{ filter.range_max | money_without_currency | replace: '.00', '' }}"
+                      {% if filter.min_value.value %}value="{{ filter.min_value.value | money_without_currency | replace: '.00', '' }}"{% endif %}
+                      aria-label="Minimum price"
+                    >
+                    <span class="ai-collection-price-separator-{{ ai_gen_id }}">—</span>
+                    <input
+                      type="number"
+                      name="{{ filter.max_value.param_name }}"
+                      class="ai-collection-price-input-{{ ai_gen_id }}"
+                      placeholder="{{ filter.range_max | money_without_currency | replace: '.00', '' }}"
+                      min="{{ filter.range_min | money_without_currency | replace: '.00', '' }}"
+                      max="{{ filter.range_max | money_without_currency | replace: '.00', '' }}"
+                      {% if filter.max_value.value %}value="{{ filter.max_value.value | money_without_currency | replace: '.00', '' }}"{% endif %}
+                      aria-label="Maximum price"
+                    >
+                  </form>
+                {% else %}
+                  {% for value in filter.values %}
+                    <div class="ai-collection-filter-option-{{ ai_gen_id }}">
+                      <input
+                        type="checkbox"
+                        name="{{ value.param_name }}"
+                        value="{{ value.value }}"
+                        id="filter-mobile-{{ filter.label | handleize }}-{{ value.value | handleize }}-{{ ai_gen_id }}"
+                        {% if value.active %}checked{% endif %}
+                        class="ai-collection-filter-checkbox-{{ ai_gen_id }}"
+                      >
+                      <label
+                        for="filter-mobile-{{ filter.label | handleize }}-{{ value.value | handleize }}-{{ ai_gen_id }}"
+                        class="ai-collection-filter-label-{{ ai_gen_id }}"
+                      >
+                        {{ value.label }}
+                      </label>
+                      <span class="ai-collection-filter-count-{{ ai_gen_id }}">({{ value.count }})</span>
+                    </div>
+                  {% endfor %}
+              {% endcase %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      <div class="ai-collection-drawer-footer-{{ ai_gen_id }}">
+        <button class="ai-collection-drawer-apply-{{ ai_gen_id }}">View results</button>
+      </div>
+    </div>
+  </div>
+</collection-filters-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class CollectionFilters{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.mobileToggle = this.querySelector('.ai-collection-mobile-toggle-{{ ai_gen_id }}');
+        this.mobileDrawer = this.querySelector('.ai-collection-mobile-drawer-{{ ai_gen_id }}');
+        this.drawerOverlay = this.querySelector('.ai-collection-drawer-overlay-{{ ai_gen_id }}');
+        this.drawerClose = this.querySelector('.ai-collection-drawer-close-{{ ai_gen_id }}');
+        this.drawerApply = this.querySelector('.ai-collection-drawer-apply-{{ ai_gen_id }}');
+        this.sortSelect = this.querySelector('#sort-by-{{ ai_gen_id }}');
+        this.filterCheckboxes = this.querySelectorAll('.ai-collection-filter-checkbox-{{ ai_gen_id }}');
+        this.priceInputs = this.querySelectorAll('.ai-collection-price-input-{{ ai_gen_id }}');
+        this.filterToggles = this.querySelectorAll('[data-filter-toggle]');
+        this.filterTogglesMobile = this.querySelectorAll('[data-filter-toggle-mobile]');
+      }
+
+      connectedCallback() {
+        this.setupEventListeners();
+        this.setupFilterToggles();
+      }
+
+      setupEventListeners() {
+        if (this.mobileToggle) {
+          this.mobileToggle.addEventListener('click', () => this.openDrawer());
+        }
+
+        if (this.drawerOverlay) {
+          this.drawerOverlay.addEventListener('click', () => this.closeDrawer());
+        }
+
+        if (this.drawerClose) {
+          this.drawerClose.addEventListener('click', () => this.closeDrawer());
+        }
+
+        if (this.drawerApply) {
+          this.drawerApply.addEventListener('click', () => this.applyFilters());
+        }
+
+        if (this.sortSelect) {
+          this.sortSelect.addEventListener('change', (e) => this.handleSort(e));
+        }
+
+        this.filterCheckboxes.forEach((checkbox) => {
+          checkbox.addEventListener('change', (e) => this.handleFilterChange(e));
+        });
+
+        this.priceInputs.forEach((input) => {
+          input.addEventListener('change', (e) => this.handlePriceChange(e));
+        });
+
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && this.mobileDrawer.classList.contains('active')) {
+            this.closeDrawer();
+          }
+        });
+      }
+
+      setupFilterToggles() {
+        this.filterToggles.forEach((toggle) => {
+          toggle.addEventListener('click', () => {
+            const filterLabel = toggle.getAttribute('data-filter-toggle');
+            const options = this.querySelector(`[data-filter-options="${filterLabel}"]`);
+            const icon = toggle.querySelector('.ai-collection-filter-toggle-{{ ai_gen_id }}');
+            
+            if (options && icon) {
+              options.classList.toggle('collapsed');
+              icon.classList.toggle('collapsed');
+            }
+          });
+        });
+
+        this.filterTogglesMobile.forEach((toggle) => {
+          toggle.addEventListener('click', () => {
+            const filterLabel = toggle.getAttribute('data-filter-toggle-mobile');
+            const options = this.querySelector(`[data-filter-options-mobile="${filterLabel}"]`);
+            const icon = toggle.querySelector('.ai-collection-filter-toggle-{{ ai_gen_id }}');
+            
+            if (options && icon) {
+              options.classList.toggle('collapsed');
+              icon.classList.toggle('collapsed');
+            }
+          });
+        });
+      }
+
+      openDrawer() {
+        this.mobileDrawer.classList.add('active');
+        this.mobileToggle.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+      }
+
+      closeDrawer() {
+        this.mobileDrawer.classList.remove('active');
+        this.mobileToggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      }
+
+      applyFilters() {
+        this.closeDrawer();
+      }
+
+      handleSort(e) {
+        const sortValue = e.target.value;
+        const url = new URL(window.location.href);
+        url.searchParams.set('sort_by', sortValue);
+        window.location.href = url.toString();
+      }
+
+      handleFilterChange(e) {
+        const checkbox = e.target;
+        const url = new URL(window.location.href);
+        
+        if (checkbox.checked) {
+          url.searchParams.append(checkbox.name, checkbox.value);
+        } else {
+          const params = url.searchParams.getAll(checkbox.name);
+          url.searchParams.delete(checkbox.name);
+          params.forEach((param) => {
+            if (param !== checkbox.value) {
+              url.searchParams.append(checkbox.name, param);
+            }
+          });
+        }
+        
+        window.location.href = url.toString();
+      }
+
+      handlePriceChange(e) {
+        const input = e.target;
+        const form = input.closest('form');
+        const url = new URL(window.location.href);
+        
+        const inputs = form.querySelectorAll('input');
+        inputs.forEach((inp) => {
+          if (inp.value) {
+            url.searchParams.set(inp.name, inp.value);
+          } else {
+            url.searchParams.delete(inp.name);
+          }
+        });
+        
+        window.location.href = url.toString();
+      }
+    }
+
+    customElements.define('collection-filters-{{ ai_gen_id }}', CollectionFilters{{ ai_gen_id }});
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Collection with filters",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "sidebar_width",
+      "label": "Sidebar width",
+      "min": 200,
+      "max": 350,
+      "step": 10,
+      "unit": "px",
+      "default": 260
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "label": "Grid gap",
+      "min": 10,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "section_spacing",
+      "label": "Section spacing",
+      "min": 20,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Sidebar style"
+    },
+    {
+      "type": "color",
+      "id": "sidebar_bg",
+      "label": "Background",
+      "default": "#fafafa"
+    },
+    {
+      "type": "range",
+      "id": "sidebar_padding",
+      "label": "Padding",
+      "min": 10,
+      "max": 40,
+      "step": 5,
+      "unit": "px",
+      "default": 25
+    },
+    {
+      "type": "range",
+      "id": "sidebar_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "select",
+      "id": "sidebar_shadow",
+      "label": "Shadow",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "0 2px 8px rgba(0,0,0,0.06)",
+          "label": "Subtle"
+        },
+        {
+          "value": "0 4px 16px rgba(0,0,0,0.1)",
+          "label": "Medium"
+        },
+        {
+          "value": "0 8px 24px rgba(0,0,0,0.12)",
+          "label": "Strong"
+        }
+      ],
+      "default": "0 2px 8px rgba(0,0,0,0.06)"
+    },
+    {
+      "type": "header",
+      "content": "Grid columns"
+    },
+    {
+      "type": "range",
+      "id": "desktop_columns",
+      "label": "Desktop columns",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "tablet_columns",
+      "label": "Tablet columns",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#e5e5e5"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_bg_color",
+      "label": "Button hover",
+      "default": "#2d2d2d"
+    },
+    {
+      "type": "color",
+      "id": "pill_bg_color",
+      "label": "Filter pill background",
+      "default": "#f0f0f0"
+    },
+    {
+      "type": "color",
+      "id": "pill_text_color",
+      "label": "Filter pill text",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "pill_hover_bg_color",
+      "label": "Filter pill hover",
+      "default": "#e0e0e0"
+    },
+    {
+      "type": "color",
+      "id": "sale_color",
+      "label": "Sale price color",
+      "default": "#c41e3a"
+    },
+    {
+      "type": "header",
+      "content": "Sale badge"
+    },
+    {
+      "type": "color",
+      "id": "sale_badge_bg",
+      "label": "Background start",
+      "default": "#dc2626"
+    },
+    {
+      "type": "color",
+      "id": "sale_badge_bg_end",
+      "label": "Background end",
+      "default": "#b91c1c"
+    },
+    {
+      "type": "color",
+      "id": "sale_badge_text",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_discount_badge",
+      "label": "Show discount badge",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "New badge"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_new_badge",
+      "label": "Show new badge",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "new_badge_days",
+      "label": "Days to show new",
+      "min": 5,
+      "max": 60,
+      "step": 5,
+      "default": 30
+    },
+    {
+      "type": "color",
+      "id": "new_badge_bg",
+      "label": "Background start",
+      "default": "#10b981"
+    },
+    {
+      "type": "color",
+      "id": "new_badge_bg_end",
+      "label": "Background end",
+      "default": "#059669"
+    },
+    {
+      "type": "color",
+      "id": "new_badge_text",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Text size",
+      "min": 12,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "filter_title_size",
+      "label": "Filter title size",
+      "min": 14,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "product_title_size",
+      "label": "Product title size",
+      "min": 14,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "product_price_size",
+      "label": "Product price size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Product cards"
+    },
+    {
+      "type": "range",
+      "id": "product_image_radius",
+      "label": "Image border radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Filters"
+    },
+    {
+      "type": "range",
+      "id": "filter_spacing",
+      "label": "Filter group spacing",
+      "min": 12,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection with filters"
+    }
+  ]
+}
 {% endschema %}
