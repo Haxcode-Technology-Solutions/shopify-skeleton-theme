@@ -8,14 +8,13 @@
  * ------------------------------------------------------------
  */
 {
-  "layout": "theme",
   "sections": {
-    "ecom-6a376a6b6990fd99ef05b5f2-collection": {
-      "type": "ecom-6a376a6b6990fd99ef05b5f2-collection",
+    "main": {
+      "type": "collection",
       "settings": {}
     }
   },
   "order": [
-    "ecom-6a376a6b6990fd99ef05b5f2-collection"
+    "main"
   ]
 }
